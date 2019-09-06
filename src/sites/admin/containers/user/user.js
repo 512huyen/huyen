@@ -368,7 +368,7 @@ class User extends Component {
                         onChange={(event) => this.handleChangeFilter(event, 3)}
                     />
                 </div>
-                {/* <div className="search-type">
+                <div className="search-type">
                     <div className="search-name" style={{ marginBottom: -12 }}>Ngày sinh</div>
                     <div className="date-picker-style-header">
                         <DateTimeBoxSearch
@@ -379,7 +379,7 @@ class User extends Component {
                             placeholder="Ngày sinh"
                         />
                     </div>
-                </div> */}
+                </div>
             </div>
         )
     }

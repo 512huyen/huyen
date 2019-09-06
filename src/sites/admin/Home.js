@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import userProvider from '../../data-access/user-provider';
 import { BrowserRouter, Router, NavLink } from "react-router-dom";
 import '../../App.css';
-// import { DeviceUUID } from 'device-uuid';
 
 import {
     AppAside,
@@ -54,82 +53,12 @@ class Home extends Component {
                     },
                     {
                         role: [],
-                        name: "TK CSYT",
-                        url: '/admin/user-hospital',
-                        imgUrl: '/icon/danh-muc-tk.png',
-                        classActiveStyle: 'user-hospital',
-                    },
-                    {
-                        role: [],
                         name: "Tài khoản người bệnh",
                         url: '/admin/user',
                         imgUrl: '/icon/the.png',
                         classActiveStyle: 'user-admin',
                     }
                 ]
-            },
-            {
-                userType: [1],
-                name: "Quản lý thẻ",
-                url: '/admin/card',
-                imgUrl: '/icon/the.png',
-                classActiveStyle: "the"
-            },
-            {
-                userType: [4],
-                name: "Quản lý thẻ",
-                url: '/admin/card-hospital',
-                imgUrl: '/icon/the.png',
-                classActiveStyle: "the"
-            },
-            {
-                userType: [1],
-                name: "Danh sách thẻ NB",
-                url: '/admin/card-user',
-                imgUrl: '/icon/danh-muc-tk.png',
-                classActiveStyle: "danh-muc-tk"
-            },
-            // {
-            //     userType: [1],
-            //     name: "DS thẻ ngân hàng CSYT",
-            //     url: '/admin/hospital-bank',
-            //     imgUrl: '/icon/csyt.png',
-            //     classActiveStyle: "csyt"
-            // },
-            {
-                userType: [1],
-                name: "Lịch sử giao dịch",
-                url: '/admin/transaction-history',
-                imgUrl: '/icon/ls-giao-dich.png',
-                classActiveStyle: "ls-giao-dich"
-            },
-            {
-                userType: [4],
-                name: "Lịch sử giao dịch",
-                url: '/admin/transaction-history-hospital',
-                imgUrl: '/icon/ls-giao-dich.png',
-                classActiveStyle: "ls-giao-dich"
-            },
-            {
-                userType: [1],
-                name: "Quản lý csyt",
-                url: '/admin/hospital',
-                imgUrl: '/icon/csyt.png',
-                classActiveStyle: "csyt"
-            },
-            // {
-            //     userType: [1],
-            //     name: "Danh mục phương thức tt",
-            //     url: '/admin/payment-method',
-            //     imgUrl: '/icon/phuong-thuc-tt.png',
-            //     classActiveStyle: "phuong-thuc-tt"
-            // },
-            {
-                userType: [1],
-                name: "Danh mục nhà cung cấp",
-                url: '/admin/payment-agent',
-                imgUrl: '/icon/nha-cc.png',
-                classActiveStyle: "nha-cc"
             },
         ];
         return allMenus.filter(item => {

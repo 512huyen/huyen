@@ -77,6 +77,7 @@ class UserAdmin extends Component {
                 this.setState({
                     dataView: dataPage,
                     data: s.data.data,
+                    dataSearch: s.data.data,
                     stt,
                     total: s.data.total,
                     totalPage: totalPage

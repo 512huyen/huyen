@@ -105,17 +105,6 @@ body {
     color: rgba(92, 104, 115, 0.7);
 }
 
-.select-style {
-    background-color: #fff;
-    height: 32px;
-    margin-top: 7px;
-    margin-right: 14px !important;
-}
-
-.select-style>div>div {
-    padding: 10px;
-}
-
 .search-type {
     display: inline-block;
     padding-bottom: 6px;
@@ -255,77 +244,10 @@ table td {
     box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
     padding: 20px;
 }
-@media (max-width: 1600px) {
-    .button-change {
-        background-color: #fff !important;
-        box-shadow: none !important;
-        font-size: 13px !important;
-        text-transform: none !important;
-        border: 1px solid rgb(33, 152, 188) !important;
-        color: rgb(33, 152, 188) !important;
-        border-radius: 3px !important;
-        width: 175px;
-        height: 33px;
-    }
-    .date-picker-style-date {
-        width: 200px !important;
-    }
-    .select-style {
-        width: 202px !important;
-    }
-    .select-style-width {
-        width: 60px !important;
-    }
-    .select-style-width-2 {
-        width: 80px !important;
-    }
-    .search-input-custom-width {
-        width: 65px !important;
-    }
-    .search-input-custom-width-2 {
-        width: 102px !important;
-    }
-    .search-input-custom-width-3 {
-        width: 180px !important;
-    }
-}
 
 @media (max-width: 1400px) {
-    .select-style {
-        width: 202px !important;
-    }
-    .button-change {
-        background-color: #fff !important;
-        box-shadow: none !important;
-        font-size: 10px !important;
-        text-transform: none !important;
-        border: 1px solid rgb(33, 152, 188) !important;
-        color: rgb(33, 152, 188) !important;
-        border-radius: 3px !important;
-        width: 134px;
-        height: 30px;
-        margin-top: -7px !important;
-    }
     .table-wallet th button {
         display: block !important;
-    }
-    .table-wallet {
-        min-width: 1200px !important;
-    }
-    .select-style-width {
-        width: 60px !important;
-    }
-    .select-style-width-2 {
-        width: 70px !important;
-    }
-    .search-input-custom-width {
-        width: 60px !important;
-    }
-    .search-input-custom-width-2 {
-        width: 90px !important;
-    }
-    .search-input-custom-width-3 {
-        width: 140px !important;
     }
 }
 
@@ -333,49 +255,10 @@ table td {
     .next-prev-week {
         width: 47%;
     }
-    .news-title-date>div>div>div>input {
-        /* width: 400px; */
-        border-color: #0000003b;
-        font-weight: 600;
-        color: black;
-    }
-    .select-style-width {
-        width: 50px !important;
-    }
-    .select-style-width-2 {
-        width: 50px !important;
-    }
-    .search-input-custom-width {
-        width: 50px !important;
-    }
-    .search-input-custom-width-2 {
-        width: 70px !important;
-    }
-    .search-input-custom-width-3 {
-        width: 70px !important;
-    }
 }
 
 @media (min-width: 992px) {
     .sidebar-fixed .app-header+.app-body .sidebar {
         height: calc(100vh - 100px) !important;
-    }
-    .select-style {
-        width: 202px !important;
-    }
-    .news-title-date>.form-group {
-        width: 100%;
-    }
-    .news-title-date>.form-group>.react-datepicker-wrapper {
-        width: 100%;
-    }
-    .news-title-date>.form-group>.react-datepicker-wrapper>.react-datepicker__input-container {
-        width: 100%;
-    }
-    .news-title-date>div>div>div>input {
-        /* width: 400px; */
-        border-color: #0000003b;
-        font-weight: 600;
-        color: black;
     }
 }

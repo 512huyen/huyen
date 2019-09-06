@@ -153,7 +153,7 @@ class PrimarySearchAppBar extends React.Component {
                       <MenuIcon className={classes.menubutton} />
                     }
                     display="lg" />
-                  <img src="/logo-header.png" alt="" className="logo-img" />
+                  <img src="/images/logo-header.png" alt="" className="logo-img" />
                 </div>
               </Typography>
               <div className={classes.grow} />

@@ -32,33 +32,14 @@ class PrimarySearchAppBar extends React.Component {
   };
 
   handleProfile() {
-    // this.handleMenuClose();
     window.location.href = '/user-info';
   }
   handleHome() {
-    // this.handleMenuClose();
     window.location.href = '/';
   }
   handlelogOut = event => {
-    // let param = JSON.parse(localStorage.getItem('isofh'));
     localStorage.clear()
     window.location.href = '/dang-nhap';
-    // let id = (this.props.userApp.currentUser || {}).id;
-    // userProvider.logout(id).then(s => {
-    //   if (s && s.data && s.code === 0) {
-    //     localStorage.clear()
-    //     // window.location.reload()
-    //     window.location.href = '/dang-nhap';
-    //     // var logedin = localStorage.getItem('isofh')
-    //     // if(!logedin) {
-    //     //   this.props.history.push("/login");
-    //     // }
-    //   } else {
-    //     alert(s.message)
-    //   }
-    // }).catch(e => {
-
-    // })
   };
 
   handleMenuClose = () => {
@@ -156,7 +137,7 @@ class PrimarySearchAppBar extends React.Component {
                       <MenuIcon className={classes.menubutton} />
                     }
                     display="lg" />
-                  <img src="/logo-header.png" alt="" className="logo-img" onClick={() => this.handleHome()} />
+                  <img src="/images/logo-header.png" alt="" className="logo-img" onClick={() => this.handleHome()} />
                 </div>
               </Typography>
               <div className={classes.grow} />
