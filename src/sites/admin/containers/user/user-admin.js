@@ -438,7 +438,7 @@ class UserAdmin extends Component {
                                                 <TableCell>{item.user.status === 1 ? "Đang hoạt động" : item.user.status === 2 ? "Đã khóa" : ""}</TableCell>
                                                 <TableCell>
                                                     <Tooltip title="Chỉnh sửa">
-                                                        <IconButton onClick={() => this.modalCreateUpdate(item)} color="primary" className={classes.button + " button-detail-user-card"} aria-label="EditIcon">
+                                                        <IconButton onClick={() => this.modalCreateUpdate(item)} color="primary" className={classes.button + " button-home"} aria-label="EditIcon">
                                                             <img src="/images/edit.png" alt="" />
                                                         </IconButton>
                                                     </Tooltip>

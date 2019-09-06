@@ -6,12 +6,10 @@ body {
 .isofhPay-user-home {
     margin-top: 25px;
 }
-
 .color-header>header>div {
     background-color: rgb(33, 152, 188);
     padding: 0px !important;
 }
-
 .logo-isofh {
     height: 63px !important;
     background-color: rgb(33, 152, 188) !important;
@@ -19,24 +17,20 @@ body {
     display: flex;
     align-items: center;
 }
-
 .logo-img {
     display: inline-block;
     height: 48px;
     float: left;
     cursor: pointer;
 }
-
 .default-header-title {
     align-items: center;
 }
-
 .name-csyt-top {
     color: white;
     font-weight: 600;
     text-transform: uppercase;
 }
-
 .item-right {
     display: inline-block;
     vertical-align: middle;
@@ -44,7 +38,6 @@ body {
     margin: 0 5px;
     font-size: 16px;
 }
-
 .item-right {
     display: inline-block;
     vertical-align: middle;
@@ -52,14 +45,12 @@ body {
     margin: 0 5px;
     font-size: 16px;
 }
-
 .user-icon {
     width: 50px;
     height: 50px;
     overflow: hidden;
     border-radius: 100%;
 }
-
 .user-icon img {
     display: block;
     position: relative;
@@ -67,7 +58,6 @@ body {
     width: 100%;
     object-fit: cover
 }
-
 .icon-dropdown {
     height: 35px;
     width: 35px;
@@ -76,23 +66,19 @@ body {
     /* width: 30%; */
     margin-right: 16px !important;
 }
-
 .header-search {
     text-align: left;
     padding: 0 !important;
     margin-bottom: 10px !important;
 }
-
 .isofh-pay-table-user-home-title {
     margin-left: 18px;
 }
-
 .search-type {
     display: inline-block;
     padding-bottom: 6px;
     padding-top: 8px;
 }
-
 .search-name {
     font-size: 12px;
     color: black;
@@ -100,31 +86,25 @@ body {
     margin-bottom: -7px;
     margin-left: 2px;
 }
-
 .user-color-title-search {
     color: rgba(92, 104, 115, 0.7);
 }
-
 .search-type {
     display: inline-block;
     padding-bottom: 6px;
     padding-top: 8px;
 }
-
 .date-picker-style-header>div>div>div {
     top: 13px;
 }
-
 .date-picker-style-header>div>div>div>input {
     width: 200px;
     border: 1px solid #0000003b;
     height: 32px;
 }
-
 .icon-dropdown>span {
     margin-top: -9px !important;
 }
-
 .page-title {
     background-color: white !important;
     display: -webkit-box;
@@ -144,13 +124,11 @@ h2.title-page {
     margin-right: 2%;
     margin-bottom: 14px;
 }
-
 .search-input-custom {
     margin-left: 0px !important;
     background-color: #fff;
     margin-right: 14px !important;
 }
-
 .search-input-custom>div {
     height: 32px;
     font-size: 14px;
@@ -159,27 +137,21 @@ h2.title-page {
 .user-color-title-search {
     color: #5c6873b3;
 }
-
 .select-style-user>fieldset {
     border-color: #000 !important;
     box-shadow: 0 1px 8px #00000033;
 }
-
 .select-style-user>div>div>div>input {
     border-color: #000 !important;
     box-shadow: 0 1px 8px #00000033;
 }
-
 .select-style-user>div>fieldset {
     border-color: #000 !important;
     box-shadow: 0 1px 8px #00000033;
 }
-
-
 table tbody td {
     font-size: 14px !important;
 }
-
 table td {
     color: black !important;
     padding: 0px !important;
@@ -207,7 +179,6 @@ table td {
 .color-detail {
     background-color: #f4f4f4;
     border-radius: 6px;
-    /* box-shadow: 0px 1px 20px #0000003d; */
   }
 .color-border-user-card {
     border-right: 2px solid #2198bc;

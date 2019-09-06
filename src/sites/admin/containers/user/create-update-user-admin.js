@@ -60,7 +60,6 @@ class CreateUpdateUserAdmin extends React.Component {
         this.props.callbackOff(item)
     };
     handlelogOut() {
-        // let param = JSON.parse(localStorage.getItem('isofh'));
         localStorage.clear()
         window.location.href = '/dang-nhap';
     };
@@ -192,7 +191,7 @@ class CreateUpdateUserAdmin extends React.Component {
                                 }
                                 {
                                     dataUserAdmin && dataUserAdmin.user && dataUserAdmin.user.id ?
-                                        <Grid item xs={12} md={8} className="grid-title-2-disabled">
+                                        <Grid item xs={12} md={8} className="grid-title-2-disabled trim-text">
                                             {dataUserAdmin.user.username}
                                         </Grid> : null
                                 }
@@ -325,7 +324,6 @@ class CreateUpdateUserAdmin extends React.Component {
                                             />
                                             <a>Đang hoạt động</a>
                                         </Grid>
-
                                         : <Grid item xs={12} md={8} className="news-title">
                                             <TextValidator
                                                 value={password}
