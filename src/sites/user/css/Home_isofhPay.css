@@ -1,0 +1,269 @@
+.isofhPay-user-home .infor {
+    box-shadow: 0px 1px 8px #00000033;
+    padding-right: 0px;
+    padding-left: 0px;
+    min-height: 800px;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+}
+
+.isofh-pay-main-left {
+    width: 331px;
+    margin-left: 100px
+}
+
+.thong-tin-the {
+    clear: both;
+}
+
+.isofhPay-user-home .mycard {
+    box-shadow: 0px 1px 8px #00000033;
+    float: left;
+    width: calc(100% - 500px);
+    margin-left: 30px;
+}
+
+.isofhPay-user-home .title_infor {
+    color: #fff;
+    background-color: #2198bc;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    padding: 12px 22px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.isofhPay-user-home .mycard {
+    box-shadow: 0px 1px 8px #00000033;
+}
+
+.isofhPay-user-home .div_card {
+    width: 273px;
+    float: left;
+    margin: 28px 70px 28px 42px;
+}
+
+.isofh-pay-image-style-1 {
+    display: flex;
+    padding: 4px
+}
+
+.isofh-pay-image-header {
+    background-image: url(/images/group.png) !important;
+    padding-bottom: 27px;
+}
+
+.isofhPay-user-home .logo_isofhpay {
+    margin: 5px;
+}
+
+.isofhPay-user-home .logo_mb {
+    margin-left: auto;
+    margin-right: 5px;
+}
+
+.isofhPay-user-home .name_hopital {
+    text-transform: uppercase;
+    margin-left: 14px;
+    color: #fff;
+    padding-top: 9px;
+    font-size: 16px !important;
+    font-weight: 600;
+}
+
+.isofhPay-user-home .num_card {
+    margin-left: 14px;
+    color: #fff;
+    padding-top: 24px;
+    padding-bottom: 21px
+}
+
+.isofhPay-user-home .sothe {
+    font-size: 10px;
+}
+
+.isofhPay-user-home .thongtinthe {
+    width: 140px;
+    display: inline-block;
+    border: 1px solid #97979796;
+    border-radius: 4px;
+    padding: 9px 14px 8px 15px;
+    color: #0078ff;
+    font-size: 14px;
+    box-shadow: 0 4px 0 #00000029;
+    text-align: center;
+}
+
+.isofhPay-user-home .numbers {
+    font-size: 24px;
+    color: #f0f3bd;
+    font-weight: 600;
+    margin-top: -5px;
+}
+
+.isofhPay-user-home .soduht {
+    font-size: 13px;
+    display: inline-block;
+    vertical-align: middle;
+    float: right;
+    color: #000;
+}
+
+.isofhPay-user-home .xemsodu {
+    font-size: 14px;
+    display: inline-block;
+    color: #fff;
+    background-color: #27ae60;
+    border-radius: 5px;
+    padding: 9px 32px 8px 32px;
+    text-align: center;
+    margin-left: 10px;
+    font-weight: 600;
+    box-shadow: 0 4px 0 #00000029;
+}
+
+.isofhPay-user-home .div_avatar {
+    text-align: center;
+    padding-bottom: 18px;
+    padding-top: 35px;
+}
+
+.isofhPay-user-home .avatar {
+    -webkit-border-radius: 50%;
+    width: 112px;
+    height: 112px;
+    object-fit: cover;
+    /* box-shadow: 0px 0px 4px #00000052;
+    border: 1px solid #27ae60; */
+}
+
+.isofhPay-user-home .fullname {
+    color: #27ae60;
+    text-align: center;
+    font-size: 24px;
+}
+
+.isofhPay-user-home .left {
+    text-align: left;
+    padding: 10px 0px 9px 18px !important;
+    font-size: 14px !important;
+}
+
+.isofhPay-user-home .right {
+    text-align: right;
+    padding-right: 18px !important;
+    font-weight: 700;
+    font-size: 14px !important;
+}
+
+.isofhPay-user-home tr td {
+    border-bottom: 1px solid #ddd;
+    vertical-align: top;
+}
+
+.isofhPay-user-home .div_thongtin {
+    height: 44px;
+    text-align: center;
+}
+
+.isofhPay-user-home #mycard {
+    padding-top: 20px;
+    color: #2198bc;
+    font-weight: 600;
+    font-size: 20px;
+    margin-left: 30px;
+}
+
+.isofh-pay-table {
+    margin-top: 35px;
+}
+
+.isofhPay-user-home .container {
+    max-width: 1600px;
+}
+
+.isofh-pay-title-header {
+    clear: both;
+    padding-left: 30px;
+    padding-top: 12px
+}
+
+.isofh-pay-table-user-home {
+    margin-left: 42px;
+    border: 1px solid #0000003d;
+    width: calc(100% - 76px);
+    box-shadow: 0px 1px 8px #00000033;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 53px;
+}
+
+.user-home-tr {
+    background-color: #fff !important;
+}
+
+.user-home-margin-left {
+    margin-left: 15px;
+}
+
+.user-home-style-1 {
+    font-size: 12px;
+    color: #5c6873b3;
+}
+
+.user-home-style-2 {
+    font-weight: 600;
+    padding-top: 7px;
+}
+
+.user-home-style-3 {
+    padding-top: 7px;
+}
+
+.user-home-color-green {
+    color: rgb(39, 174, 96)
+}
+
+.user-home-color-red {
+    color: rgb(208, 2, 27)
+}
+
+.user-home-cell-1>img {
+    margin: 0px 2px 0px 2px !important;
+}
+
+.user-home-button {
+    color: rgb(33, 152, 188);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    padding-top: 5px;
+}
+
+.user-home-image {
+    max-width: 70px;
+    max-height: 18px;
+}
+.user-home-item {
+    border-bottom: 1px solid #e0e0e0;
+    color: #000;
+    padding: 10px 18px 9px 18px;
+}
+
+span.user-home-index-1 {
+    text-align: left;
+    font-size: 14px !important;
+}
+
+p.user-home-index-2 {
+    text-align: right;
+    font-weight: 700;
+    font-size: 14px !important;
+}
+.user-home-cell-1 {
+    vertical-align: middle !important;
+    text-align: center;
+}
+.user-home-cell {
+    padding: 7px 0px 10px 15px !important;
+}
