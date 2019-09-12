@@ -1,0 +1,112 @@
+.priority {
+    position: relative;
+    z-index: 99;
+}
+.form-control[disabled] {
+    border-color: transparent !important;
+    background-color: #dddddd17 !important;
+    border-radius: 5px !important;
+    min-height: 30px !important;
+}
+.overlay-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 6;
+}
+ul.list-hospital {
+    position: absolute;
+    z-index: 999;
+    background: #fff;
+    color: #333;
+    border-radius: 5px;
+    max-height: 290px;
+    display: none;
+    width: 100%;
+    padding-left: 0 !important
+}
+ul.list-hospital.display-lists {
+    display: block;
+}
+.list-hospital.display-lists li {
+    padding-bottom: 6px;
+    cursor: pointer;
+    list-style: none;
+    padding-top: 6px;
+}
+.list-hospital.display-lists li:hover {
+    background-color: #b4ec5159;
+}   
+.list-hospital.mostly-customized-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+}
+.popup-list label {
+    padding: 3px 10px;
+    cursor: pointer;
+}
+.popup-list input[type="radio"]:checked+label .around-radio {
+    background-color: #FF5579;
+}
+.popup-list input[type="radio"]:checked+label {
+    background-color: #b4ec5166;
+}
+.popup-list li {
+    position: relative;
+    padding: 0 10px;
+}
+.popup-list label {
+    display: flex;
+}
+.popup-list input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+.popup-list-suggest tr {
+    position: relative;
+}
+.mostly-customized-scrollbar {
+    display: block;
+    overflow: auto;
+}
+.mostly-customized-scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.11);
+}
+.content-sidebar.history-lists.mostly-customized-scrollbar::-webkit-scrollbar {
+    background: rgba(255, 255, 255, 0.05);
+    z-index: 999;
+}
+.mostly-customized-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    position: absolute;
+    left: 0;
+}
+.list-hospital.mostly-customized-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+}
+.list-address li:hover, .active-item {
+    background-color: #b4ec5159;
+}
+.active-item .around-radio{
+    background-color: #FF5579;
+}
+.active-element {
+    border: 1px solid #00000033 !important;
+    height: 32px !important;
+    margin-top: 26px;
+}
+.form-control:focus{
+    color: #000 !important
+}
+.select-header {
+    position: absolute;
+    width: 100%;
+}
+.select-form {
+    width: 200px;
+    position: relative;
+}

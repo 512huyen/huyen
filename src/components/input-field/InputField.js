@@ -114,6 +114,7 @@ class SelectBox extends React.Component {
             }
         } else {
             if (selected) {
+                debugger
                 for (var i = 0; i < listOption.length; i++) {
                     if (selected.indexOf(this.props.getIdObject(listOption[i])) != -1)
                         list.push(listOption[i]);

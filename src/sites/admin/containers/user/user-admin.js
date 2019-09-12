@@ -22,6 +22,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DataContants from '../../../../config/data-contants';
 import { SelectBox } from '../../../../components/input-field/InputField';
 import stringUtils from 'mainam-react-native-string-utils';
+import SelectSearch from '../../../../components/input-field/selectSearch'
 class UserAdmin extends Component {
     constructor(props) {
         super(props);
@@ -30,6 +31,7 @@ class UserAdmin extends Component {
             page: 0,
             size: 10,
             text: '',
+            index: [],
             title: '',
             index: '',
             info: '',
@@ -74,13 +76,20 @@ class UserAdmin extends Component {
                         dataPage.push(s.data.data[i])
                     }
                 }
+                let dataSelect = (s.data.data || []).map(item => {
+                    return {
+                        id: item.user.id,
+                        name: item.user.name,
+                    }
+                })
                 this.setState({
                     dataView: dataPage,
                     data: s.data.data,
                     dataSearch: s.data.data,
                     stt,
                     total: s.data.total,
-                    totalPage: totalPage
+                    totalPage: totalPage,
+                    dataSelect: dataSelect
                 })
             } else {
                 this.setState({
@@ -330,9 +339,19 @@ class UserAdmin extends Component {
             })
         }
     }
+    getUserFrom(item) {
+        let index = item.name.toLocaleLowerCase().unsignText()
+        let dataSearch = (this.state.data || []).filter(option => {
+            return option.user.name.toLocaleLowerCase().unsignText().indexOf(index) != -1
+        })
+        this.setState({
+            dataView: dataSearch,
+            name: item.name
+        })
+    }
     renderChirenToolbar() {
         const { classes } = this.props;
-        const { type, status, text } = this.state;
+        const { type, status, text, dataSelect, index } = this.state;
         return (
             <div className="header-search">
                 <div className="search-type">
@@ -383,6 +402,26 @@ class UserAdmin extends Component {
                         }}
                     />
                 </div>
+                {
+                    dataSelect && dataSelect.length > 0 &&
+                    <div className="select-form">
+                        <SelectSearch
+                            isMulti
+                            // ref={ref => this.infoHospital2 = ref}
+                            onChange={this.getUserFrom.bind(this)}
+                            listOption={dataSelect}
+                            placeholder="hí hí"
+                            value={index}
+                            getIdObject={(item) => {
+                                return item.id;
+                            }}
+                            getLabelObject={(item) => {
+                                return item.name
+                            }}
+                            // checkInsuranceCardPortal={this.checkInsuranceCardPortal}
+                        />
+                    </div>
+                }
             </div>
         )
     }
