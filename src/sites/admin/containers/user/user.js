@@ -17,7 +17,8 @@ import moment from 'moment';
 import ModalAddUpdate from './create-update-user-admin';
 import { DateTimeBoxSearch } from '../../../../components/input-field/InputField';
 import TableFooter from '@material-ui/core/TableFooter';
-
+import ReactCrop from 'react-image-crop'
+import '../../../../components/input-field/cropImage/custom-image-crop.css';
 class User extends Component {
     constructor(props) {
         super(props);
@@ -261,7 +262,7 @@ class User extends Component {
                 total: dataSearchList.length,
             })
         }
-        if (action === "page"){
+        if (action === "page") {
             let dataView = []
             for (let i = pageSize * size; i < (pageSize + 1) * size; i++) {
                 if (this.state.dataSearchList[i]) {
@@ -273,7 +274,7 @@ class User extends Component {
                 page: pageSize
             })
         }
-        if (action === "size"){
+        if (action === "size") {
             let dataView = []
             for (let i = page * pageSize; i < (page + 1) * pageSize; i++) {
                 if (this.state.dataSearchList[i]) {
@@ -374,7 +375,7 @@ class User extends Component {
                         <DateTimeBoxSearch
                             value={this.state.dob}
                             onChangeValue={(event) => {
-                                this.setState({ dob: event }, () => this.loadPage())
+                                this.setState({ dob: event }, () => this.loadPage(true))
                             }}
                             placeholder="Ngày sinh"
                         />

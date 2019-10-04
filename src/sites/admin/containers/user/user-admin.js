@@ -16,13 +16,14 @@ import { withStyles } from '@material-ui/core/styles';
 import TablePagination from '@material-ui/core/TablePagination';
 import TablePaginationActions from '../../components/pagination/pagination';
 import moment from 'moment';
-import ModalAddUpdate from './create-update-user-admin';
+// import ModalAddUpdate from './create-update-user-admin';
+import ModalAddUpdate from '../../../../components/input-field/cropImage/cropImage';
 import TableFooter from '@material-ui/core/TableFooter';
 import Tooltip from '@material-ui/core/Tooltip';
 import DataContants from '../../../../config/data-contants';
 import { SelectBox } from '../../../../components/input-field/InputField';
 import stringUtils from 'mainam-react-native-string-utils';
-import SelectSearch from '../../../../components/input-field/selectSearch'
+import SelectSearch from '../../../../components/input-field/selectTimeDate'
 class UserAdmin extends Component {
     constructor(props) {
         super(props);

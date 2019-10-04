@@ -18,6 +18,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Clear from '@material-ui/icons/Clear';
 import Radio from '@material-ui/core/Radio';
 import stringUtils from 'mainam-react-native-string-utils';
+import imageProvider from '../../../../data-access/image-provider';
+import ReactCrop from "react-image-crop";
+import CropImage from '../../../../components/input-field/cropImage/cropImage';
+import "react-image-crop/dist/ReactCrop.css";
 function Transition(props) {
     return <Slide direction="up" {...props} />;
 }
@@ -42,6 +46,20 @@ class CreateUpdateUserAdmin extends React.Component {
             statusActive: this.props.data && this.props.data.user && this.props.data.user.status === 1 ? true : false,
             password: "",
             checkValidate: false,
+            logo: "",
+            // src: null,
+            // crop: {
+            //     unit: "%",
+            //     width: 30,
+            //     // aspect: 9 / 9
+            // },
+            src: null,
+            crop: {
+                x: 10,
+                y: 10,
+                width: 80,
+                height: 80,
+            },
         };
         this.data = JSON.stringify(this.props.data);
         this.data2 = this.props.data;
@@ -159,10 +177,138 @@ class CreateUpdateUserAdmin extends React.Component {
             })
         }
     }
+    uploadImage(event) {
+        let selector = event.target;
+        let fileName = selector.value.replace("C:\\fakepath\\", "").toLocaleLowerCase();
+        let sizeImage = (event.target.files[0] || {}).size / 1048576;
+        if (sizeImage) {
+            if (fileName.endsWith(".jpg") ||
+                fileName.endsWith(".png") ||
+                fileName.endsWith(".Gif")) {
+                if (sizeImage > 2) {
+                    toast.error("Ảnh không vượt quá dung lượng 2MB", {
+                        position: toast.POSITION.TOP_RIGHT
+                    });
+                } else {
+                    imageProvider.upload(event.target.files[0]).then(s => {
+                        if (s && s.data.code == 0 && s.data.data) {
+                            this.setState({
+                                logo: s.data.data.image.image,
+                            })
+                            this.data2.logo = s.data.data.image.image;
+                        } else {
+                            toast.error("Vui lòng thử lại !", {
+                                position: toast.POSITION.TOP_LEFT
+                            });
+                        }
+                        this.setState({ progress: false })
+                    }).catch(e => {
+                        this.setState({ progress: false })
+                    })
+                }
+
+            } else {
+                toast.error("Vui lòng chọn đúng định dạng file ảnh", {
+                    position: toast.POSITION.TOP_RIGHT
+                });
+            }
+        }
+    }
+    onSelectFile = e => {
+        if (e.target.files && e.target.files.length > 0) {
+            const reader = new FileReader();
+            reader.addEventListener("load", () =>
+                this.setState({ src: reader.result })
+            );
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    };
+
+    // If you setState the crop in here you should return false.
+    onImageLoaded = image => {
+        this.imageRef = image;
+    };
+
+    onCropComplete = crop => {
+        this.makeClientCrop(crop);
+    };
+
+    onCropChange = (crop, percentCrop) => {
+        // You could also use percentCrop:
+        // this.setState({ crop: percentCrop });
+        this.setState({ crop });
+    };
+
+    async makeClientCrop(crop) {
+        if (this.imageRef && crop.width && crop.height) {
+            const croppedImageUrl = await this.getCroppedImg(
+                this.imageRef,
+                crop,
+                "newFile.jpeg"
+            );
+            this.setState({ croppedImageUrl });
+        }
+    }
+
+    getCroppedImg(image, crop, fileName) {
+        const canvas = document.createElement("canvas");
+        const scaleX = image.naturalWidth / image.width;
+        const scaleY = image.naturalHeight / image.height;
+        canvas.width = crop.width;
+        canvas.height = crop.height;
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(
+            image,
+            crop.x * scaleX,
+            crop.y * scaleY,
+            crop.width * scaleX,
+            crop.height * scaleY,
+            0,
+            0,
+            crop.width,
+            crop.height
+        );
+        var myImg = new Image();
+        myImg.onload = function () {
+            ctx.drawImage(myImg, 0, 0);
+        };
+        return new Promise((resolve, reject) => {
+            imageProvider.upload(myImg).then(s => {
+                if (s && s.data.code == 0 && s.data.data) {
+                    this.setState({
+                        logo: s.data.data.image.image,
+                    })
+                    this.data2.logo = s.data.data.image.image;
+                } else {
+                    toast.error("Vui lòng thử lại !", {
+                        position: toast.POSITION.TOP_LEFT
+                    });
+                }
+                this.setState({ progress: false })
+            }).catch(e => {
+                this.setState({ progress: false })
+            })
+
+
+
+            canvas.toBlob(blob => {
+                if (!blob) {
+                    //reject(new Error('Canvas is empty'));
+                    console.error("Canvas is empty");
+                    return;
+                }
+                blob.name = fileName;
+                window.URL.revokeObjectURL(this.fileUrl);
+                this.fileUrl = window.URL.createObjectURL(blob);
+                resolve(this.fileUrl);
+            }, "image/jpeg");
+        });
+    }
 
     render() {
         const { classes } = this.props;
-        const { dataUserAdmin, name, email, username, password } = this.state;
+        const { dataUserAdmin, name, email, username, password, logo, crop, croppedImageUrl, src } = this.state;
         return (
             <div style={{ backgroundColor: 'red' }}>
                 <Dialog
@@ -182,6 +328,36 @@ class CreateUpdateUserAdmin extends React.Component {
                         </DialogTitle>
                         <DialogContent>
                             <Grid container spacing={16} className="user-create-header">
+                                {/* <Grid item xs={12} md={12} className="news-title">
+                                    <input
+                                        accept="image/png"
+                                        className={classes.input}
+                                        style={{ display: 'none' }}
+                                        id="upload_logo_header"
+                                        onChange={(event) => { this.data2.logo = (event.target.files[0] || {}).name; this.uploadImage(event) }}
+                                        type="file"
+                                    />
+                                    <label htmlFor="upload_logo_header" style={{ marginTop: 2, marginBottom: "auto" }}>
+                                        {
+                                            logo ?
+                                                <div style={{ marginLeft: 20 }}>
+                                                    <img style={{ maxHeight: 150, maxWidth: 250, cursor: "pointer" }}
+                                                        src={logo ? logo.absoluteUrl() : ""} />
+                                                </div> :
+                                                <img className="upload-image-create"
+                                                    src="/image-icon.png" />
+                                        }
+                                    </label>
+                                    {
+                                        this.state.checkValidate && this.state.logo.toString().length == 0 ? <div className="error-dob">Vui lòng chọn logo!</div> : null
+                                    }
+                                </Grid> */}
+                                <Grid item xs={12} md={4} className="grid-title-2" style={{ marginTop: 10 }}>
+                                    Ảnh (*):
+                                </Grid>
+                                <Grid item xs={12} md={12} className="news-title">
+                                    <CropImage />
+                                </Grid>
                                 {
                                     dataUserAdmin && dataUserAdmin.user && dataUserAdmin.user.id ?
                                         <Grid item xs={12} md={4} className="grid-title-2">

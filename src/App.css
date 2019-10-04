@@ -168,7 +168,6 @@ table th {
   border-radius: 6px;
   margin-top: 20px;
   overflow: hidden;
-  margin-bottom: 20px !important;
 }
 .page-wrapper tr td:last-child {
   border-right: 1px solid rgba(224, 224, 224, 1);
@@ -799,6 +798,9 @@ button.button-new.btn-login {
 }
 .select__dropdown-indicator {
   padding: 1px 7px !important;
+}
+.upload-image-create {
+  max-width: 40px;
 }
 @media (min-width: 992px){
   .news-title-date >.form-group>.react-datepicker-wrapper {

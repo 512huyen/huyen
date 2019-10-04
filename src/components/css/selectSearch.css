@@ -42,6 +42,9 @@ ul.list-hospital.display-lists {
 .list-hospital.mostly-customized-scrollbar::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.2);
 }
+.list-hospital.mostly-customized-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+}
 .popup-list label {
     padding: 3px 10px;
     cursor: pointer;
@@ -85,9 +88,7 @@ ul.list-hospital.display-lists {
     position: absolute;
     left: 0;
 }
-.list-hospital.mostly-customized-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
-}
+
 .list-address li:hover, .active-item {
     background-color: #b4ec5159;
 }
@@ -107,6 +108,6 @@ ul.list-hospital.display-lists {
     width: 100%;
 }
 .select-form {
-    width: 200px;
+    width: 210px;
     position: relative;
 }

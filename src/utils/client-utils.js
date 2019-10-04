@@ -13,6 +13,9 @@ String.prototype.absoluteUrl = String.prototype.absolute || function (defaultVal
     if (_this.startsWith("http") || _this.startsWith("blob")) {
         return _this;
     }
+    if (!_this.startsWith("/")){
+        return  server_url + "/" + _this;
+    } 
     if (_this.endsWith(".jpg") || _this.endsWith(".png") || _this.endsWith(".JPG") || _this.endsWith(".PNG") || _this.endsWith(".gif")) {
         return server_url +  _this + "";
     }
