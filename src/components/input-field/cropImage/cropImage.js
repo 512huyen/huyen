@@ -25,7 +25,9 @@ class ImgDropAndCrop extends Component {
             crop: {
                 // aspect: 1 / 1
             },
-            logo: ""
+            logo: "",
+            image: "",
+            imageName: ""
         }
     }
     verifyFile = (files) => {
@@ -76,7 +78,7 @@ class ImgDropAndCrop extends Component {
         image64toCanvasRef(canvasRef, imgSrc, crop)
     }
     handleSaveloadClick = (event) => {
-        event.preventDefault()
+        // event.preventDefault()
         const { imgSrc } = this.state
         if (imgSrc) {
             const canvasRef = this.imagePreviewCanvasRef.current
@@ -88,7 +90,14 @@ class ImgDropAndCrop extends Component {
                 if (s && s.data.code == 0 && s.data.data) {
                     this.setState({
                         image: s.data.data.image.image,
+                        imageName: s.data.data.image.name,
                     })
+                    // if (this.props.changeImageCrop){
+                    //     this.props.changeImageCrop(s.data.data.image.image, s.data.data.image.name)
+                    // }
+                    // if (this.props.callbackOff) {
+                    //     this.props.callbackOff()
+                    // }
                 } else {
                     toast.error("Vui lòng thử lại !", {
                         position: toast.POSITION.TOP_LEFT
@@ -135,10 +144,10 @@ class ImgDropAndCrop extends Component {
         }
     }
     render() {
-        const { imgSrc } = this.state
+        const { imgSrc, image, imageName } = this.state
         return (
             <div>
-                <input
+                {/* <input
                     ref={this.fileInputRef}
                     type='file'
                     accept={acceptedFileTypes}
@@ -150,7 +159,25 @@ class ImgDropAndCrop extends Component {
                 <label htmlFor="upload_logo_header" style={{ marginTop: 2, marginBottom: "auto" }}>
                     <img className="upload-image-create"
                         src="/image-icon.png" />
+                </label> */}
+                <input
+                    ref={this.fileInputRef}
+                    type='file'
+                    accept={acceptedFileTypes}
+                    multiple={false}
+                    onChange={this.handleFileSelect}
+                    style={{ display: 'none' }}
+                    id="upload_logo_header"
+                />
+                <label htmlFor="upload_logo_header" className="change-tilte">
+                    <input
+                        className="change-avatar"
+                        placeholder="Chọn file ảnh"
+                        value={imageName}
+                    />
+                    <div className="change-avatar-title">Chọn</div>
                 </label>
+                <img className="image-avatar" src={image && image.absoluteUrl()} alt="" />
                 {imgSrc !== null ?
                     <div>
                         <ReactCrop
@@ -161,9 +188,9 @@ class ImgDropAndCrop extends Component {
                             onChange={this.handleOnCropChange}
                         />
                         <br />
-                        <img src={this.state.image && this.state.image.absoluteUrl()} alt="" />
+                        {/* <img src={this.state.image && this.state.image.absoluteUrl()} alt="" /> */}
                         <canvas style={{ display: "none" }} ref={this.imagePreviewCanvasRef}></canvas>
-                        <button onClick={this.handleSaveloadClick}>Save</button>
+                        {/* <button onClick={this.handleSaveloadClick}>Save</button> */}
                     </div>
                     : null
                 }

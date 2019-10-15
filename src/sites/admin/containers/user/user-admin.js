@@ -23,7 +23,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DataContants from '../../../../config/data-contants';
 import { SelectBox } from '../../../../components/input-field/InputField';
 import stringUtils from 'mainam-react-native-string-utils';
-import SelectSearch from '../../../../components/input-field/selectTimeDate'
+import SelectSearch from '../../../../components/input-field/selectSearch'
+import '../../css/change-avatar.css';
 class UserAdmin extends Component {
     constructor(props) {
         super(props);
@@ -419,7 +420,7 @@ class UserAdmin extends Component {
                             getLabelObject={(item) => {
                                 return item.name
                             }}
-                            // checkInsuranceCardPortal={this.checkInsuranceCardPortal}
+                            checkInsuranceCardPortal={this.checkInsuranceCardPortal}
                         />
                     </div>
                 }

@@ -273,37 +273,40 @@ class CreateUpdateUserAdmin extends React.Component {
         myImg.onload = function () {
             ctx.drawImage(myImg, 0, 0);
         };
-        return new Promise((resolve, reject) => {
-            imageProvider.upload(myImg).then(s => {
-                if (s && s.data.code == 0 && s.data.data) {
-                    this.setState({
-                        logo: s.data.data.image.image,
-                    })
-                    this.data2.logo = s.data.data.image.image;
-                } else {
-                    toast.error("Vui lòng thử lại !", {
-                        position: toast.POSITION.TOP_LEFT
-                    });
-                }
-                this.setState({ progress: false })
-            }).catch(e => {
-                this.setState({ progress: false })
-            })
+        // return new Promise((resolve, reject) => {
+        //     imageProvider.upload(myImg).then(s => {
+        //         if (s && s.data.code == 0 && s.data.data) {
+        //             this.setState({
+        //                 logo: s.data.data.image.image,
+        //             })
+        //             this.data2.logo = s.data.data.image.image;
+        //         } else {
+        //             toast.error("Vui lòng thử lại !", {
+        //                 position: toast.POSITION.TOP_LEFT
+        //             });
+        //         }
+        //         this.setState({ progress: false })
+        //     }).catch(e => {
+        //         this.setState({ progress: false })
+        //     })
 
 
 
-            canvas.toBlob(blob => {
-                if (!blob) {
-                    //reject(new Error('Canvas is empty'));
-                    console.error("Canvas is empty");
-                    return;
-                }
-                blob.name = fileName;
-                window.URL.revokeObjectURL(this.fileUrl);
-                this.fileUrl = window.URL.createObjectURL(blob);
-                resolve(this.fileUrl);
-            }, "image/jpeg");
-        });
+        //     canvas.toBlob(blob => {
+        //         if (!blob) {
+        //             //reject(new Error('Canvas is empty'));
+        //             console.error("Canvas is empty");
+        //             return;
+        //         }
+        //         blob.name = fileName;
+        //         window.URL.revokeObjectURL(this.fileUrl);
+        //         this.fileUrl = window.URL.createObjectURL(blob);
+        //         resolve(this.fileUrl);
+        //     }, "image/jpeg");
+        // });
+        const uploadData = new FormData();
+        uploadData.append("image", this.state.src);
+        debugger
     }
 
     render() {
@@ -357,6 +360,21 @@ class CreateUpdateUserAdmin extends React.Component {
                                 </Grid>
                                 <Grid item xs={12} md={12} className="news-title">
                                     <CropImage />
+                                    {/* <div>
+                                        <input type="file" onChange={this.onSelectFile} />
+                                    </div>
+                                    {src && (
+                                        <ReactCrop
+                                            src={src}
+                                            crop={crop}
+                                            onImageLoaded={this.onImageLoaded}
+                                            onComplete={this.onCropComplete}
+                                            onChange={this.onCropChange}
+                                        />
+                                    )}
+                                    {croppedImageUrl && (
+                                        <img alt="Crop" style={{ maxWidth: "100%" }} src={croppedImageUrl} />
+                                    )} */}
                                 </Grid>
                                 {
                                     dataUserAdmin && dataUserAdmin.user && dataUserAdmin.user.id ?
