@@ -306,7 +306,6 @@ class CreateUpdateUserAdmin extends React.Component {
         // });
         const uploadData = new FormData();
         uploadData.append("image", this.state.src);
-        debugger
     }
 
     render() {

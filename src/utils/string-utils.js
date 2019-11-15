@@ -3,7 +3,6 @@ var readHangChuc = function (so, daydu) {
     var chuoi = "";
     var chuc = Math.floor(so / 10);
     var donvi = so % 10;
-    debugger
     if (chuc > 1) {
         chuoi = " " + mangchu[chuc] + " mươi";
         if (donvi == 1) {

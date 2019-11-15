@@ -61,14 +61,12 @@ class ImgDropAndCrop extends Component {
     handleImageUpload = e => {
         const uploadData = new FormData();
         uploadData.append("image", this.state.imgSrc);
-        debugger
         imageProvider.upload(uploadData).then(s => {
             if (s && s.data.code == 0 && s.data.data) {
                 this.setState({
                     image: s.data.data.image.image,
                     imageName: s.data.data.image.name,
                 })
-                debugger
                 if (this.props.changeImageCrop) {
                     this.props.changeImageCrop(s.data.data.image.image, s.data.data.image.name)
                 }

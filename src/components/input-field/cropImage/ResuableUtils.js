@@ -7,7 +7,6 @@ import imageProvider from '../../../data-access/image-provider';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export function base64StringtoFile(base64String, filename) {
-  debugger
   var arr = base64String.split(','), mime = arr[0].match(/:(.*?);/)[1],
     bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n)
   while (n--) {
