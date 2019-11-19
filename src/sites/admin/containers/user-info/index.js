@@ -100,6 +100,87 @@ class Wallets extends React.Component {
             tempChangeAvatar: item
         })
     }
+    update = (item) => {
+        const { image, phone, address, dataUser } = this.state;
+        let param = {
+            image: item && item.image ? item.image : image,
+            phone: phone,
+            address: address,
+            identification: dataUser.identification,
+            name: dataUser.name,
+            type: dataUser.type,
+            email: dataUser.email,
+            dob: dataUser.dob,
+            status: dataUser.status,
+            hospitalId: this.props.userApp.currentUser && this.props.userApp.currentUser.hospital && this.props.userApp.currentUser.hospital.id
+        }
+        console.log(param);
+        if ((this.props.userApp.currentUser || {}).id) {
+            userProvider.update((this.props.userApp.currentUser || {}).id, param).then(s => {
+                if (s && s.data && s.code === 0) {
+                    this.props.dispatch({ type: constants.action.action_change_user_info, value: s.data.user && s.data.user })
+                    dataCacheProvider.save("", constants.key.storage.change_user_info, s.data.user && s.data.user)
+                    if (item && item.image) {
+                        toast.success("Cập nhật ảnh đại diện thành công!", {
+                            position: toast.POSITION.TOP_RIGHT
+                        });
+                    } else {
+                        toast.success("Cập nhật tài khoản thành công!", {
+                            position: toast.POSITION.TOP_RIGHT
+                        });
+                    }
+                } else {
+                    if (item && item.image) {
+                        toast.error("Cập nhật ảnh đại diện không thành công!", {
+                            position: toast.POSITION.TOP_RIGHT
+                        });
+                    } else {
+                        toast.error("Cập nhật tài khoản không thành công!", {
+                            position: toast.POSITION.TOP_RIGHT
+                        });
+                    }
+                }
+            }).catch(e => {
+            })
+        }
+    }
+    updateAvatar() {
+        this.changeAvatar.handleSaveloadClick();
+    }
+    changeImageCrop = (image, imageName) => {
+        const { dataUser } = this.state;
+        let param = {
+            image: image,
+            phone: dataUser.phone,
+            address: dataUser.address,
+            identification: dataUser.identification,
+            name: dataUser.name,
+            type: dataUser.type,
+            email: dataUser.email,
+            dob: dataUser.dob,
+            status: dataUser.status,
+            hospitalId: this.props.userApp.currentUser && this.props.userApp.currentUser.hospital && this.props.userApp.currentUser.hospital.id
+        }
+        if ((this.props.userApp.currentUser || {}).id) {
+            userProvider.update((this.props.userApp.currentUser || {}).id, param).then(s => {
+                if (s && s.data && s.code === 0) {
+                    this.props.dispatch({ type: constants.action.action_change_user_info, value: s.data.user && s.data.user })
+                    dataCacheProvider.save("", constants.key.storage.change_user_info, s.data.user && s.data.user)
+                    toast.success("Cập nhật ảnh đại diện thành công!", {
+                        position: toast.POSITION.TOP_RIGHT
+                    });
+                    if (this.props.callbackOff) {
+                        this.props.callbackOff()
+                    }
+                } else {
+                    toast.error("Cập nhật ảnh đại diện không thành công!", {
+                        position: toast.POSITION.TOP_RIGHT
+                    });
+                }
+            }).catch(e => {
+            })
+        }
+    }
     render() {
         const { classes } = this.props;
         const { dataUser, image, phone, address, tempChangePassword, hospital, tempChangeAvatar } = this.state;
@@ -236,14 +317,9 @@ class Wallets extends React.Component {
                                                 <div className="col-md-12">
                                                     <div className="img-user-info">
                                                         <Button component="span" onClick={() => { this.modalUploadAvatar(dataUser) }}>
-                                                            {image ? <img alt="" src={image.absoluteUrl()} className="image-info" /> : <img src="/avatar.png" alt="" className="image-user-info" />}
+                                                            {(this.props.userApp.currentUser || {}).image ? <img alt="" src={(this.props.userApp.currentUser || {}).image.absoluteUrl()} className="image-info" /> :
+                                                                image ? <img alt="" src={image.absoluteUrl()} className="image-info" /> : <img src="/avatar.png" alt="" className="image-user-info" />}
                                                         </Button>
-                                                        {/* <CropImage
-                                                            ref={ref => this.changeAvatar = ref}
-                                                            callbackOff={this.closeModal.bind(this)}
-                                                            changeImageCrop={this.changeImageCrop.bind(this)}
-                                                            handleSaveloadClick={this.handleSaveloadClick}
-                                                        /> */}
                                                     </div>
                                                 </div>
                                             </div>

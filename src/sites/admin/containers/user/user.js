@@ -19,6 +19,7 @@ import { DateTimeBoxSearch } from '../../../../components/input-field/InputField
 import TableFooter from '@material-ui/core/TableFooter';
 import ReactCrop from 'react-image-crop'
 import '../../../../components/input-field/cropImage/custom-image-crop.css';
+import CropImage from '../../../../components/input-field/cropImage/cropImage';
 class User extends Component {
     constructor(props) {
         super(props);
@@ -395,6 +396,7 @@ class User extends Component {
                         <div className="page-title">
                             <h2 className="title-page">Tài khoản Người bệnh</h2>
                             {/* <Button className="button-new" variant="contained" color="primary" onClick={() => this.modalCreateUpdate()} >Thêm mới</Button> */}
+                            <CropImage />
                         </div>
                         <EnhancedTableToolbar
                             className="ahihi"

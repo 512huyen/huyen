@@ -16,8 +16,8 @@ import { withStyles } from '@material-ui/core/styles';
 import TablePagination from '@material-ui/core/TablePagination';
 import TablePaginationActions from '../../components/pagination/pagination';
 import moment from 'moment';
-// import ModalAddUpdate from './create-update-user-admin';
-import ModalAddUpdate from '../../../../components/input-field/cropImage/cropImage';
+import ModalAddUpdate from './create-update-user-admin';
+import CropImage from '../../../../components/input-field/cropImage/cropImage';
 import TableFooter from '@material-ui/core/TableFooter';
 import Tooltip from '@material-ui/core/Tooltip';
 import DataContants from '../../../../config/data-contants';
@@ -73,7 +73,7 @@ class UserAdmin extends Component {
                 let _totalpage = Math.round(temp);
                 let totalPage = (temp > _totalpage) ? (_totalpage + 1) : _totalpage;
                 let dataPage = []
-                for (let i = (params.page - 1) * 10; i < params.page * 10; i++) {
+                for (let i = (params.page - 1) * 2; i < params.page * 2; i++) {
                     if (s.data.data[i]) {
                         dataPage.push(s.data.data[i])
                     }
@@ -439,6 +439,7 @@ class UserAdmin extends Component {
                             <h2 className="title-page">Tài khoản nhân viên isofhpay</h2>
                             <Button className="button-new" variant="contained" color="primary" onClick={() => this.modalCreateUpdate()} >Thêm mới</Button>
                         </div>
+                        <CropImage />
                         <EnhancedTableToolbar
                             className="ahihi"
                             numSelected={selected.length}

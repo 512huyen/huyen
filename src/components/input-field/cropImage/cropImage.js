@@ -47,7 +47,7 @@ class ImgDropAndCrop extends Component {
         }
     }
     handleImageLoaded = (image) => {
-        console.log(image)
+        // console.log(image)
     }
     handleOnCropChange = (crop) => {
         this.setState({ crop: crop })
@@ -55,7 +55,7 @@ class ImgDropAndCrop extends Component {
     handleOnCropComplete = (crop, pixelCrop) => {
         const canvasRef = this.imagePreviewCanvasRef.current
         const { imgSrc } = this.state
-        image64toCanvasRef(canvasRef, imgSrc, crop)
+        image64toCanvasRef(canvasRef, imgSrc, pixelCrop)
     }
     handleSaveloadClick = (event) => {
         // event.preventDefault()
@@ -72,12 +72,12 @@ class ImgDropAndCrop extends Component {
                         image: s.data.data.image.image,
                         imageName: s.data.data.image.name,
                     })
-                    // if (this.props.changeImageCrop){
-                    //     this.props.changeImageCrop(s.data.data.image.image, s.data.data.image.name)
-                    // }
-                    // if (this.props.callbackOff) {
-                    //     this.props.callbackOff()
-                    // }
+                    if (this.props.changeImageCrop){
+                        this.props.changeImageCrop(s.data.data.image.image, s.data.data.image.name)
+                    }
+                    if (this.props.callbackOff) {
+                        this.props.callbackOff()
+                    }
                 } else {
                     toast.error("Vui lòng thử lại !", {
                         position: toast.POSITION.TOP_LEFT
@@ -96,7 +96,7 @@ class ImgDropAndCrop extends Component {
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         this.setState({
-            // imgSrc: null,
+            imgSrc: null,
             imgSrcExt: null,
             crop: {
                 // aspect: 1 / 1
@@ -111,7 +111,6 @@ class ImgDropAndCrop extends Component {
             if (isVerified) {
                 const currentFile = files[0]
                 const myFileItemReader = new FileReader()
-                debugger
                 myFileItemReader.addEventListener("load", () => {
                     const myResult = myFileItemReader.result
                     this.setState({
@@ -140,7 +139,7 @@ class ImgDropAndCrop extends Component {
                     <input
                         className="change-avatar"
                         placeholder="Chọn file ảnh"
-                        value={imageName}
+                        defaultValue={imageName}
                     />
                     <div className="change-avatar-title">Chọn</div>
                 </label>
@@ -156,7 +155,7 @@ class ImgDropAndCrop extends Component {
                         />
                         <br />
                         {/* <img src={this.state.image && this.state.image.absoluteUrl()} alt="" /> */}
-                        <canvas  ref={this.imagePreviewCanvasRef}></canvas>
+                        <canvas style={{ display: "none"}} ref={this.imagePreviewCanvasRef}></canvas>
                         {/* <button onClick={this.handleSaveloadClick}>Save</button> */}
                     </div>
                     : null

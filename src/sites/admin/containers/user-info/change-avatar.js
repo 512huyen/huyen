@@ -84,61 +84,55 @@ class SetPassword extends React.Component {
         this.changeAvatar.handleSaveloadClick();
     }
     changeImageCrop = (image, imageName) => {
-        // const { dataUser } = this.state;
-        // let param = {
-        //     image: image,
-        //     phone: dataUser.phone,
-        //     address: dataUser.address,
-        //     identification: dataUser.identification,
-        //     name: dataUser.name,
-        //     type: dataUser.type,
-        //     email: dataUser.email,
-        //     dob: dataUser.dob,
-        //     status: dataUser.status,
-        //     hospitalId: this.props.userApp.currentUser && this.props.userApp.currentUser.hospital && this.props.userApp.currentUser.hospital.id
-        // }
-        // console.log(param);
-        // if ((this.props.userApp.currentUser || {}).id) {
-        //     userProvider.update((this.props.userApp.currentUser || {}).id, param).then(s => {
-        //         if (s && s.data && s.code === 0) {
-        //             this.props.dispatch({ type: constants.action.action_change_user_info, value: s.data.user && s.data.user })
-        //             dataCacheProvider.save("", constants.key.storage.change_user_info, s.data.user && s.data.user)
-        //             toast.success("Cập nhật ảnh đại diện thành công!", {
-        //                 position: toast.POSITION.TOP_RIGHT
-        //             });
-        //             // if (this.props.callbackOff) {
-        //             //     this.props.callbackOff()
-        //             // }
-        //         } else {
-        //             toast.error("Cập nhật ảnh đại diện không thành công!", {
-        //                 position: toast.POSITION.TOP_RIGHT
-        //             });
-        //         }
-        //     }).catch(e => {
-        //     })
-        // }
+        const { dataUser } = this.state;
+        let param = {
+            image: image,
+            phone: dataUser.phone,
+            address: dataUser.address,
+            identification: dataUser.identification,
+            name: dataUser.name,
+            type: dataUser.type,
+            email: dataUser.email,
+            dob: dataUser.dob,
+            status: dataUser.status,
+            hospitalId: this.props.userApp.currentUser && this.props.userApp.currentUser.hospital && this.props.userApp.currentUser.hospital.id
+        }
+        console.log(param);
+        if ((this.props.userApp.currentUser || {}).id) {
+            userProvider.update((this.props.userApp.currentUser || {}).id, param).then(s => {
+                if (s && s.data && s.code === 0) {
+                    this.props.dispatch({ type: constants.action.action_change_user_info, value: s.data.user && s.data.user })
+                    dataCacheProvider.save("", constants.key.storage.change_user_info, s.data.user && s.data.user)
+                    toast.success("Cập nhật ảnh đại diện thành công!", {
+                        position: toast.POSITION.TOP_RIGHT
+                    });
+                    if (this.props.callbackOff) {
+                        this.props.callbackOff()
+                    }
+                } else {
+                    toast.error("Cập nhật ảnh đại diện không thành công!", {
+                        position: toast.POSITION.TOP_RIGHT
+                    });
+                }
+            }).catch(e => {
+            })
+        }
     }
     render() {
         const { classes } = this.props;
-        const { dataUser, image, imageName } = this.state;
         return (
-            <div style={{ backgroundColor: 'red' }}>
-                {/* <CropImage
-                    ref={ref => this.changeAvatar = ref}
-                    // callbackOff={this.closeModal.bind(this)}
-                    changeImageCrop={this.changeImageCrop.bind(this)}
-                    // handleSaveloadClick={this.handleSaveloadClick}
-                />
-                <Button variant="contained" color="primary" onClick={()=>this.updateAvatar()} >Lưu</Button> */}
+            <div>
                 <Dialog
                     open={this.state.open}
                     TransitionComponent={Transition}
                     keepMounted
                     fullWidth={true}
                     maxWidth="sm"
+                    className="ahihi"
                     onClose={this.handleClose}
                     aria-labelledby="alert-dialog-slide-title"
-                    aria-describedby="alert-dialog-slide-description">
+                    aria-describedby="alert-dialog-slide-description"
+                    >
                     <ValidatorForm onSubmit={this.updateAvatar}>
                         <DialogTitle id="alert-dialog-slide-title" className="change-password-index">
                             <span className="change-password-title">Cập nhật ảnh đại diện</span>
@@ -147,35 +141,10 @@ class SetPassword extends React.Component {
                             </IconButton>
                         </DialogTitle>
                         <DialogContent className="change-password-content">
-                            <Grid container spacing={16} className="change-password-body">
-                                <Grid item xs={12} md={12} >
-                                    <CropImage
-                                        ref={ref => this.changeAvatar = ref}
-                                        // callbackOff={this.closeModal.bind(this)}
-                                        changeImageCrop={this.changeImageCrop.bind(this)}
-                                        handleSaveloadClick={this.handleSaveloadClick}
-                                    />
-
-                                    {/* <input
-                                        accept="file_extension"
-                                        className={classes.input}
-                                        style={{ display: 'none' }}
-                                        placeholder="chọn ảnh"
-                                        id="upload_logo_header"
-                                        onChange={(event) => { this.uploadImage(event) }}
-                                        type="file"
-                                    />
-                                    <label htmlFor="upload_logo_header" className="change-tilte">
-                                        <input
-                                            className="change-avatar"
-                                            placeholder="Chọn file ảnh"
-                                            value={imageName}
-                                        />
-                                        <div className="change-avatar-title">Chọn</div>
-                                    </label>
-                                    <img className="image-avatar" src={image && image.absoluteUrl()} alt="" /> */}
-                                </Grid>
-                            </Grid>
+                            <CropImage
+                                ref={ref => this.changeAvatar = ref}
+                                changeImageCrop={this.changeImageCrop.bind(this)}
+                            />
                         </DialogContent>
                         <DialogActions className="margin-button">
                             <Button onClick={this.handleClose} variant="contained" color="inherit">Hủy</Button>

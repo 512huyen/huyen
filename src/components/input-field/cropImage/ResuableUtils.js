@@ -1,8 +1,3 @@
-// A few JavaScript Functions for Images and Files
-// Author: Justin Mitchel
-// Source: https://kirr.co/ndywes
-
-// Convert a Base64-encoded string to a File object
 import imageProvider from '../../../data-access/image-provider';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,8 +10,6 @@ export function base64StringtoFile(base64String, filename) {
   return new File([u8arr], filename, { type: mime })
 }
 
-// Download a Base64-encoded file
-
 export function downloadBase64File(base64Data, filename) {
   var element = document.createElement('a')
   element.setAttribute('href', base64Data)
@@ -27,7 +20,6 @@ export function downloadBase64File(base64Data, filename) {
   document.body.removeChild(element)
 }
 
-// upload image crop 
 export function uploadImageCrop(myNewCroppedFile) {
   imageProvider.upload(myNewCroppedFile).then(s => {
     if (s && s.data.code == 0 && s.data.data) {
@@ -45,19 +37,28 @@ export function uploadImageCrop(myNewCroppedFile) {
   })
 }
 
-// Extract an Base64 Image's File Extension
 export function extractImageFileExtensionFromBase64(base64Data) {
   return base64Data.substring('data:image/'.length, base64Data.indexOf(';base64'))
 }
 
-// Base64 Image to Canvas with a Crop
-export function image64toCanvasRef(canvasRef, image64, pixelCrop) {
-  const canvas = canvasRef // document.createElement('canvas');
-  canvas.width = pixelCrop.width
-  canvas.height = pixelCrop.height
-  const ctx = canvas.getContext('2d')
+export function image64toCanvasRef(canvasRef, image64, pixelCropPx) {
   const image = new Image()
   image.src = image64
+  let width = image.width / 100
+  let height = image.height / 100
+  let pixelCrop = {
+    height: height * pixelCropPx.height,
+    width: width * pixelCropPx.width,
+    x: width * pixelCropPx.x,
+    y: height * pixelCropPx.y,
+    unit: "px"
+  }
+  const canvas = canvasRef
+  const ctx = canvas.getContext('2d')
+  canvas.width = pixelCrop.width
+  canvas.height = pixelCrop.height
+  image.width = pixelCrop.width
+  image.height = pixelCrop.height
   image.onload = function () {
     ctx.drawImage(
       image,
