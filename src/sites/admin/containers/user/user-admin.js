@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
-import EnhancedTableToolbar from '../../components/table-toolbar';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -17,30 +15,25 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TablePaginationActions from '../../components/pagination/pagination';
 import moment from 'moment';
 import ModalAddUpdate from './create-update-user-admin';
-import CropImage from '../../../../components/input-field/cropImage/cropImage';
 import TableFooter from '@material-ui/core/TableFooter';
 import Tooltip from '@material-ui/core/Tooltip';
 import DataContants from '../../../../config/data-contants';
 import { SelectBox } from '../../../../components/input-field/InputField';
-import stringUtils from 'mainam-react-native-string-utils';
-import SelectSearch from '../../../../components/input-field/selectSearch'
-import '../../css/change-avatar.css';
+import { listUserAdmin } from '../../../../reducers/actions'
 class UserAdmin extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             page: 0,
             size: 10,
+            sizeSearch: 99999,
             text: '',
-            index: [],
             title: '',
             index: '',
             info: '',
             data: [],
             total: 0,
             selected: [],
-            progress: false,
             confirmDialog: false,
             tempDelete: [],
             modalAdd: false,
@@ -48,60 +41,56 @@ class UserAdmin extends Component {
             createdUser: '',
             status: -1,
             type: 3,
-            totalPage: 0
         }
     }
-
     componentWillMount() {
         this.loadPage();
     }
-
-
     loadPage(item) {
-        this.setState({ progress: true })
         let params = {
-            page: this.state.page === 0 ? this.state.page + 1 : Number(this.state.page) + 1,
-            size: this.state.size,
+            page: Number(this.state.page) + 1,
+            size: this.state.sizeSearch,
             text: this.state.text.trim(),
             status: this.state.status,
             type: this.state.type,
         }
-        userProvider.search(params, item ? true : false).then(s => {
-            if (s && s.code === 0 && s.data) {
-                let stt = 1 + (params.page - 1) * params.size;
-                let temp = s.data.total / params.size;
-                let _totalpage = Math.round(temp);
-                let totalPage = (temp > _totalpage) ? (_totalpage + 1) : _totalpage;
-                let dataPage = []
-                for (let i = (params.page - 1) * 2; i < params.page * 2; i++) {
-                    if (s.data.data[i]) {
-                        dataPage.push(s.data.data[i])
-                    }
+        if (this.props.userApp.listUserAdmin && this.props.userApp.listUserAdmin.length !== 0 && !item) {
+            let dataPage = []
+            for (let i = (params.page - 1) * this.state.size; i < params.page * this.state.size; i++) {
+                if (this.props.userApp.listUserAdmin[i]) {
+                    dataPage.push(this.props.userApp.listUserAdmin[i])
                 }
-                let dataSelect = (s.data.data || []).map(item => {
-                    return {
-                        id: item.user.id,
-                        name: item.user.name,
-                    }
-                })
-                this.setState({
-                    dataView: dataPage,
-                    data: s.data.data,
-                    dataSearch: s.data.data,
-                    stt,
-                    total: s.data.total,
-                    totalPage: totalPage,
-                    dataSelect: dataSelect
-                })
-            } else {
-                this.setState({
-                    data: []
-                })
             }
-            this.setState({ progress: false })
-        }).catch(e => {
-            this.setState({ progress: false })
-        })
+            this.setState({
+                data: this.props.userApp.listUserAdmin,
+                dataSearch: this.props.userApp.listUserAdmin,
+                dataView: dataPage,
+                total: this.props.userApp.listUserAdmin.length,
+                stt: 1 + ((Number(this.state.page) >= 1 ? this.state.page : 1) - 1) * this.state.size
+            })
+        } else {
+            userProvider.search(params).then(s => {
+                if (s && s.code === 0 && s.data) {
+                    debugger
+                    this.props.dispatch(listUserAdmin(s.data.data))
+                    let stt = 1 + (params.page - 1) * this.state.size;
+                    let dataPage = []
+                    for (let i = (params.page - 1) * this.state.size; i < params.page * this.state.size; i++) {
+                        if (s.data.data[i]) {
+                            dataPage.push(s.data.data[i])
+                        }
+                    }
+                    this.setState({
+                        dataView: dataPage,
+                        dataSearch: s.data.data,
+                        data: s.data.data,
+                        stt,
+                        total: s.data.total,
+                    })
+                }
+            }).catch(e => {
+            })
+        }
     }
     modalCreateUpdate(item) {
         if (item) {
@@ -116,7 +105,6 @@ class UserAdmin extends Component {
             })
         }
     }
-
     handleChangePage = (event, action) => {
         this.setState({
             page: action,
@@ -145,7 +133,6 @@ class UserAdmin extends Component {
     }
 
     handlelogOut() {
-        // let param = JSON.parse(localStorage.getItem('isofh'));
         localStorage.clear()
         window.location.href = '/dang-nhap';
     };
@@ -159,42 +146,31 @@ class UserAdmin extends Component {
             let dataView = []
             let index = event.target.value
             index = index.trim().toLocaleLowerCase().unsignText()
-            if (type == 3) {
-                if (status == -1) {
+            if (type === 3) {
+                if (status === -1) {
                     dataSearchChange = data
                 } else {
                     dataSearchChange = (data || []).filter(item => {
-                        if (item.user.status == Number(status)) {
-                            return item
-                        }
+                        return (item.user.status === Number(status))
                     })
                 }
             } else {
-                if (status == -1) {
+                if (status === -1) {
                     dataSearchChange = (data || []).filter(item => {
-                        if (item.user.type == Number(type)) {
-                            return item
-                        }
+                        return (item.user.type === Number(type))
                     })
                 } else {
                     let dataSearchType = (data || []).filter(item => {
-                        if (item.user.type == Number(type)) {
-                            return item
-                        }
+                        return (item.user.type === Number(type))
                     })
                     dataSearchChange = (dataSearchType || []).filter(item2 => {
-                        if (item2.user.status == Number(status)) {
-                            return item2
-                        }
+                        return (item2.user.status === Number(status))
                     })
                 }
             }
             dataSearch = (dataSearchChange || []).filter(item => {
-                return (item.user.username || "").toLocaleLowerCase().unsignText().indexOf(index) != -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(index) != -1
+                return (item.user.username || "").toLocaleLowerCase().unsignText().indexOf(index) !== -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(index) !== -1
             })
-            let temp = dataSearch.length / size
-            let _totalpage = Math.round(temp)
-            let totalPage = (temp > _totalpage) ? (_totalpage + 1) : _totalpage
             for (let i = page * size; i < (page + 1) * size; i++) {
                 if (dataSearch[i]) {
                     dataView.push(dataSearch[i])
@@ -203,7 +179,6 @@ class UserAdmin extends Component {
             this.setState({
                 dataSearch: dataSearch,
                 dataView: dataView,
-                totalPage: totalPage,
                 total: dataSearch.length,
                 text: event.target.value
             })
@@ -211,44 +186,35 @@ class UserAdmin extends Component {
         if (action === 2) {
             let dataSearch = []
             let dataView = []
-            if (status == -1) {
-                if ((text || "").length == 0) {
+            if (status === -1) {
+                if ((text || "").length === 0) {
                     dataSearchChange = data
                 } else {
                     dataSearchChange = (data || []).filter(item => {
-                        return (item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) != -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) != -1
+                        return (item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1
                     })
                 }
             } else {
-                if ((text || "").length == 0) {
+                if ((text || "").length === 0) {
                     dataSearchChange = (data || []).filter(item => {
-                        if (item.user.status == Number(status)) {
-                            return item
-                        }
+                        return (item.user.status === Number(status))
                     })
                 } else {
                     let dataSearchStatus = (data || []).filter(item => {
-                        if (item.user.status == Number(status)) {
-                            return item
-                        }
+                        return (item.user.status === Number(status))
                     })
                     dataSearchChange = (dataSearchStatus || []).filter(item => {
-                        return (item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) != -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) != -1
+                        return (item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1
                     })
                 }
             }
-            if (event == 3) {
+            if (event === 3) {
                 dataSearch = dataSearchChange
             } else {
                 dataSearch = (dataSearchChange || []).filter(item => {
-                    if (item.user.type == Number(event)) {
-                        return item
-                    }
+                    return (item.user.type === Number(event))
                 })
             }
-            let temp = dataSearch.length / size
-            let _totalpage = Math.round(temp)
-            let totalPage = (temp > _totalpage) ? (_totalpage + 1) : _totalpage
             for (let i = page * size; i < (page + 1) * size; i++) {
                 if (dataSearch[i]) {
                     dataView.push(dataSearch[i])
@@ -257,7 +223,6 @@ class UserAdmin extends Component {
             this.setState({
                 dataSearch: dataSearch,
                 dataView: dataView,
-                totalPage: totalPage,
                 total: dataSearch.length,
                 type: event
             })
@@ -265,44 +230,35 @@ class UserAdmin extends Component {
         if (action === 3) {
             let dataSearch = []
             let dataView = []
-            if (type == 3) {
-                if ((text || "").length == 0) {
+            if (type === 3) {
+                if ((text || "").length === 0) {
                     dataSearchChange = data
                 } else {
                     dataSearchChange = (data || "").filter(item => {
-                        return (item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) != -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) != -1
+                        return (item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1
                     })
                 }
             } else {
-                if ((text || "").length == 0) {
+                if ((text || "").length === 0) {
                     dataSearchChange = (data || []).filter(item => {
-                        if (item.user.type == Number(type)) {
-                            return item
-                        }
+                        return (item.user.type === Number(type))
                     })
                 } else {
                     let dataSearchType = (data || []).filter(item => {
-                        if (item.user.type == Number(type)) {
-                            return item
-                        }
+                        return (item.user.type === Number(type))
                     })
                     dataSearchChange = (dataSearchType || []).filter(item => {
-                        return (item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) != -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) != -1
+                        return (item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1
                     })
                 }
             }
-            if (event == -1) {
+            if (event === -1) {
                 dataSearch = dataSearchChange
             } else {
                 dataSearch = (dataSearchChange || []).filter(item => {
-                    if (item.user.status == Number(event)) {
-                        return item
-                    }
+                    return (item.user.status === Number(event))
                 })
             }
-            let temp = dataSearch.length / size
-            let _totalpage = Math.round(temp)
-            let totalPage = (temp > _totalpage) ? (_totalpage + 1) : _totalpage
             for (let i = page * size; i < (page + 1) * size; i++) {
                 if (dataSearch[i]) {
                     dataView.push(dataSearch[i])
@@ -311,7 +267,6 @@ class UserAdmin extends Component {
             this.setState({
                 dataSearch: dataSearch,
                 dataView: dataView,
-                totalPage: totalPage,
                 total: dataSearch.length,
                 status: event
             })
@@ -325,7 +280,8 @@ class UserAdmin extends Component {
             }
             this.setState({
                 dataView: dataView,
-                page: pageSize
+                page: pageSize,
+                stt: 1 + pageSize * this.state.size
             })
         }
         if (action === "size") {
@@ -341,19 +297,9 @@ class UserAdmin extends Component {
             })
         }
     }
-    getUserFrom(item) {
-        let index = item.name.toLocaleLowerCase().unsignText()
-        let dataSearch = (this.state.data || []).filter(option => {
-            return option.user.name.toLocaleLowerCase().unsignText().indexOf(index) != -1
-        })
-        this.setState({
-            dataView: dataSearch,
-            name: item.name
-        })
-    }
     renderChirenToolbar() {
         const { classes } = this.props;
-        const { type, status, text, dataSelect, index } = this.state;
+        const { type, status, text } = this.state;
         return (
             <div className="header-search">
                 <div className="search-type">
@@ -404,50 +350,22 @@ class UserAdmin extends Component {
                         }}
                     />
                 </div>
-                {
-                    dataSelect && dataSelect.length > 0 &&
-                    <div className="select-form">
-                        <SelectSearch
-                            isMulti
-                            // ref={ref => this.infoHospital2 = ref}
-                            onChange={this.getUserFrom.bind(this)}
-                            listOption={dataSelect}
-                            placeholder="hí hí"
-                            value={index}
-                            getIdObject={(item) => {
-                                return item.id;
-                            }}
-                            getLabelObject={(item) => {
-                                return item.name
-                            }}
-                            checkInsuranceCardPortal={this.checkInsuranceCardPortal}
-                        />
-                    </div>
-                }
             </div>
         )
     }
 
     render() {
         const { classes } = this.props;
-        const { dataView, page, progress, selected, stt, total, size, dataUserAdmin } = this.state;
+        const { dataView, page, stt, total, size, dataUserAdmin } = this.state;
         return (
-            <div>
+            <div className="color-background-control">
                 <Paper className={classes.root + " page-header"}>
                     <div className={classes.tableWrapper + ' page-wrapper'}>
                         <div className="page-title">
                             <h2 className="title-page">Tài khoản nhân viên isofhpay</h2>
                             <Button className="button-new" variant="contained" color="primary" onClick={() => this.modalCreateUpdate()} >Thêm mới</Button>
                         </div>
-                        <CropImage />
-                        <EnhancedTableToolbar
-                            className="ahihi"
-                            numSelected={selected.length}
-                            actionsChiren={
-                                this.renderChirenToolbar()
-                            }
-                        />
-                        {progress ? <LinearProgress /> : null}
+                        {this.renderChirenToolbar()}
                         <Table aria-labelledby="tableTitle" className="style-table-new">
                             <TableHead>
                                 <TableRow>
@@ -480,7 +398,7 @@ class UserAdmin extends Component {
                                                 <TableCell>{item.user.status === 1 ? "Đang hoạt động" : item.user.status === 2 ? "Đã khóa" : ""}</TableCell>
                                                 <TableCell>
                                                     <Tooltip title="Chỉnh sửa">
-                                                        <IconButton onClick={() => this.modalCreateUpdate(item)} color="primary" className={classes.button + " button-home"} aria-label="EditIcon">
+                                                        <IconButton onClick={() => this.modalCreateUpdate(item)} color="primary" className={classes.button + " button-detail-user-card"} aria-label="EditIcon">
                                                             <img src="/images/edit.png" alt="" />
                                                         </IconButton>
                                                     </Tooltip>
@@ -490,10 +408,11 @@ class UserAdmin extends Component {
                                     })
                                         :
                                         <TableRow>
-                                            <TableCell colSpan="9">{this.state.name ? 'Không có kết quả phù hợp' :
-                                                this.state.text ? 'Không có kết quả phù hợp' :
-                                                    this.state.type ? 'Không có kết quả phù hợp' :
-                                                        this.state.status ? 'Không có kết quả phù hợp' : 'Không có dữ liệu'}</TableCell>
+                                            <TableCell colSpan="9">
+                                                {
+                                                    (this.state.text || this.state.type || this.state.status) ? 'Không có kết quả phù hợp' : 'Không có dữ liệu'
+                                                }
+                                            </TableCell>
                                         </TableRow>
                                 }
                             </TableBody>

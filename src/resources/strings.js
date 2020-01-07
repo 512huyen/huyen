@@ -10,9 +10,15 @@ module.exports = {
     action: {
         action_user_login: "ACTION_USER_LOGIN",
         action_user_logout: "ACTION_USER_LOGOUT",
-        // action_payment_agent_status: "ACTION_PAYMENT_AGENT_STATUS",
         action_change_avatar: "ACTION_CHANGE_AVATAR",
-        action_change_user_info: "ACTION_CHANGE_USER_INFO"
+        action_change_user_info: "ACTION_CHANGE_USER_INFO",
+        list_user_admin: 'LIST_ADMIN',
+        list_user: 'LIST_USER',
+        list_user_hospital: 'LIST_USER_HOSPITAL',
+        list_hospital: 'LIST_HOSPITAL',
+        list_payment_agent: 'LIST_PAYMENT_AGENT',
+        list_payment_agent_method: 'LIST_PAYMENT_AGENT_METHOD',
+        list_card: 'LIST_CARD'
     },
     message: {
         user: {

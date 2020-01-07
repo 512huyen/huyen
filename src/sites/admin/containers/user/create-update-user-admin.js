@@ -330,51 +330,6 @@ class CreateUpdateUserAdmin extends React.Component {
                         </DialogTitle>
                         <DialogContent>
                             <Grid container spacing={16} className="user-create-header">
-                                {/* <Grid item xs={12} md={12} className="news-title">
-                                    <input
-                                        accept="image/png"
-                                        className={classes.input}
-                                        style={{ display: 'none' }}
-                                        id="upload_logo_header"
-                                        onChange={(event) => { this.data2.logo = (event.target.files[0] || {}).name; this.uploadImage(event) }}
-                                        type="file"
-                                    />
-                                    <label htmlFor="upload_logo_header" style={{ marginTop: 2, marginBottom: "auto" }}>
-                                        {
-                                            logo ?
-                                                <div style={{ marginLeft: 20 }}>
-                                                    <img style={{ maxHeight: 150, maxWidth: 250, cursor: "pointer" }}
-                                                        src={logo ? logo.absoluteUrl() : ""} />
-                                                </div> :
-                                                <img className="upload-image-create"
-                                                    src="/image-icon.png" />
-                                        }
-                                    </label>
-                                    {
-                                        this.state.checkValidate && this.state.logo.toString().length == 0 ? <div className="error-dob">Vui lòng chọn logo!</div> : null
-                                    }
-                                </Grid> */}
-                                <Grid item xs={12} md={4} className="grid-title-2" style={{ marginTop: 10 }}>
-                                    Ảnh (*):
-                                </Grid>
-                                <Grid item xs={12} md={12} className="news-title">
-                                    <CropImage />
-                                    {/* <div>
-                                        <input type="file" onChange={this.onSelectFile} />
-                                    </div>
-                                    {src && (
-                                        <ReactCrop
-                                            src={src}
-                                            crop={crop}
-                                            onImageLoaded={this.onImageLoaded}
-                                            onComplete={this.onCropComplete}
-                                            onChange={this.onCropChange}
-                                        />
-                                    )}
-                                    {croppedImageUrl && (
-                                        <img alt="Crop" style={{ maxWidth: "100%" }} src={croppedImageUrl} />
-                                    )} */}
-                                </Grid>
                                 {
                                     dataUserAdmin && dataUserAdmin.user && dataUserAdmin.user.id ?
                                         <Grid item xs={12} md={4} className="grid-title-2">
