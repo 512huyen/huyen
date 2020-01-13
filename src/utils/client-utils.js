@@ -102,7 +102,6 @@ export default {
                 }, dataBody).then(s => {
                     // ;
                     s.json().then(val => {
-                        console.log(val);
                         resolve(val);
                     }).catch(e => { reject(e) });
                 }).catch(e => {
@@ -112,7 +111,6 @@ export default {
     },
     requestFetch(methodType, url, headers, body) {
         return new Promise((resolve, reject) => {
-            console.log(body);
             let fetchParam = {
                 method: methodType,
                 headers,

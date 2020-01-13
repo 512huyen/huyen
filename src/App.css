@@ -802,6 +802,11 @@ button.button-new.btn-login {
 .upload-image-create {
   max-width: 40px;
 }
+.dob-user-admin {
+  margin-bottom: 10px !important;
+  margin-top: -8px !important;
+  padding: 0 !important;
+} 
 @media (min-width: 992px){
   .news-title-date >.form-group>.react-datepicker-wrapper {
     width: 100%;

@@ -133,7 +133,6 @@ class Main extends Component {
     }
   }
   _handleKeyDown = (event) => {
-    console.log(event);
     let keycode = event.keyCode;
     switch (keycode) {
       case 18:

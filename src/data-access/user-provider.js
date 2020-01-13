@@ -45,6 +45,13 @@ export default {
             (param.type ? '&type=' + param.type : '&type=' + - 1) +
             (param.identification ? '&identification=' + param.identification : '') +
             (param.dob ? '&dob=' + param.dob : '')
+        // return new Promise((resolve, reject) => {
+        //     clientUtils.requestApi("get", constants.api.user.search + parameters, {}).then(x => {
+        //         resolve(x);
+        //     }).catch(e => {
+        //         reject(e);
+        //     })
+        // });
         return new Promise((resolve, reject) => {
             let data = datacacheProvider.read(param.type, "DATA_USER", [])
             if (!fromApi) {
