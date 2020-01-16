@@ -4,7 +4,7 @@
  */
 
 CKEDITOR.editorConfig = function (config) {
-    config.extraPlugins = 'videodetector,wordcount,notification,imageresize,base64image,embed,embedbase,autoembed,widget,notificationaggregator,widgetselection,lineutils,toolbar,button,dialog,dialogui,clipboard';
+    config.extraPlugins = 'videodetector,wordcount,notification,imageresize,base64image,embed,embedbase,autoembed,widget,notificationaggregator,widgetselection,lineutils,toolbar,button,dialog,dialogui,clipboard,pdf,word,excel,audio,powerpoint,video,spss,zip';
     // Define changes to default configuration here. For example:
     config.language = 'vi';
     config.uiColor = '#FAFAFA';

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const server_url = "https://api.ykhoahanoi.vn"; 
 const server_url = "http://123.24.206.9:9483"; 
+window.server_url = server_url;
 
 String.prototype.absoluteUrl = String.prototype.absolute || function (defaultValue) {
     var _this = this.toString();
