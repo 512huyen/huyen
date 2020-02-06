@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const server_url = "http://123.24.206.9:9483"; 
-window.server_url = server_url;
+const server_url = "http://123.24.206.9:9483";
+
 
 String.prototype.absoluteUrl = String.prototype.absolute || function (defaultValue) {
     var _this = this.toString();
@@ -13,11 +13,11 @@ String.prototype.absoluteUrl = String.prototype.absolute || function (defaultVal
     if (_this.startsWith("http") || _this.startsWith("blob")) {
         return _this;
     }
-    if (!_this.startsWith("/")){
-        return  server_url + "/" + _this;
-    } 
+    if (!_this.startsWith("/")) {
+        return server_url + "/" + _this;
+    }
     if (_this.endsWith(".jpg") || _this.endsWith(".png") || _this.endsWith(".JPG") || _this.endsWith(".PNG") || _this.endsWith(".gif")) {
-        return server_url +  _this + "";
+        return server_url + _this + "";
     }
     if (!_this.endsWith(".jpg") || !_this.endsWith(".png") || _this.endsWith(".JPG") || _this.endsWith(".PNG") || !_this.endsWith(".gif")) {
         return defaultValue;
@@ -40,9 +40,9 @@ String.prototype.getServiceUrl = String.prototype.absolute || function (defaultV
 
 
 export default {
-    // auth: "eyJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiaXNvZmhDYXJlIiwiY3JlYXRlZCI6MTU1MzA3MDc0Mzc4NiwidHlwZSI6MCwidXNlcklkIjo1NX0.k8B3Cm5M-22ckpKk3W1fhgHoHq7LGVdKIjhLZUl0abKES5nSCC5RhupsRXctTK6skQMvCZ8f-TuZGbDcNgdlsb_Kc0ogFmaPmGI4ao7MKrCb9nCr4fxztUN0ABWUERA1wnQNFljgVR9FIrNKnf2hx_aTHIrwS9Ol1JOaKJVnj83cK5vg2ExvN7ralb1yoyuHEZoODlDBVHCIxeG5X3oaJE6-BKfcafXau_cmYz-Ovg31VtZpu1lCffaOj2uLSefPBvqfL2d2U1sswiUrV95rankTjOomr31lP4xiCN71-7YX_6Hx7EraRFhmclmaOjGUWM83VB0fvY8hIEHiE8yB8w",
     auth: "",
     serverApi: server_url,
+    serverApiDownload: server_url + "/file/download",
     response: {
         ok(data, message) {
             if (!message)
@@ -69,7 +69,6 @@ export default {
             headers: {
                 'content-type': 'multipart/form-data',
                 'Authorization': this.auth,
-                // 'MobileMode': 'vendorPortal'
             }
         }
         return axios.post(url.getServiceUrl(), formData, config)
@@ -81,10 +80,25 @@ export default {
             headers: {
                 'content-type': 'multipart/form-data',
                 'Authorization': this.auth,
-                // 'MobileMode': 'vendorPortal'
             }
         }
         return axios.post(url.getServiceUrl(), formData, config)
+    },
+
+    download(fileName, url) {
+        return new Promise((resolve, reject) => {
+            this.requestFetch("get", url + "/" + fileName,
+                {
+                    'Authorization': this.auth,
+                }, "{}").then(s => {
+                    s.blob().then(blob => {
+                        let blobUrl = URL.createObjectURL(blob);
+                        resolve(blobUrl);
+                    });
+                }).catch(e => {
+                    reject(e);
+                });
+        });
     },
     requestApi(methodType, url, body) {
         return new Promise((resolve, reject) => {
@@ -98,9 +112,7 @@ export default {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     'Authorization': this.auth,
-                    // 'MobileMode': 'vendorPortal'
                 }, dataBody).then(s => {
-                    // ;
                     s.json().then(val => {
                         resolve(val);
                     }).catch(e => { reject(e) });
@@ -127,14 +139,12 @@ export default {
                 else
                     resolve(json);
             }).catch((e) => {
-                console.log(e);
                 reject(e);
             });
         })
     },
     requestService(url) {
         return new Promise(function (resolve, reject) {
-
             axios.get(server_url + url)
                 .then(function (response) {
                     resolve(response.data);

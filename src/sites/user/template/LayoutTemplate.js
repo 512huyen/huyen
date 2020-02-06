@@ -14,34 +14,6 @@ function Loading() {
 }
 
 const routes = [
-    // {
-    //     path: '/chuyen-gia',
-    //     component: Loadable({
-    //         loader: () => import('./../containners/specialist/index'),
-    //         loading: Loading,
-    //     })
-    // },
-    // {
-    //     path: '/tin-tuc/:id',
-    //     component: Loadable({
-    //         loader: () => import('./../containners/news/index'),
-    //         loading: Loading,
-    //     })
-    // },
-    // {
-    //     path: '/bang-gia-dich-vu',
-    //     component: Loadable({
-    //         loader: () => import('./../containners/service/index'),
-    //         loading: Loading,
-    //     })
-    // },
-    // {
-    //     path: '/landing-page',
-    //     component: Loadable({
-    //         loader: () => import('./../containners/landingPage/index'),
-    //         loading: Loading,
-    //     })
-    // },
     {
         path: '/user-info',
         component: Loadable({
@@ -84,9 +56,7 @@ class LayoutTemplate extends Component {
                         translate_count = $scroll.data('translate'),
                         translate_data = 'translate' + '(' + translate_count + 'em' + ',' + 0 + ')',
                         data_opacity = $scroll.data('opacity');
-                    // console.log(translate_data)
                     if ((scrollTop_item + vh) >= scrollOffsetTop && $scroll.find($scroll.data('css'))) {
-                        //console.log('scroll')
                         $scroll.addClass('animated' + ' ' + $scroll.data('css'));
                         // $('.element-item').addClass('animated fadeInDown');
                     }

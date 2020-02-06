@@ -10,7 +10,6 @@ import Slide from '@material-ui/core/Slide';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import stringUtils from 'mainam-react-native-string-utils';
 import userProvider from '../../../../data-access/user-provider';
 import IconButton from '@material-ui/core/IconButton';
 import Clear from '@material-ui/icons/Clear';
@@ -18,8 +17,6 @@ import Clear from '@material-ui/icons/Clear';
 function Transition(props) {
     return <Slide direction="up" {...props} />;
 }
-
-var md5 = require('md5');
 class SetPassword extends React.Component {
     constructor(props) {
         super(props)
@@ -34,7 +31,6 @@ class SetPassword extends React.Component {
     }
 
     componentDidMount() {
-        // custom rule will have name 'isPasswordMatch'
         ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
             if (value !== this.state.newPassword) {
                 return false;
@@ -47,7 +43,7 @@ class SetPassword extends React.Component {
             return true
         });
         ValidatorForm.addValidationRule('checkSpace', (value) => {
-            if (value.trim() == "")
+            if (value.trim() === "")
                 return false
             return true
         });
@@ -55,11 +51,6 @@ class SetPassword extends React.Component {
 
     handleClose = () => {
         this.props.callbackOff()
-    };
-    handlelogOut() {
-        let param = JSON.parse(localStorage.getItem('isofh'));
-        localStorage.clear()
-        window.location.href = '/dang-nhap';
     };
     updatePassword = () => {
         const { dataUser, newPassword, oldPassword } = this.state;
@@ -70,19 +61,15 @@ class SetPassword extends React.Component {
         }
         console.log(JSON.stringify(object))
         userProvider.updatePassword(id, object).then(s => {
-            if (s && s.code == 0) {
+            if (s && s.code === 0) {
                 toast.success("Thiết lập mật khẩu thành công!", {
                     position: toast.POSITION.TOP_RIGHT
                 });
-                this.handlelogOut();
             }
-            if (s.code == 1) {
+            if (s.code === 1) {
                 toast.error("Mật khẩu hiện tại không chính xác. Vui lòng kiểm tra lại!", {
                     position: toast.POSITION.TOP_RIGHT
                 });
-            }
-            if (s.code == 97) {
-                this.handlelogOut();
             }
         }).catch(e => {
             toast.error("Thiết lập mật khẩu không thành công!", {
@@ -93,7 +80,7 @@ class SetPassword extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { dataUser, newPassword, confirmPassword, oldPassword } = this.state;
+        const { newPassword, confirmPassword, oldPassword } = this.state;
         return (
             <div style={{ backgroundColor: 'red' }}>
                 <Dialog

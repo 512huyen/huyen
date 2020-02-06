@@ -8,8 +8,6 @@ import { BrowserRouter } from 'react-router-dom'
 import $ from 'jquery';
 import Loadable from 'react-loadable';
 import dataCacheProvider from './data-access/datacache-provider'
-import keyEventProvider from './data-access/keyevent-provider'
-
 function Loading() {
   return <div></div>;
 }
@@ -78,19 +76,6 @@ class Main extends Component {
       deviceId: '',
       checkLoadPage: false
     }
-    this.events = [
-      "load",
-      "mousemove",
-      "mousedown",
-      "click",
-      "scroll",
-      "keypress"
-    ];
-    this.resetTimeout = this.resetTimeout.bind(this);
-
-    for (var i in this.events) {
-      window.addEventListener(this.events[i], this.resetTimeout);
-    }
     this.props.dispatch({ type: constants.action.action_user_login, value: userProvider.getAccountStorage() })
     let dataImage = dataCacheProvider.read("", constants.key.storage.change_avatar);
     let userInfo = dataCacheProvider.read("", constants.key.storage.change_user_info);
@@ -101,94 +86,12 @@ class Main extends Component {
       this.props.dispatch({ type: constants.action.action_change_user_info, value: userInfo })
     }
   }
+  
   loadScript(path) {
     const script = document.createElement("script");
     script.src = path;
     script.async = true;
     document.body.appendChild(script);
-  }
-  clearTimeout() {
-    if (this.warnTimeout) clearTimeout(this.warnTimeout);
-  
-    if (this.logoutTimeout) clearTimeout(this.logoutTimeout);
-  }
-  
-  setTimeout() {
-    this.warnTimeout = setTimeout(this.warn, 3600000);
-  }
-  
-  resetTimeout() {
-    this.clearTimeout();
-    this.setTimeout();
-  }
-  componentDidMount() {
-    document.addEventListener("keydown", this._handleKeyDown);
-    document.addEventListener("keyup", this._handleKeyUp);
-  }
-  destroy() {
-    this.clearTimeout();
-  
-    for (var i in this.events) {
-      window.removeEventListener(this.events[i], this.resetTimeout);
-    }
-  }
-  _handleKeyDown = (event) => {
-    let keycode = event.keyCode;
-    switch (keycode) {
-      case 18:
-        keyEventProvider.altDown = true;
-        break;
-      case 115:
-        keyEventProvider.f4Down = true;
-        break;
-      case 17:
-        keyEventProvider.ctrlDown = true;
-        break;
-      case 16:
-        keyEventProvider.shiftDown = true;
-      case 91:
-        keyEventProvider.windowsDown = true;
-        break;
-    }
-    let func = keyEventProvider.getFunction(keycode, 'keydown');
-    if (func) {
-      if (!func()) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      return false;
-    }
-  }
-  _handleKeyUp = (event) => {
-    let keycode = event.keyCode;
-    switch (keycode) {
-      case 18:
-        keyEventProvider.altDown = false;
-        break;
-      case 115:
-        keyEventProvider.f4Down = false;
-        break;
-      case 17:
-        keyEventProvider.ctrlDown = false;
-        break;
-      case 16:
-        keyEventProvider.shiftDown = false;
-      case 91:
-        keyEventProvider.windowsDown = false;
-        break;
-    }
-    let func = keyEventProvider.getFunction(keycode, 'keyup');
-    if (func) {
-      if (!func()) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      return false;
-    }
-  }
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this._handleKeyDown);
-    document.removeEventListener("keyup", this._handleKeyUp);
   }
   render() {
     return (<BrowserRouter>

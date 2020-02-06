@@ -267,3 +267,298 @@ p.user-home-index-2 {
 .user-home-cell {
     padding: 7px 0px 10px 15px !important;
 }
+.react-datepicker__input-container>input{
+    font-size: 13px;
+}
+.react-datepicker__input-container>input::placeholder{
+    color:  #000 !important;
+    opacity: 0.4 !important;
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: 13px !important;
+    line-height: 32px;
+    font-weight: 400 !important;
+}
+.search-input-custom>div>div>textarea {
+    font-size: 13px !important;
+    height: 16px !important;
+}
+.search-input-custom>div>div>textarea::placeholder {
+    color:  #000 !important;
+    opacity: 0.4;
+    font-family: 'Open Sans', sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 13px !important;
+}
+.search-input-custom:hover {
+    color: #495057 !important;
+    background-color: #fff !important;
+    border-color: #80bdff !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25) !important;
+    border-radius: 4px !important;
+}
+.react-datepicker__input-container:hover {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25) !important;
+    border-radius: 4px !important
+}
+.form-control:focus{
+    box-shadow: none
+}
+.search-type-check-box {
+    /* display: inline-flex; */
+    float: right;
+    margin-right: 18px;
+    margin-top: 8px;
+}
+.check-box-name {
+    color: #000;
+    font-weight: 600;
+}
+.text-field-max {
+    margin-top: 7px;
+    min-width: 230px;
+    max-width: 503px;
+}
+.table-user-home {
+    overflow: auto;
+}
+@media (max-width: 1655px) {
+    .isofhPay-user-home .div_card {
+        margin: 28px 50px 28px 36px;
+    }
+}
+@media (max-width: 1580px) {
+    .isofhPay-user-home .div_card {
+        margin: 28px 24px 28px 36px;
+    }
+}
+@media (max-width: 1500px) {
+    .isofh-pay-main-left {
+        width: 300px;
+        margin-left: 60px;
+    }
+    .isofhPay-user-home .mycard {
+        width: calc(100% - 420px);
+    }
+    .isofhPay-user-home .div_card {
+        margin: 28px 15px 28px 36px;
+    }
+}
+@media (max-width: 1400px) {
+    .isofh-pay-main-left {
+        width: 331px;
+        margin-left: 100px
+    }
+    .isofhPay-user-home .mycard {
+        width: calc(100% - 500px);
+    }
+    .isofhPay-user-home .div_card {
+        margin: 28px 70px 28px 46px;
+    }
+    .text-field-max {
+        min-width: 180px;
+        max-width: 180px;
+    }
+    .date-picker-style-header>div>div>div>input {
+        width: 180px;
+    }
+}
+@media (max-width: 1320px) {
+    .isofhPay-user-home .div_card {
+        margin: 28px 40px 28px 46px;
+    }
+    .text-field-max {
+        min-width: 150px;
+        max-width: 150px;
+    }
+    .date-picker-style-header>div>div>div>input {
+        width: 150px;
+    }
+}
+@media (max-width: 1270px) {
+    .isofh-pay-main-left {
+        width: 300px;
+        margin-left: 60px;
+    }
+    .isofhPay-user-home .mycard {
+        width: calc(100% - 430px);
+    }
+    .isofhPay-user-home .div_card {
+        margin: 28px 40px 28px 40px;
+    }
+}
+@media (max-width: 1230px) {
+    .isofhPay-user-home .div_card {
+        margin: 28px 24px 28px 36px;
+    }
+    .text-field-max {
+        min-width: 140px;
+        max-width: 140px;
+    }
+    .date-picker-style-header>div>div>div>input {
+        width: 140px;
+    }
+}
+@media (max-width: 1166px) {
+    .isofh-pay-main-left {
+        width: 280px;
+        margin-left: 50px;
+    }
+    .isofhPay-user-home .mycard {
+        width: calc(100% - 400px);
+    }
+    .isofhPay-user-home .div_card {
+        margin: 28px 24px 28px 36px;
+    }
+    .text-field-max {
+        min-width: 130px;
+        max-width: 130px;
+    }
+    .date-picker-style-header>div>div>div>input {
+        width: 130px;
+    }
+}
+@media (max-width: 1070px) {
+    .isofh-pay-main-left {
+        width: 260px;
+        margin-left: 30px;
+    }
+    .isofhPay-user-home .mycard {
+        width: calc(100% - 340px);
+    }
+    .isofhPay-user-home .div_card {
+        margin: 28px 24px 28px 36px;
+    }
+    .text-field-max {
+        min-width: 125px;
+        max-width: 125px;
+    }
+    .date-picker-style-header>div>div>div>input {
+        width: 125px;
+    }
+}
+@media (max-width: 1006px) {
+    .isofh-pay-main-left {
+        width: 250px;
+        margin-left: 20px;
+    }
+    .isofhPay-user-home .mycard {
+        width: calc(100% - 305px);
+    }
+    .isofhPay-user-home .mycard {
+        margin-left: 20px;
+    }
+    .isofhPay-user-home .div_card {
+        margin: 28px 10px 28px 36px;
+    }
+    .text-field-max {
+        min-width: 120px;
+        max-width: 120px;
+    }
+    .date-picker-style-header>div>div>div>input {
+        width: 120px;
+    }
+}
+@media (max-width: 945px) {
+    .isofh-pay-main-left {
+        width: 250px;
+        margin-left: 20px;
+    }
+    .isofhPay-user-home .mycard {
+        width: calc(100% - 305px);
+    }
+    .isofhPay-user-home .mycard {
+        margin-left: 20px;
+    }
+    .isofhPay-user-home .div_card {
+        margin: 28px 0px 28px 36px;
+    }
+    .text-field-max {
+        min-width: 110px;
+        max-width: 110px;
+    }
+    .date-picker-style-header>div>div>div>input {
+        width: 110px;
+    }
+}
+
+@media (max-width: 930px) {
+    .isofh-pay-main-left {
+        width: 280px;
+        margin-left: 30px;
+    }
+    .isofhPay-user-home .mycard {
+        width: calc(100% - 370px);
+    }
+    .isofhPay-user-home .mycard {
+        margin-left: 30px;
+    }
+    .isofhPay-user-home .div_card {
+        margin: 28px 10px 28px 36px;
+    }
+    .text-field-max {
+        min-width: 170px;
+        max-width: 170px;
+    }
+    .date-picker-style-header>div>div>div>input {
+        width: 170px;
+    }
+    .user-home-margin-left {
+        margin-left: 0px;
+    }
+}
+@media (max-width: 850px) {
+    .isofh-pay-main-left {
+        width: 280px;
+        margin-left: 30px;
+    }
+    .isofhPay-user-home .mycard {
+        width: calc(100% - 370px);
+    }
+    .isofhPay-user-home .mycard {
+        margin-left: 30px;
+    }
+    .isofhPay-user-home .div_card {
+        margin: 28px 10px 28px 36px;
+    }
+    .text-field-max {
+        min-width: 170px;
+        max-width: 170px;
+    }
+    .date-picker-style-header>div>div>div>input {
+        width: 170px;
+    }
+    .user-home-margin-left {
+        margin-left: 0px;
+    }
+}
+@media (max-width: 800px) {
+    .text-field-max {
+        min-width: 185px;
+        max-width: 185px;
+    }
+    .date-picker-style-header>div>div>div>input {
+        width: 185px;
+    }
+    .search-type-check-box {
+        /* float: right; */
+        margin-right: 0px;
+        /* margin-top: 8px; */
+    }
+}
+@media (max-width: 700px) {
+    .isofhPay-user-home .mycard {
+        width: 100%;
+    }
+    .isofh-pay-main-left {
+        width: 100%;
+        margin: 30px 0px;
+    }
+    .isofhPay-user-home .infor {
+        margin: 33px;
+        min-height: 530px;
+    }
+    .search-type {
+        padding-right: 14px;
+    }
+}

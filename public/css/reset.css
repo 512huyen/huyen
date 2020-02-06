@@ -1,9 +1,15 @@
 
+
 *,
 *::before,
 *::after {
   box-sizing: border-box; 
 }
+
+
+
+
+
 body {
   margin: 0; 
   
@@ -13,11 +19,15 @@ body {
 
 }
 
+
+
 hr {
   box-sizing: content-box;
   height: 0; 
   overflow: visible;
 }
+
+
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
@@ -27,6 +37,8 @@ p {
   margin-top: 0;
   margin-bottom: 0 !important;
 }
+
+
 
 abbr[title],
 abbr[data-original-title] {
@@ -66,6 +78,7 @@ strong {
   font-weight: 0; 
 }
 
+
 sup {
   position: relative;
   line-height: 0;
@@ -74,6 +87,15 @@ sup {
 
 sub { bottom: -.25em; }
 sup { top: -.5em; }
+
+
+
+
+
+
+
+
+
 pre {
   margin-top: 0;
   margin-bottom: 1rem;
@@ -171,6 +193,7 @@ input[type="checkbox"] {
   padding: 0; 
 }
 
+
 input[type="date"],
 input[type="time"],
 input[type="datetime-local"],
@@ -216,9 +239,11 @@ progress {
   -webkit-appearance: none;
 }
 
+
 [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
+
 
 ::-webkit-file-upload-button {
   font: inherit;

@@ -6,7 +6,8 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
-
+import TableFooter from '@material-ui/core/TableFooter';
+import TableRow from '@material-ui/core/TableRow';
 
 class TablePaginationActions extends React.Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class TablePaginationActions extends React.Component {
         this.props.onChangePage(event, this.props.page + 1);
     };
     handleUpdatePage = event => {
-        this.props.onChangePage(event, Number(event.target.value)-1);
+        this.props.onChangePage(event, Number(event.target.value) - 1);
     }
 
     handleLastPageButtonClick = event => {
@@ -60,7 +61,7 @@ class TablePaginationActions extends React.Component {
                 >
                     {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
                 </IconButton>
-                <input className="input-page" type="text" value={page+1} onChange={this.handleUpdatePage} />
+                <input className="input-page" type="text" value={page + 1} onChange={this.handleUpdatePage} />
                 <span className="page-size">/{totalPage}</span>
                 <IconButton
                     onClick={this.handleNextButtonClick}

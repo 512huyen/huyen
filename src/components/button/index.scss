@@ -1,0 +1,57 @@
+.button-new {
+    color: #fff;
+    font-weight: 600;
+    text-transform: none;
+    font-family: 'Open Sans', sans-serif;
+    background-color: rgb(39,174,96);
+    height: 36px;
+    font-size: 14px;
+    -webkit-font-feature-settings: "smcp", "c2sc";
+    font-feature-settings: "smcp", "c2sc";
+    font-variant: all-small-caps;
+    padding: 0px 14px;
+    margin-top: 14px;
+    margin-bottom: 18px;
+    border-radius: 6px;
+    outline: 0;
+    span {
+        margin-top: -3px;
+    }
+}
+.button-new:focus {
+    outline: 0;
+}
+.button-footer {
+    color: #fff ;
+    font-weight: 700;
+    text-transform: none;
+    font-family: 'Open Sans', sans-serif;
+    background-color: rgb(39,174,96) ;
+    height: 36px;
+    font-size: 18px;
+    -webkit-font-feature-settings: "smcp", "c2sc";
+    font-feature-settings: "smcp", "c2sc";
+    font-variant: all-small-caps;
+    border-radius: 6px;
+    padding-top: 1px;
+    margin: 5px;
+}
+.button-footer:focus {
+    outline: 0;
+}
+.radio-input {
+    .radio-button {
+        padding: 0px;
+    }
+    .button-radio-title {
+        padding: 0px 12px;
+    }
+}
+.checkbox-input {
+    span {
+        padding: 0;
+    }
+    .button-checkbox-title {
+        padding-left: 12px !important;
+    }
+}

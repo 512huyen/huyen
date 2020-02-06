@@ -1,0 +1,17 @@
+.modal-create-update {
+    .title-popup {
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 700;
+        .close-button {
+            float: right;
+            margin-top: -20px !important;
+            color: black !important;
+            outline: 0;
+        }
+    }
+    .popup-footer {
+        text-align: center;
+    }
+}

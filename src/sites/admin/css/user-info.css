@@ -2,12 +2,15 @@ body {
     font-family: 'Open Sans', sans-serif !important;
     color: #000 !important;
 }
+
 .user-info-body {
-    box-shadow: none !important;
+    box-shadow: 0px 1px 8px #00000033 !important;
+    min-height: 799px;
 }
 .info-hospital {
     background-color: #fff !important;
-    margin: 36px 0px;
+    /* margin: 15px 0px 58px 20px; */
+    padding: 25px 0px 0px;
 }
 h4.user-info-title {
     font-weight: 700;
@@ -113,21 +116,24 @@ h4.user-info-title {
 } */
 .button-change-update {
     background-color: #fff!important;
-    box-shadow: none!important;
+    box-shadow: 0px 4px 0px #00000029 !important;
     font-size: 16px!important;
     text-transform: none!important;
-    border: 1px solid #2198bc!important;
     color: #2198bc!important;
     border-radius: 3px!important;
     width: 140px;
     margin: 10px 6px!important;
 }
 .button-change-update:hover{
-    background-color: rgb(33,152,188) !important;
+    background-color: #1f9651 !important;
     color: #fff !important;
 }
+.export-file-button-2 {
+    border:  1px solid rgb(151,151,151) !important;
+    color: black !important;
+}
 .change-password-color {
-    background-color: #2198bccc !important;
+    background-color: rgb(39,174,96) !important;
     color: #fff !important;
 }
 .col-md-7 {
@@ -164,7 +170,83 @@ h4.user-info-title {
 .margin-button button:nth-child(2) {
     background-color: #2198bc !important;
 }
+
+
+/* báo cáo tài chính */
+.select-box-recharge {
+    width: 100%;
+    padding: 0 !important;
+    margin-top: -15px;
+}
+.user-info-recharge {
+    padding: 60px 60px 53px !important;
+    position: relative;
+}
+h4.recharge-title {
+    font-weight: 700;
+    color: #087292 !important;
+    font-size: 28px;
+    text-align: center;
+    padding-bottom: 18px;
+}
+.recharge-detail {
+    width: 100%;
+    padding: 15px 0px;
+}
+/* .select-group.form-group {
+    margin: 0 !important;
+} */
+.select-box-recharge > div {
+    margin: 0 !important;
+}
+.racharge-item {
+    padding-top: 5px;
+    font-weight: 600;
+}
+.recharge-disabled {
+    background-color: #2198bc24;
+    border-radius: 6px;
+    height: 32px;
+    padding: 5px 12px!important;
+    font-weight: 600;
+    margin-right: 15px;
+}
+.setting-control {
+    margin-left: auto;
+    padding-right: 17px;
+    font-size: 18px;
+    color: #0a9be1;
+    font-weight: 600;
+    cursor: pointer;
+}
+.setting-control-image {
+    padding: 0px 15px;
+}
+.radio-set-up {
+    padding: 0px;
+    margin-left: -15px;
+}
+.style-table-set-up {
+    width: calc(100% - 15px);
+    border-radius: 6px;
+    overflow: hidden;
+}
+.style-table-set-up > thead > tr {
+    background-color: #2197ba52 !important;
+}
+.style-table-set-up > thead > tr > th {
+    color: black !important;
+    padding: 2px 4px 2px 4px !important;
+    border: 1px solid #9d9b9b !important;
+    text-align: center;
+}
+.style-table-set-up > tbody > tr > td {
+    border: 1px solid #e0e0e0 !important;
+}
 @media (max-width: 1600px){
+    .user-info-recharge {
+        padding: 60px 45px 53px 53px !important;
+    }
     .user-info-table {
         padding: 50px 50px;
     }
@@ -180,5 +262,3 @@ h4.user-info-title {
         padding-left: 16px;
     }
 }
-
-

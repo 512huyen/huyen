@@ -17,7 +17,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
-
+import './header.scss';
 class PrimarySearchAppBar extends React.Component {
   constructor(props) {
     super(props)
@@ -153,7 +153,7 @@ class PrimarySearchAppBar extends React.Component {
                       <MenuIcon className={classes.menubutton} />
                     }
                     display="lg" />
-                  <img src="/images/logo-header.png" alt="" className="logo-img" />
+                  <img src="/logo-header.png" alt="" className="logo-img" />
                 </div>
               </Typography>
               <div className={classes.grow} />

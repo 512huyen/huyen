@@ -1,0 +1,157 @@
+body { 
+    margin-left: 50px;
+    margin-bottom: 40px; 
+    font-family: 'Serif';
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+thead {
+    font-weight: 600;
+}
+tr, td,table
+{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border: 1px solid #00000080
+}
+td, th {
+    text-align: center;
+    padding: 5px;
+}
+table tbody tr:nth-child(2n+1) {
+  background-color: #0000001a;
+}
+*{ 
+    color: #000;
+    line-height: 1.5;
+    font-size: 14px;
+    }
+p {
+    margin:0;
+}
+
+.export-file-recharge{
+    position: relative;
+}
+.export-file-recharge .export-file-header {
+display: flex;
+}
+.export-file-recharge .export-file-header .export-header-1 {
+    text-align: center;
+    text-transform: uppercase;
+}
+.export-file-recharge .export-file-header .export-header-1 .export-item-1 {
+    font-size: 16px;
+}
+.export-file-recharge .export-file-header .export-header-1 .export-item-2 {
+    font-size: 16px;
+    font-weight: 600;
+}
+.export-file-recharge .export-file-header .export-header-2 {
+    margin-left: auto;
+}
+.export-file-recharge .export-file-title {
+    text-align: center;
+    padding-top: 30px;
+}
+.export-file-recharge .export-file-title .title-item-1 {
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 700;
+}
+.export-file-recharge .export-file-title .title-item-3 {
+    font-weight: 600;
+    padding: 5px 0px;
+}
+.export-file-recharge .export-file-title .title-item-4 {
+    font-weight: 600;
+}
+.export-file-recharge .export-file-body {
+    padding-top: 50px;
+}
+.export-file-recharge .export-file-body .export-index {
+    display: flex;
+    padding-bottom: 5px;
+}
+.export-file-recharge .export-file-body .export-index .index-left {
+    display: flex;
+}
+.export-file-recharge .export-file-body .export-index .index-left .index-item-2 {
+    margin-left: 7px;
+    font-weight: 600;
+}
+.export-file-recharge .export-file-body .export-index .export-right {
+    margin-left: auto;
+}
+table.export-file-header-footer {
+    margin-top: 50px;
+}
+tfoot.export-table-foot > tr > td {
+    border: 1px solid white;
+    background-color: #fff;
+}
+tbody.export-table-body > tr > td {
+    border: 1px solid white;
+    background-color: #fff;
+}
+tbody.export-table-body {
+    font-weight: 600;
+}
+thead.export-table-head > tr > td {
+    border: 1px solid white;
+    background-color: #fff;
+}
+thead.export-table-head {
+    font-weight: normal;
+}
+.export-file-recharge .export-total {
+    font-weight: 600;
+    margin-top: 4px;
+}    
+.export-file-recharge .export-total .export-total-number {
+    display: flex;
+    text-align: right;
+}
+.export-file-recharge .export-total .number-total-text {
+    display: flex
+}
+.export-file-recharge .export-total .export-total-number .number-total-text {
+    width: -webkit-fill-available;
+    display: block;
+}
+.export-file-recharge .export-total .export-total-number .number-total {
+    padding-left: 15px;
+}
+.export-file-recharge .export-total .number-total-text .number-total-text {
+    padding-left: 15px;
+}
+.export-file-recharge .export-fooder-print {
+    display: flex;
+    width: 100%;
+}
+.export-file-recharge .export-fooder-print.footer {
+  position: fixed;
+  bottom: 0;
+  margin-right: 50px;
+}
+.export-file-recharge .export-fooder-print.footer .fooder-page {
+    margin-left: auto;
+    margin-right: 50px;
+}
+.export-file-recharge .export-fooder-print.footer .fooder-info {
+    font-size: 12px;
+}
+.export-file-recharge .export-fooder-print.footer .fooder-info .fooder-info-1 {
+    font-style: italic;
+}
+@media print{
+    @page 
+	    {
+	        size: auto;   
+	        margin-left: 50px;
+			margin-top: 50px;
+			margin-bottom: 40px;
+	    }
+}

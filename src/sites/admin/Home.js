@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import userProvider from '../../data-access/user-provider';
 import { BrowserRouter, Router, NavLink } from "react-router-dom";
 import '../../App.css';
+import './Home.scss';
+// import { DeviceUUID } from 'device-uuid';
 
 import {
     AppAside,
@@ -53,11 +55,97 @@ class Home extends Component {
                     },
                     {
                         role: [],
+                        name: "TK CSYT",
+                        url: '/admin/user-hospital',
+                        imgUrl: '/icon/danh-muc-tk.png',
+                        classActiveStyle: 'user-hospital',
+                    },
+                    {
+                        role: [],
                         name: "Tài khoản người bệnh",
                         url: '/admin/user',
                         imgUrl: '/icon/the.png',
                         classActiveStyle: 'user-admin',
                     }
+                ]
+            },
+            {
+                userType: [1, 4],
+                name: "Quản lý thẻ",
+                url: '/admin/card',
+                imgUrl: '/icon/the.png',
+                classActiveStyle: "the"
+            },
+            {
+                userType: [1],
+                name: "Danh sách thẻ NB",
+                url: '/admin/card-user',
+                imgUrl: '/icon/danh-muc-tk.png',
+                classActiveStyle: "danh-muc-tk"
+            },
+            {
+                userType: [1, 4],
+                name: "Lịch sử giao dịch",
+                url: '/admin/transaction-history',
+                imgUrl: '/icon/ls-giao-dich.png',
+                classActiveStyle: "ls-giao-dich"
+            },
+            {
+                userType: [1],
+                name: "Quản lý csyt",
+                url: '/admin/hospital',
+                imgUrl: '/icon/csyt.png',
+                classActiveStyle: "csyt"
+            },
+            {
+                userType: [1],
+                name: "Danh mục nhà cung cấp",
+                url: '/admin/payment-agent',
+                imgUrl: '/icon/nha-cc.png',
+                classActiveStyle: "nha-cc"
+            },
+            {
+                userType: [1, 2, 4],
+                name: "Đối soát",
+                url: '/admin/control',
+                imgUrl: '/icon/nha-cc.png',
+                classActiveStyle: "control"
+            },
+            {
+                userType: [1, 2, 4],
+                name: "Báo cáo tài chính",
+                url: '',
+                imgUrl: '/icon/the.png',
+                classActiveStyle: 'the',
+                subMenu: [
+                    {
+                        role: [],
+                        name: "BC Nạp tiền",
+                        url: '/admin/recharge',
+                        imgUrl: '/icon/the.png',
+                        classActiveStyle: 'recharge',
+                    },
+                    {
+                        role: [],
+                        name: "BC Thanh toán",
+                        url: '/admin/pay',
+                        imgUrl: '/icon/the.png',
+                        classActiveStyle: 'pay',
+                    },
+                    {
+                        role: [],
+                        name: "BC Tạm ứng",
+                        url: '/admin/advance-payment',
+                        imgUrl: '/icon/the.png',
+                        classActiveStyle: 'advance-payment',
+                    },
+                    {
+                        role: [],
+                        name: "BC Hoàn dịch vụ",
+                        url: '/admin/refund-service',
+                        imgUrl: '/icon/the.png',
+                        classActiveStyle: 'refund-service',
+                    },
                 ]
             },
         ];
@@ -165,7 +253,7 @@ class Home extends Component {
                             </AppSidebar>
                     }
                     <main className="main">
-                        <AppBreadcrumb appRoutes={routes} />
+                        {/* <AppBreadcrumb appRoutes={routes} /> */}
                         <Container fluid>
                             <Switch>
                                 {routes.map((route, idx) => {

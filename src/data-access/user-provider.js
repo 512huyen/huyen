@@ -36,7 +36,7 @@ export default {
             })
         });
     },
-    search(param, fromApi) {
+    search(param) {
         let parameters =
             (param.page ? '?page=' + param.page : '?page=' + -1) +
             (param.size ? '&size=' + param.size : '&size=' + - 1) +
@@ -45,42 +45,53 @@ export default {
             (param.type ? '&type=' + param.type : '&type=' + - 1) +
             (param.identification ? '&identification=' + param.identification : '') +
             (param.dob ? '&dob=' + param.dob : '')
-        // return new Promise((resolve, reject) => {
-        //     clientUtils.requestApi("get", constants.api.user.search + parameters, {}).then(x => {
-        //         resolve(x);
-        //     }).catch(e => {
-        //         reject(e);
-        //     })
-        // });
         return new Promise((resolve, reject) => {
-            let data = datacacheProvider.read(param.type, "DATA_USER", [])
-            if (!fromApi) {
-                if (data && data.data && data.data.data.length) {
-                    resolve(data)
-                } else {
-                    this.search(param, true).then(s => {
-                        resolve(s)
-                    }).catch(e => {
-                        resolve([])
-                    })
-                }
-            } else {
-                clientUtils.requestApi("get", constants.api.user.search + parameters, {}).then(x => {
-                    datacacheProvider.save(param.type, "DATA_USER", x);
-                    if (param.size < x.data.total) {
-                        param.size = x.data.total
-                        this.search(param, true).then(s => {
-                            resolve(s);
-                        }).catch(e => {
-                            resolve([])
-                        })
-                    } else {
-                        resolve(x);
-                    }
-                }).catch(e => {
-                    reject(e);
-                })
-            }
+            clientUtils.requestApi("get", constants.api.user.search + parameters, {}).then(x => {
+                resolve(x);
+            }).catch(e => {
+                reject(e);
+            })
+            // let data = datacacheProvider.read(param.type, "DATA_USER", [])
+            // if (!fromApi) {
+            //     if (data && data.data && data.data.data.length) {
+            //         if (param.size < data.data.total){
+            //             param.size = data.data.total
+            //             this.search(param, true).then(s=>{
+            //                 resolve(s)
+            //             }).catch(e=>{
+            //                 resolve([])
+            //             })
+            //         } else {
+            //             resolve(data)
+            //         }
+            //     } else {
+            //         this.search(param, true).then(s => {
+            //             resolve(s)
+            //         }).catch(e => {
+            //             resolve([])
+            //         })
+            //     }
+            // } else {
+            //     clientUtils.requestApi("get", constants.api.user.search + parameters, {}).then(x => {
+            //         datacacheProvider.save(param.type, "DATA_USER", x);
+            //         if (x && x.data){
+            //             if (param.size < x.data.total) {
+            //                 param.size = x.data.total
+            //                 this.search(param, true).then(s => {
+            //                     resolve(s);
+            //                 }).catch(e => {
+            //                     resolve([])
+            //                 })
+            //             } else {
+            //                 resolve(x);
+            //             }
+            //         } else {
+            //             resolve([])
+            //         }
+            //     }).catch(e => {
+            //         resolve([])
+            //     })
+            // }
         })
     },
     updatePassword(id, object) {

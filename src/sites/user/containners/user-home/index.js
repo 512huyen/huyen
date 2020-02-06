@@ -13,7 +13,7 @@ import EnhancedTableToolbar from '../../../admin/components/table-toolbar';
 import { DateTimeBoxSearch } from '../../../../components/input-field/InputField';
 import TransactionHistory from "./detail-transaction-history"
 import DetailCard from "./detail-card-user"
-
+import Checkbox from '@material-ui/core/Checkbox';
 class UserHome extends Component {
     constructor(props) {
         super(props);
@@ -67,7 +67,7 @@ class UserHome extends Component {
     loadPage() {
         this.setState({ progress: true })
         let params = {
-            page: this.state.page === 0 ? this.state.page + 1 : Number(this.state.page),
+            page: Number(this.state.page) + 1,
             size: this.state.size,
             text: this.state.text.trim(),
             status: this.state.status,
@@ -98,20 +98,6 @@ class UserHome extends Component {
         }).catch(e => {
             this.setState({ progress: false })
         })
-    }
-    formatCardNumber(value) {
-        var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
-        var matches = v.match(/\d{4,16}/g);
-        var match = matches && matches[0] || ''
-        var parts = []
-        for (let i = 0, len = match.length; i < len; i += 4) {
-            parts.push(match.substring(i, i + 4))
-        }
-        if (parts.length) {
-            return parts.join(' ')
-        } else {
-            return value
-        }
     }
     closeModal() {
         this.setState({
@@ -162,15 +148,24 @@ class UserHome extends Component {
                 <div className="search-type user-home-margin-left">
                     <div className="search-name user-color-title-search">Tìm kiếm</div>
                     <TextField
-                        style={{ marginTop: 7, minWidth: 230, maxWidth: 503 }}
+                        // style={{ marginTop: 7, minWidth: 230, maxWidth: 503 }}
                         id="outlined-textarea"
                         placeholder="Nhập nội dung"
                         multiline
-                        className={classes.textField + ' search-input-custom select-style-user'}
+                        className={classes.textField + ' search-input-custom select-style-user text-field-max'}
                         margin="normal"
                         variant="outlined"
                         value={dob}
-                        onChange={(event) => this.handleChangeFilter(event, 2)}
+                    // onChange={(event) => this.handleChangeFilter(event, 2)}
+                    />
+                </div>
+                <div className="search-type user-home-margin-left search-type-check-box">
+                    <span className="check-box-name">Tất cả giao dịch</span>
+                    <Checkbox
+                        // style={{ marginTop: 0 }}
+                        checked={this.state.active}
+                        onChange={(event) => { this.setState({ active: event.target.checked }) }}
+                        value="active"
                     />
                 </div>
             </div>
@@ -253,8 +248,8 @@ class UserHome extends Component {
                                         <div className="div_card" onClick={() => this.modelDetailCard()}>
                                             <div className="isofh-pay-image-header">
                                                 <div className="isofh-pay-image-style-1">
-                                                    <img src="/images/logoIsofhPay01.png" className="logo_isofhpay" />
-                                                    <img src="/images/bitmap2.png" className="logo_mb" />
+                                                    <img src="/images/logoIsofhPay01.png" alt="" className="logo_isofhpay" />
+                                                    <img src="/images/bitmap2.png" alt="" className="logo_mb" />
                                                 </div>
                                                 <p className="name_hopital">Bệnh viện Đại học Y Hà Nội</p>
                                                 <div className="num_card">
@@ -270,8 +265,8 @@ class UserHome extends Component {
                                         <div className="div_card" onClick={() => this.modelDetailCard()}>
                                             <div className="isofh-pay-image-header">
                                                 <div className="isofh-pay-image-style-1">
-                                                    <img src="/images/logoIsofhPay01.png" className="logo_isofhpay" />
-                                                    <img src="/images/bitmap2.png" className="logo_mb" />
+                                                    <img src="/images/logoIsofhPay01.png" alt="" className="logo_isofhpay" />
+                                                    <img src="/images/bitmap2.png" alt="" className="logo_mb" />
                                                 </div>
                                                 <p className="name_hopital">Bệnh viện Đại học Y Hà Nội</p>
                                                 <div className="num_card">
@@ -287,8 +282,8 @@ class UserHome extends Component {
                                         <div className="div_card" onClick={() => this.modelDetailCard()}>
                                             <div className="isofh-pay-image-header">
                                                 <div className="isofh-pay-image-style-1">
-                                                    <img src="/images/logoIsofhPay01.png" className="logo_isofhpay" />
-                                                    <img src="/images/bitmap2.png" className="logo_mb" />
+                                                    <img src="/images/logoIsofhPay01.png" alt="" className="logo_isofhpay" />
+                                                    <img src="/images/bitmap2.png" alt="" className="logo_mb" />
                                                 </div>
                                                 <p className="name_hopital">Bệnh viện Đại học Y Hà Nội</p>
                                                 <div className="num_card">
@@ -313,54 +308,56 @@ class UserHome extends Component {
                                             }
                                         />
                                     </div>
-                                    <Table aria-labelledby="tableTitle" className="isofh-pay-table-user-home">
-                                        <TableBody>
-                                            {
-                                                data && data.length ? data.map((item, index) => {
-                                                    return (
-                                                        <TableRow
-                                                            hover
-                                                            key={index}
-                                                            tabIndex={-1}
-                                                            className="user-home-tr">
-                                                            <TableCell style={{ width: "5%" }} className="user-home-cell-1 user-home-cell"><img src="/images/back1.png" alt="" /></TableCell>
-                                                            <TableCell style={{ width: "15%" }} className="user-home-cell">
-                                                                <div className="user-home-style-1">Ngày giao dịch</div>
-                                                                <div className="user-home-style-2">{moment(item.user.createdDate).format("HH:mm:ss - DD/MM/YYYY")}</div>
-                                                            </TableCell>
-                                                            <TableCell style={{ width: "15%" }} className="user-home-cell">
-                                                                <div className="user-home-style-1">Số tiền</div>
-                                                                <div className="user-home-style-2 user-home-color-green">{code.formatPrice()}</div>
-                                                            </TableCell>
-                                                            <TableCell style={{ width: "15%" }} className="user-home-cell">
-                                                                <div className="user-home-style-1">Tên người nhận</div>
-                                                                <div className="user-home-style-2">Bệnh viện Đại học Y Hà Nội</div>
-                                                            </TableCell>
-                                                            <TableCell style={{ width: "30%" }} className="user-home-cell">
+                                    <div className="table-user-home">
+                                        <Table aria-labelledby="tableTitle" className="isofh-pay-table-user-home">
+                                            <TableBody>
+                                                {
+                                                    data && data.length ? data.map((item, index) => {
+                                                        return (
+                                                            <TableRow
+                                                                hover
+                                                                key={index}
+                                                                tabIndex={-1}
+                                                                className="user-home-tr">
+                                                                <TableCell style={{ width: "10%" }} className="user-home-cell-1 user-home-cell"><img src="/images/back1.png" alt="" /></TableCell>
+                                                                <TableCell style={{ width: "20%" }} className="user-home-cell">
+                                                                    <div className="user-home-style-1">Ngày giao dịch</div>
+                                                                    <div className="user-home-style-2">{moment(item.user.createdDate).format("HH:mm:ss - DD/MM/YYYY")}</div>
+                                                                </TableCell>
+                                                                <TableCell style={{ width: "20%" }} className="user-home-cell">
+                                                                    <div className="user-home-style-1">Số tiền</div>
+                                                                    <div className="user-home-style-2 user-home-color-green">{code.formatPrice()}</div>
+                                                                </TableCell>
+                                                                <TableCell style={{ width: "20%" }} className="user-home-cell">
+                                                                    <div className="user-home-style-1">Tên người nhận</div>
+                                                                    <div className="user-home-style-2">Bệnh viện Đại học Y Hà Nội</div>
+                                                                </TableCell>
+                                                                {/* <TableCell style={{ width: "30%" }} className="user-home-cell">
                                                                 <div className="user-home-style-1">Nội dung thanh toán</div>
                                                                 <div className="user-home-style-3">Nguyen Thi Lam thanh toán khám bệnh</div>
-                                                            </TableCell>
-                                                            <TableCell style={{ width: "10%" }} className="user-home-cell">
-                                                                <div className="user-home-style-1">Trạng thái</div>
-                                                                <div className="user-home-style-3 user-home-color-red">Không thành công</div>
-                                                            </TableCell>
-                                                            <TableCell style={{ width: "10%" }} className="user-home-cell">
-                                                                <img src="/images/bitmap2.png" alt="" className="user-home-image" />
-                                                                <div className="user-home-button" onClick={() => this.modelTransactionHistory()}>Xem chi tiết</div>
-                                                            </TableCell>
+                                                            </TableCell> */}
+                                                                <TableCell style={{ width: "15%" }} className="user-home-cell">
+                                                                    <div className="user-home-style-1">Trạng thái</div>
+                                                                    <div className="user-home-style-3 user-home-color-red">Không thành công</div>
+                                                                </TableCell>
+                                                                <TableCell style={{ width: "15%" }} className="user-home-cell">
+                                                                    <img src="/images/bitmap2.png" alt="" className="user-home-image" />
+                                                                    <div className="user-home-button" onClick={() => this.modelTransactionHistory()}>Xem chi tiết</div>
+                                                                </TableCell>
+                                                            </TableRow>
+                                                        );
+                                                    })
+                                                        :
+                                                        <TableRow>
+                                                            <TableCell colSpan="11">{this.state.name ? 'Không có kết quả phù hợp' :
+                                                                this.state.text ? 'Không có kết quả phù hợp' :
+                                                                    this.state.dob ? 'Không có kết quả phù hợp' :
+                                                                        this.state.status ? 'Không có kết quả phù hợp' : 'Không có dữ liệu'}</TableCell>
                                                         </TableRow>
-                                                    );
-                                                })
-                                                    :
-                                                    <TableRow>
-                                                        <TableCell colSpan="11">{this.state.name ? 'Không có kết quả phù hợp' :
-                                                            this.state.text ? 'Không có kết quả phù hợp' :
-                                                                this.state.dob ? 'Không có kết quả phù hợp' :
-                                                                    this.state.status ? 'Không có kết quả phù hợp' : 'Không có dữ liệu'}</TableCell>
-                                                    </TableRow>
-                                            }
-                                        </TableBody>
-                                    </Table>
+                                                }
+                                            </TableBody>
+                                        </Table>
+                                    </div>
                                 </div>
                             </div>
                             {this.state.modelTransactionHistory && <TransactionHistory data={dataHospital} callbackOff={this.closeModal.bind(this)} />}

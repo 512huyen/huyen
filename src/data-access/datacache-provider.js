@@ -17,7 +17,7 @@ module.exports = {
     read(userId, key, defaultValue) {
         if (localStorage.hasOwnProperty(userId + "_" + key)) {
             var item = localStorage.getItem(userId + "_" + key);
-            var item = CryptoJS.AES.decrypt(item, "ISOFHCARE").toString(CryptoJS.enc.Utf8);
+            item = CryptoJS.AES.decrypt(item, "ISOFHCARE").toString(CryptoJS.enc.Utf8);
             if (item)
                 try {
                     var data = JSON.parse(item);

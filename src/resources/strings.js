@@ -2,7 +2,6 @@ module.exports = {
     key: {
         storage: {
             current_account: "CURRENT_USER",
-            // payment_agent_status: "PAYMENT_AGENT_STATUS",
             change_avatar: "CHANGE_AVATAR",
             change_user_info: "CHANGE_USER_INFO",
         }
@@ -35,7 +34,6 @@ module.exports = {
         hospital: {
             create_error: "Tạo mới tài khoản không thành công!",
             update_error: "Cập nhật tài khoản không thành công!",
-
         }
     },
     api: {
@@ -60,14 +58,10 @@ module.exports = {
             delete: '/hospital/delete',
             getDetail: '/hospital/get-detail',
             getHisAccount: '/hospital/get-his-account',
-            getAgent: '/hospital/get-agent'
-        },
-        hospitalBank: {
-            search: "/hospital-bank/search",
-            create: "/hospital-bank/create",
-            update: "/hospital-bank/update",
-            delete: '/hospital-bank/delete',
-            getDetail: '/hospital-bank/get-detail',
+            getAgent: '/hospital/get-agent',
+            getBank: '/hospital/get-bank',
+            updateSetting: '/hospital/update-setting',
+            hospitalPaymentMethod: "/hospital-payment-method/search"
         },
         image: {
             upload: "/image/upload"
@@ -85,13 +79,6 @@ module.exports = {
             groupByMethod: '/payment-agent/groupByMethod',
             groupByMethodAgent: 'payment-agent/group-by-method-agent',
         },
-        paymentMethod: {
-            search: "/payment-method/search",
-            create: "/payment-method/create",
-            update: "/payment-method/update",
-            delete: '/payment-method/delete',
-            getDetail: '/payment-method/getDetail',
-        },
         cardTransferHistory: {
             search: "/card-transfer-history/search",
             create: "/card-transfer-history/create",
@@ -106,9 +93,17 @@ module.exports = {
             mapCard: '/card/map-card',
             cancel: '/card/cancel',
             payIn: '/card/pay-in',
+            getDetail: '/card/get-detail'
         },
         bank: {
             getAll: "/bank/get-all"
+        },
+        transaction: {
+            search: "/transaction/search",
+            create: "/transaction/create",
+            update: "/transaction/update",
+            delete: '/transaction/delete',
+            report: '/transaction/report'
         }
     }
 }

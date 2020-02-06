@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react'
+import React from 'react'
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -8,15 +8,14 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import ChangePassword from './change-password';
-import ChangeAvatar from './change-avatar';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import userProvider from '../../../../data-access/user-provider';
+import imageProvider from '../../../../data-access/image-provider';
 import '../../css/user-info.css'
 import dataCacheProvider from '../../../../data-access/datacache-provider'
 import constants from "../../../../resources/strings";
 import Reply from '@material-ui/icons/Reply';
 import IconButton from '@material-ui/core/IconButton';
-import CropImage from '../../../../components/input-field/cropImage/cropImage';
 class Wallets extends React.Component {
     constructor(props) {
         super(props);
@@ -32,7 +31,6 @@ class Wallets extends React.Component {
             hospital: (this.props.userApp.currentUser || {}).hospital,
             tempChangePassword: [],
             confirmDialogPassword: false,
-            modalUploadAvatar: false
         }
         this.data = JSON.stringify(this.props.userApp.currentUser);
         this.data2 = this.props.userApp.currentUser;
@@ -45,14 +43,14 @@ class Wallets extends React.Component {
             return true
         });
         ValidatorForm.addValidationRule('isEmail', (value) => {
-            if (!value && value.length == 0) {
+            if (!value && value.length === 0) {
                 return true
             } else {
                 return value.isEmail();
             }
         });
         ValidatorForm.addValidationRule('checkSpace', (value) => {
-            if (value.trim() == "")
+            if (value.trim() === "")
                 return false
             return true
         });
@@ -61,8 +59,7 @@ class Wallets extends React.Component {
     getDetail() {
         let userId = (this.props.userApp.currentUser || {}).id;
         userProvider.getDetail(userId).then(data => {
-            console.log(JSON.stringify(data))
-            if (data && data.code == 0 && data.data) {
+            if (data && data.code === 0 && data.data) {
                 this.setState({
                     dataUser: data.data.user,
                     image: data.data.user.image,
@@ -75,31 +72,9 @@ class Wallets extends React.Component {
     }
 
     closeModal() {
-        this.setState({
-            confirmDialogPassword: false,
-            modalUploadAvatar: false
-        });
+        this.setState({ confirmDialogPassword: false });
     }
 
-    modalChangePassword(item) {
-        this.setState({
-            confirmDialogPassword: true,
-            tempChangePassword: item
-        })
-    }
-
-    closePopup() {
-        this.getDetail()
-    }
-    handleHome() {
-        window.location.href = '/';
-    }
-    modalUploadAvatar(item) {
-        this.setState({
-            modalUploadAvatar: true,
-            tempChangeAvatar: item
-        })
-    }
     update = (item) => {
         const { image, phone, address, dataUser } = this.state;
         let param = {
@@ -144,46 +119,62 @@ class Wallets extends React.Component {
             })
         }
     }
-    updateAvatar() {
-        this.changeAvatar.handleSaveloadClick();
+
+    modalChangePassword(item) {
+        this.setState({
+            confirmDialogPassword: true,
+            tempChangePassword: item
+        })
     }
-    changeImageCrop = (image, imageName) => {
-        const { dataUser } = this.state;
-        let param = {
-            image: image,
-            phone: dataUser.phone,
-            address: dataUser.address,
-            identification: dataUser.identification,
-            name: dataUser.name,
-            type: dataUser.type,
-            email: dataUser.email,
-            dob: dataUser.dob,
-            status: dataUser.status,
-            hospitalId: this.props.userApp.currentUser && this.props.userApp.currentUser.hospital && this.props.userApp.currentUser.hospital.id
-        }
-        if ((this.props.userApp.currentUser || {}).id) {
-            userProvider.update((this.props.userApp.currentUser || {}).id, param).then(s => {
-                if (s && s.data && s.code === 0) {
-                    this.props.dispatch({ type: constants.action.action_change_user_info, value: s.data.user && s.data.user })
-                    dataCacheProvider.save("", constants.key.storage.change_user_info, s.data.user && s.data.user)
-                    toast.success("Cập nhật ảnh đại diện thành công!", {
+
+    uploadImage(event) {
+        let selector = event.target;
+        let fileName = selector.value.replace("C:\\fakepath\\", "").toLocaleLowerCase();
+        let sizeImage = (event.target.files[0] || {}).size / 1048576;
+        if (sizeImage) {
+            if (fileName.endsWith(".jpg") ||
+                fileName.endsWith(".png") ||
+                fileName.endsWith(".gif") ||
+                fileName.endsWith(".Gif")) {
+                if (sizeImage > 2) {
+                    toast.error("Ảnh không vượt quá dung lượng 2MB", {
                         position: toast.POSITION.TOP_RIGHT
                     });
-                    if (this.props.callbackOff) {
-                        this.props.callbackOff()
-                    }
                 } else {
-                    toast.error("Cập nhật ảnh đại diện không thành công!", {
-                        position: toast.POSITION.TOP_RIGHT
-                    });
+                    imageProvider.upload(event.target.files[0]).then(s => {
+                        if (s && s.data.code === 0 && s.data.data) {
+                            this.setState({
+                                image: s.data.data.image.image,
+                            })
+                            this.update(s.data.data.image)
+                        } else {
+                            toast.error("Vui lòng thử lại !", {
+                                position: toast.POSITION.TOP_LEFT
+                            });
+                        }
+                        this.setState({ progress: false })
+                    }).catch(e => {
+                        this.setState({ progress: false })
+                    })
                 }
-            }).catch(e => {
-            })
+
+            } else {
+                toast.error("Vui lòng chọn đúng định dạng file ảnh", {
+                    position: toast.POSITION.TOP_RIGHT
+                });
+            }
         }
+    }
+
+    closePopup() {
+        this.getDetail()
+    }
+    handleHome() {
+        window.location.href = '/';
     }
     render() {
         const { classes } = this.props;
-        const { dataUser, image, phone, address, tempChangePassword, hospital, tempChangeAvatar } = this.state;
+        const { dataUser, image, phone, address, tempChangePassword, hospital } = this.state;
         return (
             <div>
                 <Paper className={classes.root + " user-info-body"}>
@@ -192,7 +183,7 @@ class Wallets extends React.Component {
                             <ValidatorForm onSubmit={this.update} className="user-info-form">
                                 <div className="col-md-6 offset-md-3 user-info-table">
                                     {
-                                        (this.props.userApp.currentUser || {}).type == 8 ?
+                                        (this.props.userApp.currentUser || {}).type === 8 ?
                                             <IconButton onClick={() => this.handleHome()} color="primary" className={classes.button + " button-user-info"} aria-label="Reply">
                                                 <Reply /><span className="button-user-info-item">Quay lại</span>
                                             </IconButton> : null
@@ -316,10 +307,20 @@ class Wallets extends React.Component {
                                                 </div>
                                                 <div className="col-md-12">
                                                     <div className="img-user-info">
-                                                        <Button component="span" onClick={() => { this.modalUploadAvatar(dataUser) }}>
-                                                            {(this.props.userApp.currentUser || {}).image ? <img alt="" src={(this.props.userApp.currentUser || {}).image.absoluteUrl()} className="image-info" /> :
-                                                                image ? <img alt="" src={image.absoluteUrl()} className="image-info" /> : <img src="/avatar.png" alt="" className="image-user-info" />}
-                                                        </Button>
+                                                        <input
+                                                            accept="file_extension"
+                                                            className={classes.input}
+                                                            style={{ display: 'none' }}
+                                                            placeholder="chọn ảnh"
+                                                            id="upload_logo_header"
+                                                            onChange={(event) => { this.uploadImage(event) }}
+                                                            type="file"
+                                                        />
+                                                        <label htmlFor="upload_logo_header">
+                                                            <Button component="span">
+                                                                {image ? <img alt="" src={image.absoluteUrl()} className="image-info" /> : <img src="/avatar.png" alt="" className="image-user-info" />}
+                                                            </Button>
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -330,7 +331,7 @@ class Wallets extends React.Component {
                                                 <div className="col-md-12" style={{ textAlign: "center" }}>
                                                     <Button className="button-change-update" variant="contained" color="inherit" onClick={() => this.closePopup()}>Hủy</Button>
                                                     {
-                                                        this.data != JSON.stringify(this.data2) ?
+                                                        this.data !== JSON.stringify(this.data2) ?
                                                             <Button className="button-change-update change-password-color" variant="contained" color="inherit" type="submit">Lưu</Button> :
                                                             <Button className="button-change-update" variant="contained" color="inherit" type="submit" disabled>Lưu</Button>
                                                     }
@@ -344,7 +345,6 @@ class Wallets extends React.Component {
                     </div>
                 </Paper>
                 {this.state.confirmDialogPassword && <ChangePassword data={tempChangePassword} callbackOff={this.closeModal.bind(this)} />}
-                {this.state.modalUploadAvatar && <ChangeAvatar data={tempChangeAvatar} callbackOff={this.closeModal.bind(this)} />}
             </div>
         )
     }

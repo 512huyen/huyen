@@ -3,26 +3,19 @@ import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import { withStyles } from '@material-ui/core/styles';
-import moment from 'moment';
-import { Col, Row } from 'reactstrap';
-import stringUtils from 'mainam-react-native-string-utils';
-import paymentAgentProvider from '../../../../data-access/user-provider';
 import IconButton from '@material-ui/core/IconButton';
 import Clear from '@material-ui/icons/Clear';
 
 function Transition(props) {
     return <Slide direction="up" {...props} />;
 }
-
 class DetailCardUser extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             open: true,
             dataHospital: this.props.data,
@@ -40,20 +33,16 @@ class DetailCardUser extends React.Component {
             status: this.props.data && this.props.data.user && this.props.data.user.status ? this.props.data.user.status : '',
         };
     }
-
     handleClose = () => {
         this.props.callbackOff()
     };
-
     closeModal() {
         this.setState({ modalUpdate: false, modalCancel: false });
         this.handleClose();
     }
-
     render() {
         const { classes } = this.props;
         const { dataHospital, status, nameAbb, nameExchange, name, address, fax, phone, bookingTime, code, taxCode, issueDate } = this.state;
-
         return (
             <div style={{ backgroundColor: 'red' }}>
                 <Dialog
@@ -99,7 +88,7 @@ class DetailCardUser extends React.Component {
                                                     </div>
                                                 </div>
                                             </div> */}
-                                            <div className="detail-item">
+                                            {/* <div className="detail-item">
                                                 <div className="row">
                                                     <div className="col-md-5">
                                                         <span className="label-detail">Tên chủ thẻ:</span>
@@ -108,7 +97,7 @@ class DetailCardUser extends React.Component {
                                                         <p className="content-detail" style={{ color: "#d0021b", textTransform: "uppercase" }}>nguyễn thị lâm</p>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="detail-item">
                                                 <div className="row">
                                                     <div className="col-md-5">

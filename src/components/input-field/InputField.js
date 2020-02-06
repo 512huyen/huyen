@@ -13,8 +13,8 @@ class DateTimeBoxSearch extends React.Component {
         }
     }
     render() {
-        const { label, value, placeholder, required, validates, isInput , classCustom} = this.props;
-        return  <FormGroup className={"form-group-xx " + classCustom ? classCustom : ""} style={!isInput ? { marginBottom: 0 } : {}}>
+        const { label, value, placeholder, required, validates, isInput, classCustom } = this.props;
+        return <FormGroup className={"form-group-xx " + classCustom ? classCustom : ""} style={!isInput ? { marginBottom: 0 } : {}}>
             {isInput &&
                 <Label htmlFor="nf-name" className="nf-name">{label}
                     {required ? (<span className="isofh-error">*</span>) : ''}
@@ -22,7 +22,7 @@ class DateTimeBoxSearch extends React.Component {
                 </Label>
             }
             <DatePicker
-                placeholderText={placeholder ? placeholder :  "Tìm kiếm..."}
+                placeholderText={placeholder ? placeholder : "Tìm kiếm..."}
                 className="form-control"
                 selected={value}
                 onChange={this.props.onChangeValue}
@@ -30,14 +30,14 @@ class DateTimeBoxSearch extends React.Component {
                 dateFormat={"dd/MM/yyyy"}
                 strictParsing
                 onChangeRaw={(event) => {
-                    if(event.currentTarget.value.length === 10){
-                        if(monent(event.currentTarget.value, 'dd/MM/yyyy', false).isValid() === false){
+                    if (event.currentTarget.value.length === 10) {
+                        if (monent(event.currentTarget.value, 'dd/MM/yyyy', false).isValid() === false) {
                             toast.error("Chưa đúng định dạng tìm kiếm " + "dd/mm/yyyy", {
                                 position: toast.POSITION.TOP_RIGHT
                             });
                         }
                     }
-                }} 
+                }}
             />
         </FormGroup>
     }
@@ -50,32 +50,32 @@ class DateBox extends React.Component {
             dateValue: ""
         }
     }
-    
+
     render() {
-        let { label, value, placeholder, required, validates, isInput , classCustom} = this.props;
-        return  <FormGroup className={"form-group-xx " + classCustom ? classCustom : ""} style={!isInput ? { marginBottom: 0 } : {}}>
+        let { label, value, placeholder, required, validates, isInput, classCustom } = this.props;
+        return <FormGroup className={"form-group-xx " + classCustom ? classCustom : ""} style={!isInput ? { marginBottom: 0 } : {}}>
             {isInput &&
                 <Label htmlFor="nf-name" className="nf-name">{label}
                     {required ? (<span className="isofh-error">*</span>) : ''}
                     {validates ? (validates.isInvalid && <label className="isofh-error">{validates.message}</label>) : ''}
                 </Label>
             }
-            
+
             <DatePicker
-                placeholderText={placeholder ? placeholder :  ""}
+                placeholderText={placeholder ? placeholder : ""}
                 className="form-control"
-                selected={ (value && monent(value, 'dd/MM/yyyy', false).isValid() && new Date(value) !== "Invalid Date") ? new Date(value) : "" }
+                selected={(value && monent(value, 'dd/MM/yyyy', false).isValid() && new Date(value) !== "Invalid Date") ? new Date(value) : ""}
                 onChange={this.props.onChangeValue}
                 onChangeRaw={this.props.onChangeRaw}
                 dateFormat={"dd/MM/yyyy"}
                 strictParsing
                 onChangeRaw={(event) => {
-                    if(monent(event.currentTarget.value, 'dd/MM/yyyy', false).isValid() === false && event.currentTarget.value.length === 10){
+                    if (monent(event.currentTarget.value, 'dd/MM/yyyy', false).isValid() === false && event.currentTarget.value.length === 10) {
                         toast.error("Chưa đúng định dạng tìm kiếm " + "dd/mm/yyyy", {
                             position: toast.POSITION.TOP_RIGHT
                         });
                     }
-                }} 
+                }}
             />
         </FormGroup>
     }
@@ -103,19 +103,19 @@ class SelectBox extends React.Component {
         }
     }
     render() {
-        const { label, listOption, isMulti, selected, placeholder, required, validates, isDisabled } = this.props;
+        const { listOption, isMulti, selected, placeholder, isDisabled } = this.props;
         var list = [];
         if (!isMulti) {
-            if (selected) {
+            if (selected || selected === 0) {
                 for (var i = 0; i < listOption.length; i++) {
-                    if (selected == this.props.getIdObject(listOption[i]))
+                    if (selected === this.props.getIdObject(listOption[i]))
                         list.push(listOption[i]);
                 }
             }
         } else {
             if (selected) {
                 for (var i = 0; i < listOption.length; i++) {
-                    if (selected.indexOf(this.props.getIdObject(listOption[i])) != -1)
+                    if (selected.indexOf(this.props.getIdObject(listOption[i])) !== -1)
                         list.push(listOption[i]);
                 }
             }
@@ -153,5 +153,7 @@ class SelectBox extends React.Component {
         )
     }
 }
+
+
 
 export { DateTimeBoxSearch, DateBox, SelectBox }

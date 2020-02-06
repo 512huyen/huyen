@@ -1,17 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import { withStyles } from '@material-ui/core/styles';
-import moment from 'moment';
-import { Col, Row } from 'reactstrap';
-import stringUtils from 'mainam-react-native-string-utils';
-import paymentAgentProvider from '../../../../data-access/user-provider';
 import IconButton from '@material-ui/core/IconButton';
 import Clear from '@material-ui/icons/Clear';
 
@@ -19,7 +13,7 @@ function Transition(props) {
     return <Slide direction="up" {...props} />;
 }
 
-class DetailUserTransactionHistory extends React.Component {
+class DetailTransactionHistoryHospital extends React.Component {
     constructor(props) {
         super(props);
 
@@ -49,20 +43,6 @@ class DetailUserTransactionHistory extends React.Component {
         this.setState({ modalUpdate: false, modalCancel: false });
         this.handleClose();
     }
-    formatCardNumber(value) {
-        // var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
-        // var matches = v.match(/\d{4,16}/g);
-        // var match = matches && matches[0] || ''
-        // var parts = []
-        // for (let i = 0, len = match.length; i < len; i += 4) {
-        //     parts.push(match.substring(i, i + 4))
-        // }
-        // if (parts.length) {
-        //     return parts.join(' ')
-        // } else {
-        //     return value
-        // }
-    }
     render() {
         const { classes } = this.props;
         const { dataHospital, status, nameAbb, nameExchange, name, address, fax, phone, bookingTime, code, taxCode, issueDate } = this.state;
@@ -88,68 +68,8 @@ class DetailUserTransactionHistory extends React.Component {
                         <div className="content-inner">
                             <div className="color-detail detail-bottom">
                                 <div className="row">
-                                    <div className="col-md-6 color-border-user-card">
+                                    <div className="col-md-6  color-border-user-card">
                                         <div className="group-detail-colx3">
-                                            <div className="detail-item">
-                                                <div className="row">
-                                                    <div className="col-md-12">
-                                                        <span className="title-detail-history">Thông tin người gửi</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="detail-item" style={{ marginTop: 4 }}>
-                                                <div className="row">
-                                                    <div className="col-md-4">
-                                                        <span className="label-detail">Số thẻ :</span>
-                                                    </div>
-                                                    <div className="col-md-8">
-                                                        <p className="content-detail">
-                                                            {this.formatCardNumber(1000)}00000000
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="detail-item">
-                                                <div className="row">
-                                                    <div className="col-md-4">
-                                                        <span className="label-detail">Tên chủ thẻ:</span>
-                                                    </div>
-                                                    <div className="col-md-8">
-                                                        <p className="content-detail" style={{ textTransform: "uppercase" }}>Nguyen thi lam</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="detail-item" style={{ marginTop: 40, marginBottom: 5 }}>
-                                                <div className="row">
-                                                    <div className="col-md-12">
-                                                        <span className="title-detail-history">Thông tin người nhận</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="detail-item">
-                                                <div className="row">
-                                                    <div className="col-md-4">
-                                                        <span className="label-detail">Số thẻ:</span>
-                                                    </div>
-                                                    <div className="col-md-8">
-                                                        <p className="content-detail" style={{ color: "#d0021b" }}>{this.formatCardNumber(code)}00000000</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="detail-item">
-                                                <div className="row">
-                                                    <div className="col-md-4">
-                                                        <span className="label-detail">Tên chủ thẻ:</span>
-                                                    </div>
-                                                    <div className="col-md-8">
-                                                        <p className="content-detail" style={{ textTransform: "uppercase" }}>Bệnh viện đại học y Hà Nội</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="group-detail-colx2">
                                             <div className="detail-item">
                                                 <div className="row">
                                                     <div className="col-md-12">
@@ -158,6 +78,16 @@ class DetailUserTransactionHistory extends React.Component {
                                                 </div>
                                             </div>
                                             <div className="detail-item" style={{ marginTop: 4 }}>
+                                                <div className="row">
+                                                    <div className="col-md-5">
+                                                        <span className="label-detail">Loại giao dịch:</span>
+                                                    </div>
+                                                    <div className="col-md-7">
+                                                        <p className="content-detail">Thanh toán</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="detail-item">
                                                 <div className="row">
                                                     <div className="col-md-5">
                                                         <span className="label-detail">Mã giao dịch :</span>
@@ -179,7 +109,7 @@ class DetailUserTransactionHistory extends React.Component {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="detail-item">
+                                            {/* <div className="detail-item">
                                                 <div className="row">
                                                     <div className="col-md-5">
                                                         <span className="label-detail">Nội dung:</span>
@@ -188,14 +118,14 @@ class DetailUserTransactionHistory extends React.Component {
                                                         <p className="content-detail">Thanh toán tiền khám da liễu tại bệnh viện</p>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="detail-item" style={{ marginTop: 15 }}>
                                                 <div className="row">
                                                     <div className="col-md-5">
                                                         <span className="label-detail">Trạng thái:</span>
                                                     </div>
                                                     <div className="col-md-7">
-                                                        <p className="content-detail">Thành công</p>
+                                                        <p className="content-detail" style={{ color: "#27ad60" }}>Thành công</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -229,17 +159,38 @@ class DetailUserTransactionHistory extends React.Component {
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="group-detail-colx2">
                                             <div className="detail-item">
                                                 <div className="row">
-                                                    <div className="col-md-5">
-                                                        <span className="label-detail">Loại giao dịch:</span>
-                                                    </div>
-                                                    <div className="col-md-7">
-                                                        <p className="content-detail">Thanh toán</p>
+                                                    <div className="col-md-12">
+                                                        <span className="title-detail-history">Thông tin người bệnh</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="detail-item" style={{ marginTop: 20 }}>
+                                            <div className="detail-item" style={{ marginTop: 4 }}>
+                                                <div className="row">
+                                                    <div className="col-md-5">
+                                                        <span className="label-detail">Tên người bệnh:</span>
+                                                    </div>
+                                                    <div className="col-md-7">
+                                                        <p className="content-detail">Nguyễn Thị Huyền</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="detail-item">
+                                                <div className="row">
+                                                    <div className="col-md-5">
+                                                        <span className="label-detail">Mã người bệnh:</span>
+                                                    </div>
+                                                    <div className="col-md-7">
+                                                        <p className="content-detail">38946745</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="detail-item">
                                                 <div className="row">
                                                     <div className="col-md-5">
                                                         <span className="label-detail">Mã hồ sơ:</span>
@@ -249,13 +200,13 @@ class DetailUserTransactionHistory extends React.Component {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="detail-item">
+                                            <div className="detail-item" style={{ marginTop: 25 }}>
                                                 <div className="row">
                                                     <div className="col-md-5">
-                                                        <span className="label-detail">Mã NB:</span>
+                                                        <span className="label-detail">CSYT:</span>
                                                     </div>
                                                     <div className="col-md-7">
-                                                        <p className="content-detail">38946745</p>
+                                                        <p className="content-detail">Bệnh viện đại học y Hà Nội</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -297,4 +248,4 @@ const styles = theme => ({
     }
 });
 
-export default withStyles(styles)(connect(mapStateToProps)(DetailUserTransactionHistory));
+export default withStyles(styles)(connect(mapStateToProps)(DetailTransactionHistoryHospital));

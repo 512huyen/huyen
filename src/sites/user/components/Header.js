@@ -122,13 +122,13 @@ class PrimarySearchAppBar extends React.Component {
         <div className={classes.root + " color-header"}>
           <AppBar position="static">
             <Toolbar>
-              <AppSidebarToggler
+              {/* <AppSidebarToggler
                 className="d-lg-none"
                 display="md"
                 mobile
                 children={
                   <MenuIcon className={classes.menubutton} />
-                } />
+                } /> */}
               <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                 <div className={classes.box_menu + ' logo-isofh'}>
                   <AppSidebarToggler
@@ -137,7 +137,7 @@ class PrimarySearchAppBar extends React.Component {
                       <MenuIcon className={classes.menubutton} />
                     }
                     display="lg" />
-                  <img src="/images/logo-header.png" alt="" className="logo-img" onClick={() => this.handleHome()} />
+                  <img src="/logo-header.png" alt="" className="logo-img" onClick={() => this.handleHome()} />
                 </div>
               </Typography>
               <div className={classes.grow} />

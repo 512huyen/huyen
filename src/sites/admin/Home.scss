@@ -1,0 +1,162 @@
+.app-body {
+    margin-top: 63px !important;
+    .sidebar {
+        width: 240px !important;
+        .sidebar-nav {
+            width: 240px !important;
+            background-color: rgb(21,43,47);
+            .nav {
+                width: 100% !important;
+                .nav-item {
+                    .nav-link {
+                        padding: 14px 0 13px 55px !important;
+                        -webkit-transition: 0.3s ease;
+                        transition: 0.3s ease;
+                        text-transform: uppercase !important;
+                        background-repeat: no-repeat !important;
+                        background-position: 15px center !important;
+                        font-size: 13px !important;
+                        font-weight: 300;
+                        .button-primary {
+                            color: white !important;
+                            right: 12px;
+                            margin-left: 0 !important;
+                            position: absolute !important;
+                            z-index: 1065;
+                            padding: 0px !important;
+                            top: 12px !important;
+                          }
+                    }
+                    .nav-link.dashboard{
+                        background-size: 24px !important;
+                    }
+                    .nav-link:hover, .nav-link.active {
+                        background-color: #f1f5f833 !important;
+                        color: rgb(60,185,239) !important;
+                        text-transform: uppercase !important;
+                        font-weight: 700;
+                        .button-primary {
+                            color: rgb(60,185,239) !important;
+                          }
+                    }
+                    .menu-ul{
+                        padding: 0;
+                        .menu-left {
+                            list-style-type: none;
+                            .nav-link2 {
+                                -webkit-transition: 0.3s ease;
+                                transition: 0.3s ease;
+                                background-repeat: no-repeat !important;
+                                background-position: 49px center !important;
+                                font-size: 13px !important;
+                                color: white !important;
+                                display: block;
+                                font-weight: 300;
+                                padding: 14px 0 13px 45px !important;
+                                padding-left: 85px !important;
+                            }
+                            .nav-link2:hover , .nav-link2.active{
+                                background-color: #f1f5f833  !important;
+                                color: rgb(60,185,239) !important;
+                                font-weight: 700;
+                              }
+                        }
+                        .menu-left:hover{
+                            background-color: #f1f5f833  !important;
+                            color: rgb(60,185,239) !important;
+                            font-weight: 700;
+                        }
+                        .menu-left:active{
+                            background-color: #f1f5f833  !important;
+                            color: rgb(60,185,239) !important;
+                            font-weight: 700;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.pagination-custom {
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-top: 0;
+    color: black !important;
+    background-color: #08719133;
+    td {
+        padding: 0px !important;
+        padding-bottom: 2px !important;
+        div {
+            height: 32px;
+            padding: 0;
+            min-height: 32px;
+            div:nth-of-type(2) {
+                flex-shrink: inherit;
+                margin-left: 8px;
+                margin-right: 24px;
+                line-height: inherit;
+                padding-top: 6px;
+                div {
+                    padding: 2px 12px;
+                }
+                div:focus {
+                    border-radius: 0;
+                    background-color: initial;
+                }
+            }
+            .css-page {
+                background-color: rgb(33,152,188) !important;
+                border-radius: 0px !important;
+                width: 32px !important;
+                height: 32px !important;
+                margin-right: 1px !important;
+                span {
+                    svg {
+                        margin-top: -7px !important;
+                        color: #fff
+                    }
+                }
+            }
+            input.input-page {
+                width: 48px;
+                height: 30px;
+                margin-left: 8px;
+                vertical-align: middle;
+                border: 1px solid #fff;
+                padding: 8px;
+                font-size: 13px !important;
+                font-weight: 700;
+                color: black;
+                text-align: center
+            }
+            span.page-size {
+                font-size: 13px !important;
+                font-weight: 700;
+                color: black;
+                min-width: 36px;
+                display: inline-block;
+                vertical-align: middle;
+                text-align: center;
+            }
+        }
+                
+    }
+}
+html:not([dir="rtl"]) .sidebar {
+    margin-left: -240px !important;
+}
+html:not([dir="rtl"]) .sidebar-lg-show.sidebar-fixed .main, html:not([dir="rtl"]) .sidebar-lg-show.sidebar-fixed .app-footer, html:not([dir="rtl"]) .sidebar-show.sidebar-fixed .main, html:not([dir="rtl"]) .sidebar-show.sidebar-fixed .app-footer{
+    margin-left: 240px !important;
+}
+html:not([dir="rtl"]) .sidebar {
+    margin-left: -240px !important;
+  }
+   html:not([dir="rtl"]) .sidebar-lg-show .sidebar{
+    margin-left:  0 !important;
+  }
+  html:not([dir="rtl"]) .sidebar-minimized .sidebar {
+    width: 50px !important;
+  }
+  html:not([dir="rtl"]) .sidebar-lg-show.sidebar-fixed.sidebar-minimized .main, html:not([dir="rtl"]) .sidebar-lg-show.sidebar-fixed.sidebar-minimized .app-footer, html:not([dir="rtl"]) .sidebar-show.sidebar-fixed.sidebar-minimized .main, html:not([dir="rtl"]) .sidebar-show.sidebar-fixed.sidebar-minimized .app-footer{
+    margin-left: 50px !important;
+  }

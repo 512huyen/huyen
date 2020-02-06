@@ -1,0 +1,63 @@
+.app-header {
+    height: 60px;
+    border-bottom:none;
+    .color-header {
+        height: 60px;
+        header {
+            div {
+                background-color: rgb(33,152,188);
+                padding: 0px !important;
+                .default-header-title {
+                    align-items: center;
+                    .name-csyt-top {
+                        color: white;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                    }
+                    .item-right {
+                        display: inline-block;
+                        vertical-align: middle;
+                        line-height: 22px;
+                        margin: 0 5px;
+                        font-size: 16px;
+                    }
+                    .user-icon {
+                        width: 50px;
+                        height: 50px;
+                        overflow: hidden;
+                        border-radius: 100%;
+                        .user-icon img {
+                            display: block;
+                            position: relative;
+                            height: 100%;
+                            width: 100%;
+                            object-fit: cover;
+                        }
+                    }
+                    .icon-dropdown {
+                        height: 35px;
+                        width: 35px;
+                        background: rgb(21, 152, 192) !important;
+                        margin-right: 16px !important;
+                        span {
+                            margin-top: -9px !important;
+                        }
+                    }
+                }
+                .logo-isofh {
+                    height: 63px !important;
+                    background-color: rgb(33,152,188) !important;
+                    width: 240px !important;
+                    display: flex;
+                    -webkit-align-items: center;
+                    align-items: center;
+                    .logo-img {
+                        display: inline-block;
+                        height: 48px;
+                        float: left;
+                    }
+                }
+            }
+        }
+    }
+}
