@@ -27,6 +27,18 @@ function ButtonFooter({ onClick, title, disabled }) {
         </Button>
     )
 }
+function ButtonPopup({ onClick, title, disabled, className }) {
+    return (
+        <Button
+            className={className}
+            variant="contained"
+            color="primary"
+            disabled={disabled}
+            onClick={onClick}>
+            {title}
+        </Button>
+    )
+}
 function RadioButton({ checked, title, value, onChange, onClick }) {
     return (
         <span className="radio-input">
@@ -65,4 +77,4 @@ function ToolTip({ onClick, image, title, disabled }) {
     )
 }
 
-export { ButtonCreateUpdate, ButtonFooter, RadioButton, CheckBox, ToolTip };
+export { ButtonCreateUpdate, ButtonFooter, RadioButton, CheckBox, ToolTip,ButtonPopup };

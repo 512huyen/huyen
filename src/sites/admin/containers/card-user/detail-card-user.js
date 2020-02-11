@@ -45,7 +45,7 @@ function DetailCardUser({ data, useCallback }) {
     const setTplModal = () => {
         return (
             <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-6 color-border-user-card">
                     <InputDetail
                         width={5}
                         title="Số thẻ: "

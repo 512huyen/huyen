@@ -1,67 +1,30 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
-import { withStyles } from '@material-ui/core/styles';
 import moment from 'moment';
-import IconButton from '@material-ui/core/IconButton';
-import Clear from '@material-ui/icons/Clear';
 import cardProvider from '../../../../data-access/card-provider';
-function Transition(props) {
-    return <Slide direction="up" {...props} />;
-}
-class DetailCardUser extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: true,
-            dataCardUser: [],
-            name: this.props.data && this.props.data.card && this.props.data.card.patient ? this.props.data.card.patient.name : '',
-            nameCard: this.props.data && this.props.data.card && this.props.data.card ? this.props.data.card.name : '',
-            code: this.props.data && this.props.data.card && this.props.data.card.patient ? this.props.data.card.patient.code : '',
-            createdDate: this.props.data && this.props.data.card && this.props.data.card.patient ? this.props.data.card.patient.createdDate : '',
-            dob: this.props.data && this.props.data.card && this.props.data.card.patient ? this.props.data.card.patient.dob : '',
-            phone: this.props.data && this.props.data.card && this.props.data.card.patient ? this.props.data.card.patient.phone : '',
-            gender: this.props.data && this.props.data.card && this.props.data.card.patient ? this.props.data.card.patient.gender : '',
-            passport: this.props.data && this.props.data.card && this.props.data.card.patient ? this.props.data.card.patient.passport : '',
-            issueDate: this.props.data && this.props.data.card && this.props.data.card.patient ? this.props.data.card.patient.issueDate : '',
-            codeCard: this.props.data && this.props.data.card && this.props.data.card.code ? this.props.data.card.code : '',
-            transactionId: this.props.data && this.props.data.card && this.props.data.card.transactionId ? this.props.data.card.transactionId : '',
-            hospitalName: this.props.data && this.props.data.card && this.props.data.card.hospital ? this.props.data.card.hospital.name : '',
-            bankReturnDTO: this.props.data && this.props.data.card && this.props.data.card.bankReturnDTO ? this.props.data.card.bankReturnDTO : '',
-            address: this.props.data && this.props.data.card && this.props.data.card.patient ? this.props.data.card.patient.address : '',
-        };
-    }
-    componentWillMount() {
-        this.getDetail();
-    }
-    getDetail() {
-        cardProvider.getDetail(Number(this.state.cardId)).then(s => {
-            if (s && s.data && s.code === 0) {
-                this.setState({
-                    dataCardUser: s.data.card,
-                })
-            }
-        }).catch(e => {
-
-        })
-    }
-    handleClose = () => {
-        // window.location.href = '/admin/card-user';
-        this.props.callbackOff()
-    };
-
-    closeModal() {
-        // window.location.href = '/admin/card-user';
-        this.setState({ modalUpdate: false, modalCancel: false });
-        this.handleClose();
-    }
-    formatCardNumber(value) {
+import Modal from '../../../../components/modal';
+import { InputDetail } from '../../../../components/input';
+import './index.scss';
+function DetailCardUser({ data, useCallback }) {
+    const [open] = useState(true);
+    const [detail] = useState({
+        name: data && data.card && data.card.patient ? data.card.patient.name : '',
+        nameCard: data && data.card && data.card ? data.card.name : '',
+        code: data && data.card && data.card.patient ? data.card.patient.code : '',
+        createdDate: data && data.card && data.card.patient ? data.card.patient.createdDate : '',
+        dob: data && data.card && data.card.patient ? data.card.patient.dob : '',
+        phone: data && data.card && data.card.patient ? data.card.patient.phone : '',
+        gender: data && data.card && data.card.patient ? data.card.patient.gender : '',
+        passport: data && data.card && data.card.patient ? data.card.patient.passport : '',
+        issueDate: data && data.card && data.card.patient ? data.card.patient.issueDate : '',
+        codeCard: data && data.card && data.card.code ? data.card.code : '',
+        transactionId: data && data.card && data.card.transactionId ? data.card.transactionId : '',
+        hospitalName: data && data.card && data.card.hospital ? data.card.hospital.name : '',
+        bankReturnDTO: data && data.card && data.card.bankReturnDTO ? data.card.bankReturnDTO : '',
+        address: data && data.card && data.card.patient ? data.card.patient.address : '',
+    })
+    const formatCardNumber = (value) => {
         var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
         var matches = v.match(/\d{4,16}/g);
         var match = matches ? matches[0] : []
@@ -75,13 +38,12 @@ class DetailCardUser extends React.Component {
             return value
         }
     }
-    cancel() {
-        const { dataCardUser } = this.state;
+    const cancel = () => {
         let params = {
             card: {
-                code: dataCardUser.patient.code,
-                issueDate: dataCardUser.issueDate,
-                transactionId: dataCardUser.transactionId
+                code: data.patient.code,
+                issueDate: data.issueDate,
+                transactionId: data.transactionId
             }
         }
         cardProvider.cancel(params).then(s => {
@@ -101,190 +63,94 @@ class DetailCardUser extends React.Component {
             });
         })
     }
-    render() {
-        const { classes } = this.props;
-        const { name, code, codeCard, dob, gender, passport, bankReturnDTO, address, phone, hospitalName } = this.state;
+    const setTplModal = () => {
         return (
-            <div style={{ backgroundColor: 'red' }}>
-                <Dialog
-                    open={this.state.open}
-                    TransitionComponent={Transition}
-                    keepMounted
-                    onClose={this.handleClose}
-                    fullWidth={true}
-                    maxWidth="md"
-                    aria-labelledby="alert-dialog-slide-title"
-                    aria-describedby="alert-dialog-slide-description">
-                    <DialogTitle id="alert-dialog-slide-title" className="header-payment">
-                        Hủy thẻ
-                        <IconButton onClick={() => this.closeModal()} color="primary" className={classes.button + " close-button"} aria-label="CancelIcon">
-                            <Clear />
-                        </IconButton>
-                    </DialogTitle>
-                    <DialogContent style={{ paddingBottom: 0 }}>
-                        <div className="content-inner">
-                            <div className="color-detail detail-bottom-2">
-                                <div className="row">
-                                    <div className="col-md-6 color-border-user-card">
-                                        <div className="group-detail-colx3">
-                                            <div className="detail-item">
-                                                <div className="row">
-                                                    <div className="col-md-5">
-                                                        <span className="label-detail">Số thẻ :</span>
-                                                    </div>
-                                                    <div className="col-md-7">
-                                                        <p className="content-detail">
-                                                            {this.formatCardNumber(codeCard)}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="detail-item">
-                                                <div className="row">
-                                                    <div className="col-md-5">
-                                                        <span className="label-detail">Tên chủ thẻ:</span>
-                                                    </div>
-                                                    <div className="col-md-7">
-                                                        <p className="content-detail" style={{ color: "#d0021b", textTransform: "uppercase" }}>{name}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="detail-item" style={{ marginTop: 15 }}>
-                                                <div className="row">
-                                                    <div className="col-md-5">
-                                                        <span className="label-detail">Ngân hàng:</span>
-                                                    </div>
-                                                    <div className="col-md-7">
-                                                        <p className="content-detail" style={{ textTransform: "uppercase" }}>{bankReturnDTO.name}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="detail-item">
-                                                <div className="row">
-                                                    <div className="col-md-5">
-                                                        <span className="label-detail">CSYT:</span>
-                                                    </div>
-                                                    <div className="col-md-7">
-                                                        <p className="content-detail">{hospitalName}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="group-detail-colx2">
-                                            <div className="detail-item">
-                                                <div className="row">
-                                                    <div className="col-md-5">
-                                                        <span className="label-detail">Tên NB :</span>
-                                                    </div>
-                                                    <div className="col-md-7">
-                                                        <p className="content-detail">
-                                                            {name}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="detail-item">
-                                                <div className="row">
-                                                    <div className="col-md-5">
-                                                        <span className="label-detail">Mã NB:</span>
-                                                    </div>
-                                                    <div className="col-md-7">
-                                                        <p className="content-detail" style={{ color: "#d0021b" }}>{code}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="detail-item">
-                                                <div className="row">
-                                                    <div className="col-md-5">
-                                                        <span className="label-detail">Ngày sinh:</span>
-                                                    </div>
-                                                    <div className="col-md-7">
-                                                        <p className="content-detail">{moment(dob).format("DD-MM-YYYY")}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="detail-item">
-                                                <div className="row">
-                                                    <div className="col-md-5">
-                                                        <span className="label-detail">Giới tính:</span>
-                                                    </div>
-                                                    <div className="col-md-7">
-                                                        <p className="content-detail">{gender === 1 ? "Nam" : gender === 0 ? "Nữ" : ""}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="detail-item">
-                                                <div className="row">
-                                                    <div className="col-md-5">
-                                                        <span className="label-detail">SĐT:</span>
-                                                    </div>
-                                                    <div className="col-md-7">
-                                                        <p className="content-detail">{phone}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="detail-item" style={{ marginTop: 15 }}>
-                                                <div className="row">
-                                                    <div className="col-md-5">
-                                                        <span className="label-detail">Số CMND/Hộ chiếu:</span>
-                                                    </div>
-                                                    <div className="col-md-7">
-                                                        <p className="content-detail">{passport}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="detail-item">
-                                                <div className="row">
-                                                    <div className="col-md-5">
-                                                        <span className="label-detail">Địa chỉ:</span>
-                                                    </div>
-                                                    <div className="col-md-7">
-                                                        <p className="content-detail">{address}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </DialogContent>
-                    <DialogActions className="margin-button">
-                        <Button variant="contained" className="isofh-pay-button-card-user" onClick={() => this.cancel()}>Xác nhận huỷ thẻ</Button>
-                        <Button variant="contained" color="inherit" className="isofh-pay-button-cancel" onClick={() => this.handleClose()}>Không hủy</Button>
-                    </DialogActions>
-                </Dialog>
-            </div >
-        );
+            <div className="row">
+                <div className="col-md-6 color-border-user-card">
+                    <InputDetail
+                        width={4}
+                        title="Số thẻ: "
+                        value={formatCardNumber(detail.codeCard)}
+                    />
+                    <InputDetail
+                        width={4}
+                        title="Tên chủ thẻ: "
+                        value={detail.name}
+                        style={{ color: "#d0021b", textTransform: "uppercase" }}
+                    />
+                    <InputDetail
+                        width={4}
+                        title="Ngân hàng: "
+                        value={detail.bankReturnDTO.name}
+                        style={{ textTransform: "uppercase" }}
+                    />
+                    <InputDetail
+                        width={4}
+                        title="CSYT: "
+                        value={detail.hospitalName}
+                    />
+                </div>
+                <div className="col-md-6">
+                    <InputDetail
+                        width={5}
+                        title="Tên NB: "
+                        value={detail.name}
+                    />
+                    <InputDetail
+                        width={5}
+                        title="Mã NB: "
+                        value={detail.code}
+                        style={{ color: "#d0021b" }}
+                    />
+                    <InputDetail
+                        width={5}
+                        title="Ngày sinh: "
+                        value={moment(detail.dob).format("DD-MM-YYYY")}
+                    />
+                    <InputDetail
+                        width={5}
+                        title="Giới tính: "
+                        value={detail.gender === 1 ? "Nam" : detail.gender === 0 ? "Nữ" : ""}
+                    />
+                    <InputDetail
+                        width={5}
+                        title="SĐT: "
+                        value={detail.phone}
+                    />
+                    <InputDetail
+                        width={5}
+                        title="Số CMND/Hộ chiếu: "
+                        value={detail.passport}
+                    />
+                    <InputDetail
+                        width={5}
+                        title="Địa chỉ: "
+                        value={detail.address}
+                    />
+                </div>
+            </div>
+        )
     }
+    const buttonFooter = () => {
+        return (
+            <div className="margin-button">
+                <Button variant="contained" className="isofh-pay-button-card-user" onClick={cancel}>Xác nhận huỷ thẻ</Button>
+                <Button variant="contained" color="inherit" className="isofh-pay-button-cancel" onClick={useCallback}>Không hủy</Button>
+            </div>
+        )
+    }
+    return (
+        <Modal
+            isOpen={open}
+            toggle={useCallback}
+            title={"Hủy thẻ"}
+            Children={setTplModal()}
+            buttonFooter={buttonFooter()}
+            width={950}
+            padding={50}
+            popupDetail={true}
+        />
+    );
 }
-function mapStateToProps(state) {
-    return {
-        userApp: state.userApp
-    };
-}
-const styles = theme => ({
-    root: {
-        width: '100%',
-        marginTop: theme.spacing.unit * 3,
-    },
-    table: {
-        minWidth: 2048,
-    },
-    tableWrapper: {
-        overflowX: 'auto',
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        width: 200,
-    },
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-});
 
-export default withStyles(styles)(connect(mapStateToProps)(DetailCardUser));
+export default DetailCardUser;

@@ -5,7 +5,6 @@ import moment from 'moment';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import ModalDetail from './detail-card-user';
-// import ModalRechargelCard from './index';
 import ModalCancelCard from './cancel-card-user';
 import ModalRechargelCard from './recharge-card-user';
 import hospitalProvider from '../../../../data-access/hospital-provider';

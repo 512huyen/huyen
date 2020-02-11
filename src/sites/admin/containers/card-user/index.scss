@@ -1,5 +1,8 @@
 .color-border-user-card {
     border-right: 2px solid rgb(33,152,188);
+    .search-type {
+        padding: 5px 0px 4px 12px;
+    }
 }
 .recharge-title {
     font-size: 27px;
@@ -74,5 +77,22 @@
             background-color: #27ae60;
             color: #fff;
         }
+    }
+}
+.margin-button {
+    padding-top: 30px;
+    .isofh-pay-button-card-user {
+        background-color: #f5a623 !important;
+        font-size: 18px !important;
+        font-weight: 600 !important;
+        padding: 5px 40px !important;
+        text-transform: unset !important;
+        margin: 0px 8px;
+    }
+    .isofh-pay-button-cancel {
+        text-transform: unset !important;
+        font-size: 18px !important;
+        padding: 5px 40px !important;
+        margin: 0px 8px;
     }
 }
