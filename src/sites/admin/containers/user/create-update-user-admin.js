@@ -1,23 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Grid from '@material-ui/core/Grid';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import userProvider from '../../../../data-access/user-provider';
 import moment from 'moment';
 import { DateBox } from '../../../../components/date';
-import IconButton from '@material-ui/core/IconButton';
-import Clear from '@material-ui/icons/Clear';
-import Radio from '@material-ui/core/Radio';
 import Modal from '../../../../components/modal';
-import { InputModal, InputDisabled, InputRadio, InputCheckbox } from '../../../../components/input';
+import { InputModal, InputDisabled, InputButton } from '../../../../components/input';
 import { ButtonFooter, RadioButton, CheckBox } from '../../../../components/button';
-import { SelectModal } from '../../../../components/select';
-import DataContants from '../../../../config/data-contants';
 const CreateUpdateUserAdmin = ({ data, classes, useCallback }) => {
     const [open] = useState(true);
     const [name, setName] = useState(data && data.user && data.user.name ? data.user.name : '');
@@ -112,7 +100,7 @@ const CreateUpdateUserAdmin = ({ data, classes, useCallback }) => {
             })
         }
     }
-    const tplRadio = () => {
+    const tpl = () => {
         return (
             <>
                 <RadioButton
@@ -174,10 +162,10 @@ const CreateUpdateUserAdmin = ({ data, classes, useCallback }) => {
                     onChange={(event) => { setCheckButton(true); setEmail(event.target.value); }}
                     validation={checkValidate && email.trim().length == 0 ? "Vui lòng nhập email!" : (checkValidate && !email.isEmail()) ? "Vui lòng nhập đúng định dạng Email!" : null}
                 />
-                <InputRadio
+                <InputButton
                     width={3}
                     title="Loại tài khoản (*): "
-                    tplRadio={tplRadio()}
+                    tpl={tpl()}
                     validation={checkValidate && type == -1 ? "Vui lòng chọn loại tài khoản!" : null}
                 />
                 {
@@ -198,9 +186,9 @@ const CreateUpdateUserAdmin = ({ data, classes, useCallback }) => {
                 }
                 {
                     dataUserAdmin && dataUserAdmin.user && dataUserAdmin.user.id ?
-                        <InputCheckbox
+                        <InputButton
                             title="Trạng thái:"
-                            tplCheckbox={tplCheckbox()}
+                            tpl={tplCheckbox()}
                             width={3}
                         /> :
                         <InputModal

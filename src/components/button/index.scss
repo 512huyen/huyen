@@ -55,3 +55,24 @@
         padding-left: 12px !important;
     }
 }
+.tooltip-button {
+    flex: 0 0 auto;
+    color: rgba(0, 0, 0, 0.54);
+    padding: 1px 12px 5px 12px;
+    overflow: visible;
+    font-size: 1.5rem;
+    text-align: center;
+    transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    border-radius: 50%;
+    outline: 0;
+    cursor: pointer;
+}
+.tooltip-button:hover {
+    background-color: #2198bc14;
+}
+.tooltip-disabled {
+    cursor: text;
+}
+.tooltip-disabled:hover {
+    background: none;
+}

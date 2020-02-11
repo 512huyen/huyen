@@ -45,3 +45,12 @@ table tr {
 .error-dob-select {
   margin-top: -12px;
 }
+.card-no-input .search-type {
+  display: inline-block;
+  padding: 0px;
+  width: 100%;
+  padding-left: 10px;
+}
+.card-no-input .search-type .error-dob {
+  display: none;
+}

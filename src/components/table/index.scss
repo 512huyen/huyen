@@ -27,6 +27,9 @@
                     margin-bottom: 14px;
                     margin-top: 18px;
                 }
+                .color-header-card {
+                    color: #000;
+                }
             }
             table {
                 border: 1px solid rgba(224, 224, 224, 1);
@@ -37,17 +40,16 @@
                 thead tr, .thead tr:first-child {
                     background-color: rgb(0,89,116);
                     border-top: 1px solid rgb(151,151,151);
-                    height: 42px;
                 }
                 thead th {
                     font-size: 14px;
                     font-weight: 700;
-                    height: 42px;
-                    line-height: 33px;
+                    line-height: 25px;
+                    // text-align: center;
                 }
                 th {
                     color: white;
-                    padding: 4px 7px 4px 9px;
+                    padding: 4px 6px;
                 }
                 td {
                     color: black;

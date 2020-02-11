@@ -1,32 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import { ValidatorForm, TextValidator, SelectValidator } from 'react-material-ui-form-validator';
-import MenuItem from '@material-ui/core/MenuItem';
 import userProvider from '../../../../data-access/user-provider';
-import Checkbox from '@material-ui/core/Checkbox';
-import imageProvider from '../../../../data-access/image-provider';
-import DataContants from '../../../../config/data-contants';
-import Clear from '@material-ui/icons/Clear';
-import IconButton from '@material-ui/core/IconButton';
 import Modal from '../../../../components/modal';
-import { InputModal, InputDisabled, InputRadio, InputCheckbox } from '../../../../components/input';
-import { ButtonFooter, RadioButton, CheckBox } from '../../../../components/button';
+import { InputModal, InputDisabled, InputButton } from '../../../../components/input';
+import { ButtonFooter, CheckBox } from '../../../../components/button';
 import { SelectModal } from '../../../../components/select';
 import Image from '../../../../components/image';
 function CreateUpdateUserHospital({ data, useCallback, dataHospital }) {
     const [open] = useState(true);
     const [username, setUsername] = useState(data && data.user && data.user.username ? data.user.username : '');
     const [image, setImage] = useState(data && data.user && data.user.image ? data.user.image : "");
-    const [hospitalId, setHospitalId] = useState(data && data.user && data.user.type ? data.user.type.toString() : -1);
+    const [hospitalId, setHospitalId] = useState(data && data.user && data.user.hospital ? data.user.hospital.id : -1);
     const [statusActive, setStatusActive] = useState(data && data.user && data.user.status === 1 ? true : false);
     const [password, setPassword] = useState("");
     const [checkValidate, setCheckValidate] = useState(false);
@@ -114,7 +98,7 @@ function CreateUpdateUserHospital({ data, useCallback, dataHospital }) {
     const dataImage = (item) => {
         setImage(item);
     }
-    const tplCheckbox = () => {
+    const tpl = () => {
         return (
             <CheckBox
                 title="Đang hoạt động"
@@ -144,9 +128,9 @@ function CreateUpdateUserHospital({ data, useCallback, dataHospital }) {
                                 title="Tên CSYT: "
                                 value={dataUserHospital.user && dataUserHospital.user.hospital && dataUserHospital.user.hospital.name}
                             />
-                            <InputCheckbox
+                            <InputButton
                                 title="Trạng thái:"
-                                tplCheckbox={tplCheckbox()}
+                                tpl={tpl()}
                                 width={3}
                             />
                         </> :

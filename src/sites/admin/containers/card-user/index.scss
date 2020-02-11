@@ -1,0 +1,78 @@
+.color-border-user-card {
+    border-right: 2px solid rgb(33,152,188);
+}
+.recharge-title {
+    font-size: 27px;
+    line-height: 45px;
+}
+.isofh-pay-img-logo {
+    margin-top: 7px;
+}
+.recharge-body-index {
+    .recharge-title-admin {
+        color: #2198bc;
+        font-weight: 600;
+        padding: 0;
+        font-size: 18px;
+    }
+    .isofh-pay-recharge-index {
+        background-color: #f4f4f4 ;
+        border-radius: 6px ;
+        padding: 10px 20px 18px 16px ;
+        margin-top: 4px;
+        margin-bottom: 30px;
+        .search-type {
+            padding: 4px 0px 0px 10px;
+        }
+        .search-type:nth-child(5){
+            padding-bottom: 18px ;
+        }
+        .search-type:nth-child(6){
+            border-top: 1px solid #2198bc;
+            padding-top: 15px ;
+        }
+    }
+    .recharge-body-right {
+        padding-top: 30px;
+        .right-title {
+            padding-bottom: 6px;
+        }
+        .right-input {
+            .search-type {
+                width: 100%;
+                padding: 0;
+            }
+        }
+        .right-content {
+            padding-top: 15px;
+            .content-item {
+                font-weight: 700;
+                padding-left: 15px;
+            }
+        }
+    }
+    .margin-button {
+        text-align: center;
+        margin: 30px 0px;
+        .recharge-button-cancel {
+            background-color: #ffff;
+            border: 1px solid #97979796;
+            box-shadow: 0px 4px #00000029;
+            padding: 8px 34px;
+            font-size: 18px;
+            text-transform: none;
+        }
+        .recharge-button-submit {
+            text-transform: none;
+            font-size: 18px;
+            box-shadow: 0px 4px #00000029;
+            padding: 9px 50px;
+            margin-left: 12px;
+            cursor: pointer;
+        }
+        .color-rechange {
+            background-color: #27ae60;
+            color: #fff;
+        }
+    }
+}

@@ -37,6 +37,14 @@
                 }
             }
         }
+        .select--is-disabled {
+            border-radius: 6px;
+            .select__control--is-disabled {
+                background-color: #e4e7ea;
+                opacity: 1;
+                border: 1px solid #0000003b;
+            }
+        }
     }
 }
 .select-box-search-modal {

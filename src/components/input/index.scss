@@ -70,3 +70,14 @@
         padding-top: 3px;
     }
 }
+.search-type-detail {
+    width: 100%;
+    font-size: 14px;
+    .label-detail {
+        font-weight: 400;
+    }
+    .content-detail {
+        margin-bottom: 0 !important;
+        font-weight: 700;
+    }
+}

@@ -44,7 +44,7 @@ function DateBox({ label, value, placeholder, required, validates, isInput, clas
         </div>
     )
 }
-function DateTimeBoxSearch({ label, value, placeholder, required, validates, isInput, classCustom, onChange, onChangeRaw, title }) {
+function DateTimeBoxSearch({ label, value, placeholder, required, validates, isInput, classCustom, onChange, onChangeRaw, title, disabled }) {
     return (
         <div className="search-date">
             <div className="search-date-title">{title}</div>
@@ -63,6 +63,7 @@ function DateTimeBoxSearch({ label, value, placeholder, required, validates, isI
                     onChangeRaw={onChangeRaw}
                     dateFormat={"dd/MM/yyyy"}
                     strictParsing
+                    disabled={disabled}
                     onChangeRaw={(event) => {
                         if (event.currentTarget.value.length === 10) {
                             if (monent(event.currentTarget.value, 'dd/MM/yyyy', false).isValid() === false) {

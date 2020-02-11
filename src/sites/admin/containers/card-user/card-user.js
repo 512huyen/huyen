@@ -1,222 +1,210 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import cardProvider from '../../../../data-access/card-provider';
+import moment from 'moment';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import TableBody from '@material-ui/core/TableBody';
-import IconButton from '@material-ui/core/IconButton';
-import cardProvider from '../../../../data-access/card-provider';
-import { withStyles } from '@material-ui/core/styles';
-import TablePagination from '@material-ui/core/TablePagination';
-import TablePaginationActions from '../../components/pagination/pagination';
-import moment from 'moment';
 import ModalDetail from './detail-card-user';
+// import ModalRechargelCard from './index';
 import ModalCancelCard from './cancel-card-user';
 import ModalRechargelCard from './recharge-card-user';
-import TableFooter from '@material-ui/core/TableFooter';
-import Tooltip from '@material-ui/core/Tooltip';
 import hospitalProvider from '../../../../data-access/hospital-provider';
 import DataContants from '../../../../config/data-contants';
-import { SelectBox } from '../../../../components/input-field/InputField';
-import { listCard, listHospital } from '../../../../reducers/actions'
-class CardUser extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            page: 0,
-            size: 10,
-            sizeSearch: 99999,
-            number: '',
-            hospital: -1,
-            passport: '',
-            patientCode: '',
-            data: [],
-            total: 0,
-            confirmDialog: false,
-            tempDelete: [],
-            listHospital: [],
-            modalDetail: false,
-            modalCancelCard: false,
-            createdDate: '',
-            cancel: -1,
-            type: 3,
-            code: "",
-            dataCheck: []
+import { listCard, listHospital } from '../../../../reducers/actions';
+import Table from '../../../../components/table';
+import { InputText } from '../../../../components/input';
+import { SelectText } from '../../../../components/select';
+import { ToolTip } from '../../../../components/button';
+import PageSize from '../../components/pagination/pageSize';
+function CardUser({ }) {
+    const [tableHeader] = useState([
+        {
+            width: "3%",
+            name: "STT"
+        },
+        {
+            width: "12%",
+            name: "Số thẻ"
+        },
+        {
+            width: "10%",
+            name: "Mã NB"
+        },
+        {
+            width: "10%",
+            name: "Họ và tên"
+        },
+        {
+            width: "10%",
+            name: "Ngày sinh"
+        },
+        {
+            width: "9%",
+            name: "Giới tính"
+        },
+        {
+            width: "12%",
+            name: "CMND/Hộ chiếu"
+        },
+        {
+            width: "10%",
+            name: "CSYT"
+        },
+        {
+            width: "11%",
+            name: "Trạng thái"
+        },
+        {
+            width: "13%",
+            name: "Hành động"
         }
-    }
-    componentWillMount() {
-        this.loadPage();
-        this.getHospital();
-    }
-    loadPage(item) {
+    ])
+    const [state, setState] = useState({
+        page: 0,
+        size: 10,
+    });
+    const [sttAndTotal, setSttAndTotal] = useState({
+        stt: "",
+        total: 0
+    })
+    const [hospital, setHospital] = useState(-1);
+    const [passport, setPassport] = useState("");
+    const [patientCode, setPatientCode] = useState("");
+    const [cancel, setCancel] = useState(-1);
+    const [code, setCode] = useState("");
+    const [openDetail, setOpenDetail] = useState(false);
+    const [openRechargeCard, setOpenRechargeCard] = useState(false);
+    const [openCancelCard, setOpenCancelCard] = useState(false);
+    const [listDataView, setListDataView] = useState([]);
+    const [dataCardUser, setDataCardUser] = useState({});
+    const [dataHospital, setDataHospital] = useState([]);
+    const userApp = useSelector(state => state.userApp);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        loadPage();
+        getHospital();
+    }, []);
+    const loadPage = (action, item, fromApi, sizeTotal) => {
+        let page = action === "page" ? item : 0
+        let size = action === "size" ? item : state.size
+        let hospitalSearch = action === "hospital" ? item : hospital
+        let passportSearch = action === "passport" ? item : passport
+        let patientCodeSearch = action === "patientCode" ? item : patientCode
+        let cancelSearch = action === "cancel" ? item : cancel
+        let codeSearch = action === "code" ? item : code
         let params = {
-            page: Number(this.state.page) + 1,
-            size: this.state.sizeSearch,
-            number: this.state.number,
-            hospital: this.state.hospital,
-            passport: this.state.passport,
-            patientCode: this.state.patientCode,
-            cancel: this.state.cancel,
-            code: this.state.code,
+            page: Number(page) + 1,
+            size: sizeTotal ? sizeTotal : 99999,
+            hospital: hospitalSearch,
+            passport: passportSearch,
+            patientCode: patientCodeSearch,
+            code: codeSearch,
         }
-        if (this.props.userApp.listCard && this.props.userApp.listCard.length !== 0 && !item) {
+        if (userApp.listCard && userApp.listCard.length !== 0 && !fromApi) {
             let dataPage = []
             let list = []
-            if (this.state.cancel === -1) {
-                list = this.props.userApp.listCard
+            if (cancelSearch === -1) {
+                list = userApp.listCard
             } else {
-                list = this.props.userApp.listCard.filter(item => { return (item.card.cancel === this.state.cancel) })
+                list = userApp.listCard.filter(item => { return (item.card.cancel === cancelSearch) })
             }
-            for (let i = (params.page - 1) * this.state.size; i < params.page * this.state.size; i++) {
+            for (let i = page * size; i < (page + 1) * size; i++) {
                 if (list[i]) {
                     dataPage.push(list[i])
                 }
             }
-            this.setState({
-                data: list,
-                dataView: dataPage,
+            setSttAndTotal({
                 total: list.length,
-                stt: 1 + ((Number(this.state.page) >= 1 ? this.state.page : 1) - 1) * this.state.size,
-                dataCheck: list
-            })
+                stt: 1 + page * size
+            });
+            setState({
+                page: page,
+                size: size,
+            });
+            setListDataView(dataPage);
         } else {
             cardProvider.search(params).then(s => {
                 if (s && s.code === 0 && s.data) {
-                    if (s.data.total > this.state.sizeSearch) {
-                        this.loadPage(true)
+                    if (s.data.total > params.size) {
+                        loadPage("", "", true, s.data.total);
                     } else {
-                        this.props.dispatch(listCard(s.data.data))
-                        let stt = 1 + (params.page - 1) * this.state.size;
+                        dispatch(listCard(s.data.data))
+                        let stt = 1 + page * size;
                         let dataPage = []
                         let list = []
-                        if (this.state.cancel === -1) {
+                        if (cancelSearch === -1) {
                             list = s.data.data
                         } else {
-                            list = s.data.data.filter(item => { return (item.card.cancel === this.state.cancel) })
+                            list = s.data.data.filter(item => { return (item.card.cancel === cancelSearch) })
                         }
-                        for (let i = (params.page - 1) * this.state.size; i < params.page * this.state.size; i++) {
+                        for (let i = page * size; i < (page + 1) * size; i++) {
                             if (list[i]) {
                                 dataPage.push(list[i])
                             }
                         }
-                        this.setState({
-                            dataView: dataPage,
-                            data: list,
+                        setState({
+                            page: page,
+                            size: size,
+                        });
+                        setListDataView(dataPage);
+                        setSttAndTotal({
                             stt,
                             total: list.length,
-                            dataCheck: list
-                        })
+                        });
                     }
+
                 }
             }).catch(e => {
             })
         }
     }
-    getHospital() {
-        let object = {
+    const getHospital = () => {
+        let params = {
             page: 1,
-            size: 99999,
+            size: "99999"
         }
-        if (this.props.userApp.listHospital && this.props.userApp.listHospital.length !== 0) {
-            this.setState({
-                listHospital: this.props.userApp.listHospital.filter(item => { return (item.hospital.status === 1) })
-            })
+        if (userApp.listHospital && userApp.listHospital.length !== 0) {
+            let listData = userApp.listHospital.filter(item => { return (item.hospital.status === 1) })
+            setDataHospital(listData)
         } else {
-            hospitalProvider.search(object).then(s => {
-                if (s && s.data && s.code === 0) {
-                    this.props.dispatch(listHospital(s.data.data))
-                    this.setState({
-                        listHospital: s.data.data.filter(item => { return (item.hospital.status === 1) })
-                    })
+            hospitalProvider.search(params).then(s => {
+                if (s && s.code === 0 && s.data) {
+                    dispatch(listHospital(s.data.data))
+                    let listData = s.data.data.filter(item => { return (item.hospital.status === 1) })
+                    setDataHospital(listData)
                 }
             }).catch(e => {
-
             })
         }
     }
-    modalDetail(item) {
-        this.setState({
-            modalDetail: true,
-            dataCardUser: item,
-        })
+    const modalDetail = (item) => {
+        setOpenDetail(true);
+        setDataCardUser(item);
     }
-    modalCancelCard(item) {
+    const modalCancelCard = (item) => {
         // window.location.href = '/admin/cancel-card-user/' + (item.card || {}).code + "&" + item.card && (item.card.patient || {}).code + "&" + (item.card || {}).transactionId;
-        this.setState({
-            modalCancelCard: true,
-            dataCardUser: item,
-        })
+        setOpenCancelCard(true);
+        setDataCardUser(item);
     }
-    modalRechargeCard(item) {
+    const modalRechargeCard = (item) => {
         // window.location.href = '/admin/recharge-card-user/' + (item.card || {}).code + "&" + item.card && (item.card.patient || {}).code + "&" + (item.card || {}).transactionId;
-        this.setState({
-            modalRechargeCard: true,
-            dataCardUser: item,
-        })
+        setOpenRechargeCard(true);
+        setDataCardUser(item);
     }
-    handleChangePage = (event, action) => {
-        let dataPage = []
-        if (this.state.dataCheck.length > 0) {
-            for (let i = action * this.state.size; i < (action + 1) * this.state.size; i++) {
-                if (this.state.dataCheck[i]) {
-                    dataPage.push(this.state.dataCheck[i])
-                }
-            }
-            this.setState({
-                page: action,
-                dataView: dataPage,
-                stt: 1 + action * this.state.size
-            })
-        } else {
-            for (let i = action * this.state.size; i < (action + 1) * this.state.size; i++) {
-                if (this.state.data[i]) {
-                    dataPage.push(this.state.data[i])
-                }
-            }
-            this.setState({
-                page: action,
-                dataView: dataPage,
-                stt: 1 + action * this.state.size
-            })
-        }
+    const handleChangePage = (event, action) => {
+        loadPage("page", action);
+    };
 
+    const handleChangeRowsPerPage = event => {
+        loadPage("size", event.target.value);
     };
-    handleChangeRowsPerPage = event => {
-        let dataPage = []
-        if (this.state.dataCheck.length > 0) {
-            for (let i = 0; i < event.target.value; i++) {
-                if (this.state.dataCheck[i]) {
-                    dataPage.push(this.state.dataCheck[i])
-                }
-            }
-            this.setState({
-                size: event.target.value,
-                dataView: dataPage,
-                stt: 1,
-                page: 0
-            })
-        } else {
-            for (let i = 0; i < event.target.value; i++) {
-                if (this.state.data[i]) {
-                    dataPage.push(this.state.data[i])
-                }
-            }
-            this.setState({
-                size: event.target.value,
-                dataView: dataPage,
-                stt: 1,
-                page: 0
-            })
-        }
-    };
-    closeModal() {
-        this.loadPage();
-        this.setState({ modalDetail: false, modalCancelCard: false, modalRechargeCard: false });
+    const closeModal = () => {
+        loadPage();
+        setOpenRechargeCard(false);
+        setOpenDetail(false);
+        setOpenCancelCard(false);
     }
-    formatCardNumber(value) {
+    const formatCardNumber = (value) => {
         var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
         var matches = v.match(/\d{4,16}/g);
         var match = matches ? matches[0] : []
@@ -230,169 +218,7 @@ class CardUser extends Component {
             return value
         }
     }
-    handleChangeFilter(event, action) {
-        if (action === 1) {
-            this.setState({
-                page: 0,
-                hospital: event
-            }, () => {
-                this.loadPage(true);
-            })
-        }
-        if (action === 2) {
-            this.setState({
-                page: 0,
-                patientCode: event.target.value
-            }, () => {
-                if (this.clearTimeOutAffterRequest) {
-                    try {
-                        clearTimeout(this.clearTimeOutAffterRequest);
-                    } catch (error) {
-                    }
-                }
-                this.clearTimeOutAffterRequest = setTimeout(() => {
-                    this.loadPage(true)
-                }, 500)
-            })
-        }
-        if (action === 3) {
-            this.setState({
-                page: 0,
-                passport: event.target.value
-            }, () => {
-                if (this.clearTimeOutAffterRequest) {
-                    try {
-                        clearTimeout(this.clearTimeOutAffterRequest);
-                    } catch (error) {
-                    }
-                }
-                this.clearTimeOutAffterRequest = setTimeout(() => {
-                    this.loadPage(true)
-                }, 500)
-            })
-        }
-        if (action === 4) {
-            this.setState({
-                page: 0,
-                code: event.target.value ? event.target.value.replaceAllText(" ", "") : ""
-            }, () => {
-                this.loadPage(true)
-            })
-        }
-        if (action === 5) {
-            // this.setState({
-            //     page: 0,
-            //     cancel: event
-            // }, () => {
-            //     this.loadPage(true);
-            // })
-            let dataPage = [];
-            let dataCheck = [];
-            if (event === -1) {
-                dataCheck = this.state.data
-            } else {
-                dataCheck = this.state.data.filter(item => { return (item.card.cancel === event) });
-            }
-            for (let i = this.state.page * this.state.size; i < (this.state.page + 1) * this.state.size; i++) {
-                if (dataCheck[i]) {
-                    dataPage.push(dataCheck[i])
-                }
-            }
-            this.setState({
-                page: 0,
-                cancel: event,
-                dataView: dataPage,
-                dataCheck: dataCheck,
-                stt: 1 + this.state.page * this.state.size,
-                total: dataCheck.length
-            })
-        }
-    }
-    renderChirenToolbar() {
-        const { classes } = this.props;
-        const { hospital, patientCode, code, passport, listHospital, cancel } = this.state;
-        return (
-            <div className="header-search">
-                <div className="select-box-search">
-                    <div className="search-name select-title-search">CSYT</div>
-                    <SelectBox
-                        listOption={[{ hospital: { id: -1, name: "Tất cả" } }, ...listHospital]}
-                        placeholder={'Tìm kiếm'}
-                        selected={hospital}
-                        getIdObject={(item) => {
-                            return item.hospital.id;
-                        }}
-                        getLabelObject={(item) => {
-                            return item.hospital.name
-                        }}
-                        onChangeSelect={(lists, ids) => {
-                            this.handleChangeFilter(ids, 1)
-                        }}
-                    />
-                </div>
-                <div className="search-type">
-                    <div className="search-name">Mã NB</div>
-                    <TextField
-                        style={{ marginTop: 7 }}
-                        id="outlined-textarea"
-                        placeholder="Họ tên/ Mã NB"
-                        multiline
-                        className={classes.textField + ' search-input-custom'}
-                        margin="normal"
-                        variant="outlined"
-                        value={patientCode}
-                        onChange={(event) => this.handleChangeFilter(event, 2)}
-                    />
-                </div>
-                <div className="search-type">
-                    <div className="search-name">CMND/HC</div>
-                    <TextField
-                        style={{ marginTop: 7 }}
-                        id="outlined-textarea"
-                        placeholder="Nhập CMND/HC"
-                        multiline
-                        className={classes.textField + ' search-input-custom'}
-                        margin="normal"
-                        variant="outlined"
-                        value={passport}
-                        onChange={(event) => this.handleChangeFilter(event, 3)}
-                    />
-                </div>
-                <div className="search-type">
-                    <div className="search-name">Số thẻ</div>
-                    <TextField
-                        style={{ marginTop: 7 }}
-                        id="outlined-textarea"
-                        placeholder="Nhập số thẻ"
-                        multiline
-                        className={classes.textField + ' search-input-custom'}
-                        margin="normal"
-                        variant="outlined"
-                        value={code}
-                        onChange={(event) => this.handleChangeFilter(event, 4)}
-                    />
-                </div>
-                <div className="select-box-search">
-                    <div className="search-name select-title-search">Trạng thái</div>
-                    <SelectBox
-                        listOption={[{ id: -1, name: "Tất cả" }, ...DataContants.listCancel]}
-                        placeholder={'Tìm kiếm'}
-                        selected={cancel}
-                        getIdObject={(item) => {
-                            return item.id;
-                        }}
-                        getLabelObject={(item) => {
-                            return item.name
-                        }}
-                        onChangeSelect={(lists, ids) => {
-                            this.handleChangeFilter(ids, 5)
-                        }}
-                    />
-                </div>
-            </div>
-        )
-    }
-    getCancelStatus(item) {
+    const getCancelStatus = (item) => {
         var status = DataContants.listCancel.filter((data) => {
             return parseInt(data.id) === item
         })
@@ -400,149 +226,136 @@ class CardUser extends Component {
             return status[0];
         return {};
     }
-    render() {
-        const { classes } = this.props;
-        const { dataView, page, stt, total, size, dataCardUser } = this.state;
+    const tableBody = () => {
         return (
-            <div className="color-background-control">
-                <Paper className={classes.root + " page-header"}>
-                    <div className={classes.tableWrapper + ' page-wrapper'}>
-                        <div className="page-title">
-                            <h2 className="title-page">Danh sách thẻ người bệnh</h2>
-                        </div>
-                        {this.renderChirenToolbar()}
-                        <Table aria-labelledby="tableTitle" className="style-table-new">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell style={{ width: "3%" }}>STT</TableCell>
-                                    <TableCell style={{ width: "12%" }}>Số thẻ</TableCell>
-                                    <TableCell style={{ width: "10%" }}>Mã NB</TableCell>
-                                    <TableCell style={{ width: "10%" }}>Họ và tên</TableCell>
-                                    <TableCell style={{ width: "10%" }}>Ngày sinh</TableCell>
-                                    <TableCell style={{ width: "9%" }}>Giới tính</TableCell>
-                                    <TableCell style={{ width: "12%" }}>CMND/Hộ chiếu</TableCell>
-                                    <TableCell style={{ width: "10%" }}>CSYT</TableCell>
-                                    <TableCell style={{ width: "11%" }}>Trạng thái</TableCell>
-                                    <TableCell style={{ width: "13%" }}>Hành động</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
+            <>
+                {
+                    listDataView && listDataView.length ? listDataView.map((item, index) => {
+                        return (
+                            <TableRow
+                                hover
+                                key={index}
+                                tabIndex={-1}>
+                                <TableCell>{index + sttAndTotal.stt}</TableCell>
+                                <TableCell>{formatCardNumber(item.card.code)}</TableCell>
+                                <TableCell>{item.card.patient && item.card.patient.code}</TableCell>
+                                <TableCell>{item.card.patient && item.card.patient.name}</TableCell>
+                                <TableCell>{moment(item.card.patient.dob).format("DD-MM-YYYY")}</TableCell>
+                                <TableCell>{item.card.patient.gender === 0 ? "Nữ" : item.card.patient.gender === 1 ? "Nam" : ""}</TableCell>
+                                <TableCell>{item.card.patient.passport}</TableCell>
+                                <TableCell>{item.card.hospital && item.card.hospital.name}</TableCell>
+                                <TableCell>
+                                    {getCancelStatus(item.card.cancel) ? getCancelStatus(item.card.cancel).name : ""}
+                                </TableCell>
+                                <TableCell>
+                                    <ToolTip title="Xem chi tiết" image="/images/detail.png" onClick={() => modalDetail(item)} />
+                                    {
+                                        item.card.cancel === 0 ?
+                                            <>
+                                                <ToolTip title="Nạp tiền" image="/images/nap-tien.png" onClick={() => modalRechargeCard(item)} />
+                                                <ToolTip title="Hủy thẻ" image="/images/huy-the.png" onClick={() => modalCancelCard(item)} />
+                                            </> :
+                                            <>
+                                                <ToolTip disabled title="Nạp tiền" image="/images/nap-tien-inactive.png" />
+                                                <ToolTip disabled title="Hủy thẻ" image="/images/huy-the-inactive.png" />
+                                            </>
+                                    }
+                                </TableCell>
+                            </TableRow>
+                        );
+                    })
+                        :
+                        <TableRow>
+                            <TableCell colSpan="10">
                                 {
-                                    dataView && dataView.length ? dataView.map((item, index) => {
-                                        return (
-                                            <TableRow
-                                                hover
-                                                key={index}
-                                                tabIndex={-1}>
-                                                <TableCell>{index + stt}</TableCell>
-                                                <TableCell>{this.formatCardNumber(item.card.code)}</TableCell>
-                                                <TableCell>{item.card.patient && item.card.patient.code}</TableCell>
-                                                <TableCell>{item.card.patient && item.card.patient.name}</TableCell>
-                                                <TableCell>{moment(item.card.patient.dob).format("DD-MM-YYYY")}</TableCell>
-                                                <TableCell>{item.card.patient.gender === 0 ? "Nữ" : item.card.patient.gender === 1 ? "Nam" : ""}</TableCell>
-                                                <TableCell>{item.card.patient.passport}</TableCell>
-                                                <TableCell>{item.card.hospital && item.card.hospital.name}</TableCell>
-                                                <TableCell>
-                                                    {this.getCancelStatus(item.card.cancel) ? this.getCancelStatus(item.card.cancel).name : ""}
-                                                </TableCell>
-                                                {
-                                                    item.card.cancel === 0 ?
-                                                        <TableCell>
-                                                            <Tooltip title="Xem chi tiết">
-                                                                <IconButton onClick={() => this.modalDetail(item)} color="primary" className={classes.button + " button-detail-user-card"}>
-                                                                    <img src="/images/detail.png" alt="" />
-                                                                </IconButton>
-                                                            </Tooltip>
-                                                            <Tooltip title="Nạp tiền">
-                                                                <IconButton onClick={() => this.modalRechargeCard(item)} className="button-home">
-                                                                    <img src="/images/nap-tien.png" alt="" />
-                                                                </IconButton>
-                                                            </Tooltip>
-                                                            <Tooltip title="Hủy thẻ">
-                                                                <IconButton onClick={() => this.modalCancelCard(item)} className="button-home">
-                                                                    <img src="/images/huy-the.png" alt="" />
-                                                                </IconButton>
-                                                            </Tooltip>
-                                                        </TableCell> :
-                                                        <TableCell>
-                                                            <Tooltip title="Xem chi tiết">
-                                                                <IconButton onClick={() => this.modalDetail(item)} color="primary" className={classes.button + " button-detail-user-card"}>
-                                                                    <img src="/images/detail.png" alt="" />
-                                                                </IconButton>
-                                                            </Tooltip>
-                                                            <IconButton disabled>
-                                                                <img src="/images/nap-tien-inactive.png" alt="" className="button-home" />
-                                                            </IconButton>
-                                                            <IconButton disabled>
-                                                                <img src="/images/huy-the-inactive.png" alt="" className="button-home" />
-                                                            </IconButton>
-                                                        </TableCell>
-                                                }
-                                            </TableRow>
-                                        );
-                                    })
-                                        :
-                                        <TableRow>
-                                            <TableCell colSpan="10">
-                                                {
-                                                    (this.state.hospital || this.state.patientCode || this.state.passport || this.state.code || this.state.cancel) ? 'Không có kết quả phù hợp' : 'Không có dữ liệu'
-                                                }
-                                            </TableCell>
-                                        </TableRow>
+                                    (hospital || patientCode || passport || code || cancel) ? 'Không có kết quả phù hợp' : 'Không có dữ liệu'
                                 }
-                            </TableBody>
-                            <TableFooter>
-                                <TableRow className="pagination-custom" >
-                                    <TablePagination
-                                        colSpan={10}
-                                        labelRowsPerPage="Số dòng trên trang"
-                                        rowsPerPageOptions={[10, 20, 50, 100]}
-                                        count={total}
-                                        rowsPerPage={size}
-                                        page={page}
-                                        onChangePage={this.handleChangePage}
-                                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                        ActionsComponent={TablePaginationActions}
-                                    />
-                                </TableRow>
-                            </TableFooter>
-                        </Table>
-                    </div>
-                </Paper>
-                {this.state.modalDetail && <ModalDetail data={dataCardUser} callbackOff={this.closeModal.bind(this)} />}
-                {this.state.modalCancelCard && <ModalCancelCard data={dataCardUser} callbackOff={this.closeModal.bind(this)} />}
-                {this.state.modalRechargeCard && <ModalRechargelCard data={dataCardUser} callbackOff={this.closeModal.bind(this)} />}
-            </div>
-        );
+                            </TableCell>
+                        </TableRow>
+                }
+            </>
+        )
     }
+    const setTplModal = () => {
+        return (
+            <>
+                <SelectText
+                    title="CSYT"
+                    listOption={[{ hospital: { id: -1, name: "Tất cả" } }, ...dataHospital]}
+                    placeholder={'Tìm kiếm'}
+                    selected={hospital}
+                    getIdObject={(item) => {
+                        return item.hospital.id;
+                    }}
+                    getLabelObject={(item) => {
+                        return item.hospital.name
+                    }}
+                    onChangeSelect={(lists, ids) => {
+                        setHospital(ids); loadPage("hospital", ids, true)
+                    }}
+                />
+                <InputText
+                    title="Mã NB"
+                    placeholder="Họ tên/ Mã NB"
+                    value={patientCode}
+                    onChange={(event) => { setPatientCode(event.target.value); loadPage("patientCode", event.target.value, true) }}
+                />
+                <InputText
+                    title="CMND/HC"
+                    placeholder="Nhập CMND/HC"
+                    value={passport}
+                    onChange={(event) => { setPassport(event.target.value); loadPage("passport", event.target.value, true) }}
+                />
+                <InputText
+                    title="Số thẻ"
+                    placeholder="Nhập số thẻ"
+                    value={code}
+                    onChange={(event) => { setCode(event.target.value); loadPage("code", event.target.value, true) }}
+                />
+                <SelectText
+                    title="Loại tài khoản"
+                    listOption={[{ id: -1, name: "Tất cả" }, ...DataContants.listCancel]}
+                    placeholder={'Tìm kiếm'}
+                    selected={cancel}
+                    getIdObject={(item) => {
+                        return item.id;
+                    }}
+                    getLabelObject={(item) => {
+                        return item.name
+                    }}
+                    onChangeSelect={(lists, ids) => {
+                        setCancel(ids); loadPage("cancel", ids, true)
+                    }}
+                />
+            </>
+        )
+    }
+    const pagination = () => {
+        return (
+            <>
+                <PageSize
+                    colSpan={10}
+                    total={sttAndTotal.total}
+                    size={state.size}
+                    page={state.page}
+                    handleChangePage={handleChangePage}
+                    handleChangeRowsPerPage={handleChangeRowsPerPage}
+                />
+                {openDetail && <ModalDetail data={dataCardUser} useCallback={closeModal.bind(this)} />}
+                {openCancelCard && <ModalCancelCard data={dataCardUser} useCallback={closeModal.bind(this)} />}
+                {openRechargeCard && <ModalRechargelCard data={dataCardUser} useCallback={closeModal.bind(this)} />}
+            </>
+        )
+    }
+    return (
+        <Table
+            titlePage="Danh sách thẻ người bệnh"
+            setTplModal={setTplModal()}
+            tableHeader={tableHeader}
+            tableBody={tableBody()}
+            pagination={pagination()}
+        />
+    );
 }
 
-function mapStateToProps(state) {
-    return {
-        userApp: state.userApp
-    };
-}
-
-const styles = theme => ({
-    root: {
-        width: '100%',
-        marginTop: theme.spacing.unit * 3,
-    },
-    table: {
-        minWidth: 2048,
-    },
-    tableWrapper: {
-        overflowX: 'auto',
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        width: 200,
-    },
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-});
-
-export default withStyles(styles)(connect(mapStateToProps)(CardUser));
+export default CardUser;

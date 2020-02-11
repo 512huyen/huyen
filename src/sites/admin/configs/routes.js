@@ -10,13 +10,13 @@ const UserAdmin = Loadable({
 })
 
 const User = Loadable({
+  // loader: () => import('../containers/user'),
   loader: () => import('../containers/user/user'),
   loading: Loading,
 })
 
 const UserHospital = Loadable({
   loader: () => import('../containers/user/user-hospital'),
-  // loader: () => import('../containers/user'),
   loading: Loading,
 })
 
@@ -34,6 +34,7 @@ const Card = Loadable({
 })
 const CardUser = Loadable({
   loader: () => import('../containers/card-user/card-user'),
+  // loader: () => import('../containers/card-user'),
   loading: Loading,
 })
 const TransactionHistory = Loadable({

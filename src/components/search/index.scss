@@ -5,5 +5,14 @@
     background-color: #2198bc1f;
     .search-type {
         padding: 8px 0px 15px 14px;
+        .error-dob {
+            display: none;
+        }
+    }
+    .search-date {
+        padding: 8px 0px 15px 14px;
+        .error-dob {
+            display: none;
+        }
     }
 }

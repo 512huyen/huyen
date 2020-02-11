@@ -1,21 +1,18 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import IconButton from '@material-ui/core/IconButton';
 import userProvider from '../../../../data-access/user-provider';
 import moment from 'moment';
 import ModalAddUpdate from './create-update-user-admin';
-import Tooltip from '@material-ui/core/Tooltip';
 import DataContants from '../../../../config/data-contants';
 import { listUserAdmin } from '../../../../reducers/actions';
 import Table from '../../../../components/table';
 import { InputText } from '../../../../components/input';
 import { SelectText } from '../../../../components/select';
-import { ButtonCreateUpdate } from '../../../../components/button';
+import { ButtonCreateUpdate, ToolTip } from '../../../../components/button';
 import PageSize from '../../components/pagination/pageSize';
-import { DateTimeBoxSearch } from '../../../../components/date';
-const UserAdmin = ({ classes }) => {
+const UserAdmin = () => {
     const [state, setState] = useState({
         page: 0,
         size: 10,
@@ -29,7 +26,7 @@ const UserAdmin = ({ classes }) => {
         stt: "",
         total: 0
     })
-    const [tableHeader, setTableHeader] = useState([
+    const [tableHeader] = useState([
         {
             width: "5%",
             name: "STT"
@@ -305,11 +302,7 @@ const UserAdmin = ({ classes }) => {
                                 <TableCell>{moment(item.user.createdDate).format("DD-MM-YYYY HH:mm:ss")}</TableCell>
                                 <TableCell style={{ textAlign: "center" }}>{item.user.status === 1 ? "Đang hoạt động" : item.user.status === 2 ? "Đã khóa" : ""}</TableCell>
                                 <TableCell style={{ textAlign: "center" }}>
-                                    <Tooltip title="Chỉnh sửa">
-                                        <IconButton onClick={() => modalCreateUpdate(item)} color="primary" className="button-detail-user-card" aria-label="EditIcon">
-                                            <img src="/images/edit.png" alt="" />
-                                        </IconButton>
-                                    </Tooltip>
+                                    <ToolTip title="Chỉnh sửa" image="/images/edit.png" onClick={() => modalCreateUpdate(item)} />
                                 </TableCell>
                             </TableRow>
                         );

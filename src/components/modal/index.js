@@ -42,7 +42,7 @@ const styles = theme => ({
     paddingBottom: 18
   }
 });
-function SimpleModal({ classes, Children, isOpen, toggle, title, buttonFooter, width, padding }) {
+function SimpleModal({ classes, Children, isOpen, toggle, title, buttonFooter, width, padding, popupDetail }) {
   const [modalStyle] = React.useState(getModalStyle(width, padding));
   const [modalStyleButton] = React.useState(getModalStyleButton(padding));
   return (
@@ -60,9 +60,16 @@ function SimpleModal({ classes, Children, isOpen, toggle, title, buttonFooter, w
             </IconButton>
             <div className={classes.title}>{title}</div>
           </div>
-          <div className="popup-body">
-            {Children}
-          </div>
+          {
+            popupDetail ?
+              <div className="group-detail">
+                {Children}
+              </div> :
+              <div className="popup-body">
+                {Children}
+              </div>
+          }
+
           <div className="popup-footer">
             <div className="row">
 

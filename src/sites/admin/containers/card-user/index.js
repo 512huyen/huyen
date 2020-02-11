@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import cardProvider from '../../../../data-access/card-provider';
 import moment from 'moment';
@@ -6,6 +6,7 @@ import Modal from '../../../../components/modal';
 import { InputDetail, InputText } from '../../../../components/input';
 import './index.scss';
 import Button from '@material-ui/core/Button';
+import { ButtonFooter, RadioButton } from '../../../../components/button';
 function CreateUpdateHospital({ data, useCallback }) {
     const [open] = useState(true);
     const [detail] = useState({

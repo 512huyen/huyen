@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import './index.scss';
-function InputText({ placeholder, value, onChange, title }) {
+function InputText({ placeholder, value, onChange, title, validation }) {
     return (
         <div className="search-type">
             <div className="title-search-input">{title}</div>
@@ -12,6 +12,7 @@ function InputText({ placeholder, value, onChange, title }) {
                 className="search-input-custom"
                 onChange={onChange}
             />
+            <div className="error-dob">{validation}</div>
         </div>
     )
 }
@@ -51,7 +52,7 @@ function InputDisabled({ title, value, width }) {
         </div>
     )
 }
-function InputRadio({ title, tplRadio, width, validation }) {
+function InputButton({ title, tpl, width, validation }) {
     return (
         <div className="search-type-radio">
             <div className="row">
@@ -59,27 +60,26 @@ function InputRadio({ title, tplRadio, width, validation }) {
                     <span className="title-search-input">{title}</span>
                 </div>
                 <div className={"col-md-" + (12 - width)}>
-                    {tplRadio}
+                    {tpl}
                     <div className="error-dob">{validation}</div>
                 </div>
             </div>
         </div>
     )
 }
-function InputCheckbox({ title, tplCheckbox, width, validation }) {
+function InputDetail({ title, value, width, style }) {
     return (
-        <div className="search-type-radio">
+        <div className="search-type search-type-detail">
             <div className="row">
                 <div className={"col-md-" + width}>
-                    <span className="title-search-input">{title}</span>
+                    <span className="label-detail">{title}</span>
                 </div>
                 <div className={"col-md-" + (12 - width)}>
-                    {tplCheckbox}
-                    <div className="error-dob">{validation}</div>
+                    <div className="content-detail" style={style}>{value}</div>
                 </div>
             </div>
         </div>
     )
 }
 
-export { InputText, InputModal, InputDisabled, InputRadio, InputCheckbox };
+export { InputText, InputModal, InputDisabled, InputButton, InputDetail };

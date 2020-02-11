@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import './index.scss';
 import Radio from '@material-ui/core/Radio';
 import Checkbox from '@material-ui/core/Checkbox';
+import Tooltip from '@material-ui/core/Tooltip';
 function ButtonCreateUpdate({ onClick, title }) {
     return (
         <Button
@@ -26,7 +27,7 @@ function ButtonFooter({ onClick, title, disabled }) {
         </Button>
     )
 }
-function RadioButton({ checked, title, value, onChange }) {
+function RadioButton({ checked, title, value, onChange, onClick }) {
     return (
         <span className="radio-input">
             <Radio
@@ -36,6 +37,7 @@ function RadioButton({ checked, title, value, onChange }) {
                 value={value}
                 name="radio-button-demo"
                 inputProps={{ 'aria-label': value }}
+                onClick={onClick}
             />
             <span className="button-radio-title">{title}</span>
         </span>
@@ -53,5 +55,14 @@ function CheckBox({ checked, title, onChange }) {
         </span>
     )
 }
+function ToolTip({ onClick, image, title, disabled }) {
+    return (
+        <span className={"tooltip-button" + (disabled ? " tooltip-disabled" : "")}>
+            <Tooltip title={title}>
+                <img src={image} onClick={onClick} alt="" className="" />
+            </Tooltip>
+        </span>
+    )
+}
 
-export { ButtonCreateUpdate, ButtonFooter, RadioButton, CheckBox };
+export { ButtonCreateUpdate, ButtonFooter, RadioButton, CheckBox, ToolTip };

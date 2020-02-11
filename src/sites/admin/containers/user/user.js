@@ -1,356 +1,208 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Table from '../../../../components/table';
-import { InputText } from '../../../../components/input';
-import { SelectText } from '../../../../components/select';
-import { ButtonCreateUpdate } from '../../../../components/button';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import userProvider from '../../../../data-access/user-provider';
-import { withStyles } from '@material-ui/core/styles';
-import PageSize from '../../components/pagination/pageSize';
 import moment from 'moment';
-import DataContants from '../../../../config/data-contants';
-import { listUserUser } from '../../../../reducers/actions'
-class User extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            page: 0,
-            size: 10,
-            sizeSearch: 99999,
-            text: '',
-            title: '',
-            index: '',
-            info: '',
-            data: [],
-            total: 0,
-            identification: '',
-            phone: '',
-            selected: [],
-            confirmDialog: false,
-            tempDelete: [],
-            modalAdd: false,
-            dob: '',
-            createdUser: '',
-            status: -1,
-            type: 8,
-            tableHeader: [
-                {
-                    width: "7%",
-                    name: "STT"
-                },
-                {
-                    width: "16%",
-                    name: "Username"
-                },
-                {
-                    width: "13%",
-                    name: "Họ và tên"
-                },
-                {
-                    width: "12%",
-                    name: "Ngày sinh"
-                },
-                {
-                    width: "12%",
-                    name: "Giới tính"
-                },
-                {
-                    width: "13%",
-                    name: "CMND/Hộ chiếu"
-                },
-                {
-                    width: "13%",
-                    name: "SĐT"
-                },
-                {
-                    width: "14%",
-                    name: "Ngày tạo"
-                },
-            ]
-        }
-    }
-    componentWillMount() {
-        this.loadPage(true);
-    }
-    loadPage(item) {
+import { listUserUser } from '../../../../reducers/actions';
+import Table from '../../../../components/table';
+import { InputText } from '../../../../components/input';
+import PageSize from '../../components/pagination/pageSize';
+const UserHome = () => {
+    const [state, setState] = useState({
+        page: 0,
+        size: 10,
+    });
+    const [search, setSearch] = useState({
+        text: '',
+        identification: '',
+        phone: ''
+    });
+    const [sttAndTotal, setSttAndTotal] = useState({
+        stt: "",
+        total: 0
+    })
+    const [tableHeader] = useState([
+        {
+            width: "7%",
+            name: "STT"
+        },
+        {
+            width: "16%",
+            name: "Username"
+        },
+        {
+            width: "13%",
+            name: "Họ và tên"
+        },
+        {
+            width: "12%",
+            name: "Ngày sinh"
+        },
+        {
+            width: "12%",
+            name: "Giới tính"
+        },
+        {
+            width: "13%",
+            name: "CMND/Hộ chiếu"
+        },
+        {
+            width: "13%",
+            name: "SĐT"
+        },
+        {
+            width: "14%",
+            name: "Ngày tạo"
+        },
+    ])
+    const [listData, setListData] = useState([])
+    const [listDataView, setListDataView] = useState([])
+    const userApp = useSelector(state => state.userApp);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        loadPage();
+    }, []);
+
+    const loadPage = (action, item, fromApi) => {
+        let page = action === "page" ? item : action === "size" ? 0 : state.page
+        let size = action === "size" ? item : state.size
         let params = {
-            page: Number(this.state.page) + 1,
-            size: this.state.sizeSearch,
-            text: this.state.text.trim(),
-            status: this.state.status,
-            type: this.state.type,
-            identification: this.state.identification,
-            dob: this.state.dob ? moment(this.state.dob).format("YYYY-MM-DD") : ""
+            page: page + 1,
+            size: 99999,
+            type: 8
         }
-        if (this.props.userApp.listUserUser && this.props.userApp.listUserUser.length !== 0) {
+        if (userApp.listUserUser && userApp.listUserUser.length !== 0 && !fromApi) {
             let dataPage = []
-            for (let i = (params.page - 1) * this.state.size; i < params.page * this.state.size; i++) {
-                if (this.props.userApp.listUserUser[i]) {
-                    dataPage.push(this.props.userApp.listUserUser[i])
+            for (let i = page * size; i < (page + 1) * size; i++) {
+                if (userApp.listUserUser[i]) {
+                    dataPage.push(userApp.listUserUser[i])
                 }
             }
-            this.setState({
-                data: this.props.userApp.listUserUser,
-                dataSearch: this.props.userApp.listUserUser,
-                dataView: dataPage,
-                total: this.props.userApp.listUserUser.length,
-                stt: 1 + ((Number(this.state.page) >= 1 ? this.state.page : 1) - 1) * this.state.size
+            setListData(userApp.listUserUser)
+            setSttAndTotal({
+                total: userApp.listUserUser.length,
+                stt: 1 + page * size
             })
+            setState({
+                page: page,
+                size: size,
+            })
+            setListDataView(dataPage)
         } else {
-            userProvider.search(params, item ? true : false).then(s => {
+            userProvider.search(params).then(s => {
                 if (s && s.code === 0 && s.data) {
-                    this.props.dispatch(listUserUser(s.data.data))
-                    let stt = 1 + (params.page - 1) * this.state.size;
+                    dispatch(listUserUser(s.data.data))
                     let dataPage = []
-                    for (let i = (params.page - 1) * this.state.size; i < params.page * this.state.size; i++) {
+                    let stt = 1 + page * size;
+                    for (let i = page * size; i < (page + 1) * size; i++) {
                         if (s.data.data[i]) {
                             dataPage.push(s.data.data[i])
                         }
                     }
-                    this.setState({
-                        data: s.data.data,
-                        dataSearchList: s.data.data,
-                        dataView: dataPage,
+                    setState({
+                        page: page,
+                        size: size,
+                    })
+                    setListDataView(dataPage)
+                    setListData(s.data.data)
+                    setSttAndTotal({
                         stt,
                         total: s.data.total,
                     })
                 }
             }).catch(e => {
+
             })
         }
     }
 
-    handleChangePage = (event, action) => {
-        this.setState({
-            page: action,
-            selected: []
-        }, () => {
-            this.handleChangeFilter("", "page", action)
-        });
+    const handleChangePage = (event, action) => {
+        loadPage("page", action);
     };
-    handleChangeRowsPerPage = event => {
-        this.setState({ size: event.target.value }, () => {
-            this.handleChangeFilter("", "size", event.target.value)
-        });
+
+    const handleChangeRowsPerPage = event => {
+        loadPage("size", event.target.value);
     };
-    closeModal() {
-        this.loadPage();
-    }
-    handleChangeFilter(event, action, pageSize) {
-        const { text, identification, phone, data, page, size } = this.state;
-        let phoneSearch = phone
-        phoneSearch = phoneSearch.trim().toLocaleLowerCase().unsignText()
-        let identificationSearch = identification
-        identificationSearch = identification.trim().toLocaleLowerCase().unsignText()
+    const handleChangeFilter = (event, action) => {
+        const { text, phone, identification } = search;
+        let value = event && event.target ? event.target.value : event
         let textSearch = text
         textSearch = textSearch.trim().toLocaleLowerCase().unsignText()
-        let dataSearchList = []
-        if (action === 1) {
-            let index = event.target.value
-            index = index.trim().toLocaleLowerCase().unsignText()
-            let dataSearch = []
-            let dataView = []
-            if (phone.length === 0) {
-                if (identification.length === 0) {
-                    dataSearch = data
-                } else {
-                    dataSearch = (data || []).filter(item => {
-                        return (item.user.identification || "").toLocaleLowerCase().unsignText().indexOf(identificationSearch) !== -1
-                    })
-                }
-            } else {
-                if (identification.length === 0) {
-                    dataSearch = (data || []).filter(item => {
-                        return (item.user.phone || "").toLocaleLowerCase().unsignText().indexOf(phoneSearch) !== -1
-                    })
-                } else {
-                    let dataSearchIdentification = (data || []).filter(item => {
-                        return (item.user.identification || "").toLocaleLowerCase().unsignText().indexOf(identificationSearch) !== -1
-                    })
-                    dataSearch = (dataSearchIdentification || []).filter(item => {
-                        return (item.user.phone || "").toLocaleLowerCase().unsignText().indexOf(phoneSearch) !== -1
-                    })
-                }
-            }
-            dataSearchList = (dataSearch || []).filter(item => {
-                return (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(index) !== -1 || item.user.username.toLocaleLowerCase().unsignText().indexOf(index) !== -1
+        let dataView = [];
+        if (action === "text") {
+            value = value.trim().toLocaleLowerCase().unsignText()
+            dataView = listData.filter(item => {
+                return ((item.user.username || "").toLocaleLowerCase().unsignText().indexOf(value) !== -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(value) !== -1)
+                    && (item.user.identification || "").toLocaleLowerCase().unsignText().indexOf(identification) !== -1
+                    && (item.user.phone || "").toLocaleLowerCase().unsignText().indexOf(phone) !== -1
             })
-            for (let i = page * size; i < (page + 1) * size; i++) {
-                if (dataSearchList[i]) {
-                    dataView.push(dataSearchList[i])
-                }
-            }
-            this.setState({
-                text: event.target.value,
-                dataSearchList: dataSearchList,
-                dataView: dataView,
-                total: dataSearchList.length,
+        } else if (action === "identification") {
+            dataView = listData.filter(item => {
+                return ((item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1)
+                && (item.user.identification || "").toLocaleLowerCase().unsignText().indexOf(value) !== -1
+                && (item.user.phone || "").toLocaleLowerCase().unsignText().indexOf(phone) !== -1
+            })
+        } else if (action === "phone") {
+            dataView = listData.filter(item => {
+                return ((item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1)
+                && (item.user.identification || "").toLocaleLowerCase().unsignText().indexOf(identification) !== -1
+                && (item.user.phone || "").toLocaleLowerCase().unsignText().indexOf(value) !== -1
             })
         }
-        if (action === 2) {
-            let index = event.target.value
-            index = index.trim().toLocaleLowerCase().unsignText()
-            let dataSearch = []
-            let dataView = []
-            if (phone.length === 0) {
-                if (text.length === 0) {
-                    dataSearch = data
-                } else {
-                    dataSearch = (data || []).filter(item => {
-                        return (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1 || (item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1
-                    })
-                }
-            } else {
-                if (text.length === 0) {
-                    dataSearch = (data || []).filter(item => {
-                        return (item.user.phone || "").toLocaleLowerCase().unsignText().indexOf(phoneSearch) !== -1
-                    })
-                } else {
-                    let dataSearchText = (data || []).filter(item => {
-                        return (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1 || (item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1
-                    })
-                    dataSearch = (dataSearchText || []).filter(item => {
-                        return (item.user.phone || "").toLocaleLowerCase().unsignText().indexOf(phoneSearch) !== -1
-                    })
-                }
+        let object = []
+        for (let i = state.page * state.size; i < (state.page + 1) * state.size; i++) {
+            if (dataView[i]) {
+                object.push(dataView[i])
             }
-            dataSearchList = (dataSearch || []).filter(item => {
-                return (item.user.identification || "").trim().toLocaleLowerCase().unsignText().indexOf(index) !== -1
-            })
-            for (let i = page * size; i < (page + 1) * size; i++) {
-                if (dataSearchList[i]) {
-                    dataView.push(dataSearchList[i])
-                }
-            }
-            this.setState({
-                identification: event.target.value,
-                dataSearchList: dataSearchList,
-                dataView: dataView,
-                total: dataSearchList.length,
-            })
         }
-        if (action === 3) {
-            let index = event.target.value
-            index = index.trim().toLocaleLowerCase().unsignText()
-            let dataSearch = []
-            let dataView = []
-            if (identification.length === 0) {
-                if (text.length === 0) {
-                    dataSearch = data
-                } else {
-                    dataSearch = (data || []).filter(item => {
-                        return (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1 || (item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1
-                    })
-                }
-            } else {
-                if (text.length === 0) {
-                    dataSearch = (data || []).filter(item => {
-                        return (item.user.identification || "").toLocaleLowerCase().unsignText().indexOf(identificationSearch) !== -1
-                    })
-                } else {
-                    let dataSearchText = (data || []).filter(item => {
-                        return (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1 || (item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1
-                    })
-                    dataSearch = (dataSearchText || []).filter(item => {
-                        return (item.user.identification || "").toLocaleLowerCase().unsignText().indexOf(identificationSearch) !== -1
-                    })
-                }
-            }
-            dataSearchList = (dataSearch || []).filter(item => {
-                return (item.user.phone || "").trim().toLocaleLowerCase().unsignText().indexOf(index) !== -1
-            })
-            for (let i = page * size; i < (page + 1) * size; i++) {
-                if (dataSearchList[i]) {
-                    dataView.push(dataSearchList[i])
-                }
-            }
-            this.setState({
-                phone: event.target.value,
-                dataSearchList: dataSearchList,
-                dataView: dataView,
-                total: dataSearchList.length,
-            })
-        }
-        if (action === "page") {
-            let dataView = []
-            for (let i = pageSize * size; i < (pageSize + 1) * size; i++) {
-                if (this.state.dataSearchList[i]) {
-                    dataView.push(this.state.dataSearchList[i])
-                }
-            }
-            this.setState({
-                dataView: dataView,
-                page: pageSize,
-                stt: 1 + pageSize * this.state.size
-            })
-        }
-        if (action === "size") {
-            let dataView = []
-            for (let i = page * pageSize; i < (page + 1) * pageSize; i++) {
-                if (this.state.dataSearchList[i]) {
-                    dataView.push(this.state.dataSearchList[i])
-                }
-            }
-            this.setState({
-                dataView: dataView,
-                size: pageSize
-            })
-        }
+        setSearch({
+            text: action === "text" ? event.target.value : search.text,
+            phone: action === "phone" ? event.target.value : search.phone,
+            identification: action === "identification" ? event.target.value : search.identification
+        });
+        setListDataView(object);
+        setSttAndTotal({
+            stt: 1,
+            total: dataView.length
+        })
     }
-    setTplModal() {
-        const { identification, text, phone, type } = this.state;
+    const setTplModal = () => {
+        const { phone, identification, text } = search;
         return (
             <>
                 <InputText
                     title="Họ và tên"
                     placeholder="Username/Họ và tên"
                     value={text}
-                    onChangeValue={(event) => this.handleChangeFilter(event, 1)}
+                    onChange={(event) => handleChangeFilter(event, 'text')}
                 />
                 <InputText
                     title="CMND/Hộ chiếu"
-                    placeholder="Nhập sổ"
+                    placeholder="Nhập số"
                     value={identification}
-                    onChangeValue={(event) => this.handleChangeFilter(event, 2)}
+                    onChange={(event) => handleChangeFilter(event, 'identification')}
                 />
                 <InputText
                     title="Số điện thoại"
-                    placeholder="Nhập sổ"
+                    placeholder="Nhập số"
                     value={phone}
-                    onChangeValue={(event) => this.handleChangeFilter(event, 3)}
-                />
-                <SelectText
-                    title="Loại tài khoản"
-                    listOption={[{ id: 3, name: "Tất cả" }, ...DataContants.listUser]}
-                    placeholder={'Tìm kiếm'}
-                    selected={type}
-                    getIdObject={(item) => {
-                        return item.id;
-                    }}
-                    getLabelObject={(item) => {
-                        return item.name
-                    }}
-                    onChangeSelect={(lists, ids) => {
-                        this.handleChangeFilter(ids, 2)
-                    }}
+                    onChange={(event) => handleChangeFilter(event, 'phone')}
                 />
             </>
         )
     }
-    tableBody() {
-        const { dataView, stt } = this.state;
+    const tableBody = () => {
         return (
             <>
                 {
-                    dataView && dataView.length ? dataView.map((item, index) => {
+                    listDataView && listDataView.length ? listDataView.map((item, index) => {
                         return (
                             <TableRow
                                 hover
                                 key={index}
                                 tabIndex={-1}>
-                                <TableCell>{index + stt}</TableCell>
+                                <TableCell>{index + sttAndTotal.stt}</TableCell>
                                 <TableCell>{item.user.username}</TableCell>
                                 <TableCell>{item.user.name}</TableCell>
                                 <TableCell>{moment(item.user.dob).format("DD-MM-YYYY")}</TableCell>
@@ -365,7 +217,7 @@ class User extends Component {
                         <TableRow>
                             <TableCell colSpan="8">
                                 {
-                                    (this.state.text || this.state.identification || this.state.phone) ? 'Không có kết quả phù hợp' : 'Không có dữ liệu'
+                                    (search.text || search.identification || search.phone) ? 'Không có kết quả phù hợp' : 'Không có dữ liệu'
                                 }
                             </TableCell>
                         </TableRow>
@@ -373,59 +225,28 @@ class User extends Component {
             </>
         )
     }
-    pagination() {
-        const { total, size, page } = this.state;
+    const pagination = () => {
         return (
-            <PageSize
-                colSpan={8}
-                total={total}
-                size={size}
-                page={page}
-                handleChangePage={this.handleChangePage}
-                handleChangeRowsPerPage={this.handleChangeRowsPerPage}
-            />
+            <>
+                <PageSize
+                    colSpan={8}
+                    total={sttAndTotal.total}
+                    size={state.size}
+                    page={state.page}
+                    handleChangePage={handleChangePage}
+                    handleChangeRowsPerPage={handleChangeRowsPerPage}
+                />
+            </>
         )
     }
-    render() {
-        const { tableHeader } = this.state;
-        return (
-            <Table
-                titlePage="Tài khoản người bệnh"
-                setTplModal={this.setTplModal()}
-                tableHeader={tableHeader}
-                tableBody={this.tableBody()}
-                pagination={this.pagination()}
-            />
-        );
-    }
+    return (
+        <Table
+            titlePage="Tài khoản CSYT"
+            setTplModal={setTplModal()}
+            tableHeader={tableHeader}
+            tableBody={tableBody()}
+            pagination={pagination()}
+        />
+    );
 }
-
-function mapStateToProps(state) {
-    return {
-        userApp: state.userApp
-    };
-}
-
-const styles = theme => ({
-    root: {
-        width: '100%',
-        marginTop: theme.spacing.unit * 3,
-    },
-    table: {
-        minWidth: 2048,
-    },
-    tableWrapper: {
-        overflowX: 'auto',
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        width: 200,
-    },
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-});
-
-export default withStyles(styles)(connect(mapStateToProps)(User));
+export default UserHome;

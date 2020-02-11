@@ -12,8 +12,7 @@ export default {
             (param.patientCode ? '&patientCode=' + param.patientCode : '') +
             (param.deleted ? '&deleted=' + param.deleted : '') +
             (param.code ? '&code=' + param.code : '') +
-            (param.status ? '&status=' + param.status : '&status=' + -1) +
-            (param.cancel ? '&cancel=' + param.cancel : '&cancel=' + -1)
+            (param.status ? '&status=' + param.status : '&status=' + -1)
 
         return new Promise((resolve, reject) => {
             clientUtils.requestApi("get", constants.api.card.search + parameters, {}).then(x => {
