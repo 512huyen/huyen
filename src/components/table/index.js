@@ -15,7 +15,9 @@ function TableComponent({ classes, setTplModal, button, titlePage, tableHeader, 
       <Paper className={classes.root + " page-header"}>
         <div className={classes.tableWrapper + ' page-wrapper'}>
           <div className="page-title">
-            <h2 className="title-page">{titlePage} </h2>
+            {
+              titlePage ? <h2 className="title-page">{titlePage} </h2> : null
+            }
             {button}
           </div>
           <Search

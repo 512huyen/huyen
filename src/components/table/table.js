@@ -12,10 +12,13 @@ function TableHome({ titlePage, nameHospital, button, tableHeader, tableBody, pa
     return (
         <>
             <div className="page-title">
-                <h2 className="title-page color-header-card">
-                    {titlePage}
-                    {nameHospital ? <span style={{ textTransform: "none" }} > ({nameHospital})</span> : null}
-                </h2>
+                {
+                    titlePage || nameHospital ?
+                        <h2 className="title-page color-header-card">
+                            {titlePage}
+                            {nameHospital ? <span style={{ textTransform: "none" }} > ({nameHospital})</span> : null}
+                        </h2> : null
+                }
                 {button}
             </div>
             <Search

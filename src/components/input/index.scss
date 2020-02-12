@@ -31,6 +31,11 @@
         outline: 0;
         box-shadow: 0 0 2px 1px #20a8d8e3;
     }
+    input:disabled {
+        background-color: #e4e7ea;
+        opacity: 1;
+        border: 1px solid #0000003b;
+    }
 }
 .search-type-modal {
     width: 100% !important;

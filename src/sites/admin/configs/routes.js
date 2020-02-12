@@ -34,11 +34,11 @@ const Card = Loadable({
 })
 const CardUser = Loadable({
   loader: () => import('../containers/card-user/card-user'),
-  // loader: () => import('../containers/card-user'),
   loading: Loading,
 })
 const TransactionHistory = Loadable({
   loader: () => import('../containers/transaction-history/transaction-history'),
+  // loader: () => import('../containers/transaction-history'),
   loading: Loading,
 })
 const UserInfo = Loadable({

@@ -54,3 +54,6 @@ table tr {
 .card-no-input .search-type .error-dob {
   display: none;
 }
+.color-border-user-card {
+  border-right: 2px solid rgb(33,152,188);
+}

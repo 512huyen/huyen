@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import './index.scss';
-function InputText({ placeholder, value, onChange, title, validation }) {
+function InputText({ placeholder, value, onChange, title, validation, disabled }) {
     return (
         <div className="search-type">
             <div className="title-search-input">{title}</div>
@@ -11,6 +11,7 @@ function InputText({ placeholder, value, onChange, title, validation }) {
                 placeholder={placeholder}
                 className="search-input-custom"
                 onChange={onChange}
+                disabled={disabled}
             />
             <div className="error-dob">{validation}</div>
         </div>
