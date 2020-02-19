@@ -12,7 +12,7 @@ import bankProvider from '../../../../data-access/bank-provider';
 import { listHospital } from '../../../../reducers/actions';
 import ConfirmDialog from '../../components/confirm/';
 import Table from '../../../../components/table/table';
-import TableCard from '../../../../components/table/tableCard';
+import TableComponent from '../../../../components/table';
 import { SelectText } from '../../../../components/select';
 import { DateTimeBoxSearch } from '../../../../components/date';
 import PageSize from '../../components/pagination/pageSize';
@@ -441,8 +441,9 @@ function Card() {
         )
     }
     return (
-        <TableCard
+        <TableComponent
             tableBody={tableBody()}
+            tableBodyAll={true}
         />
     );
 }

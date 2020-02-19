@@ -9,7 +9,7 @@ import ModalDetail from './detail-transaction-history';
 import DataContants from '../../../../config/data-contants';
 import { listHospital } from '../../../../reducers/actions';
 import Table from '../../../../components/table/table';
-import TableCard from '../../../../components/table/tableCard';
+import TableComponent from '../../../../components/table';
 import { SelectText } from '../../../../components/select';
 import { DateTimeBoxSearch } from '../../../../components/date';
 import PageSize from '../../components/pagination/pageSize';
@@ -60,10 +60,7 @@ function TransactionHistory({ classes }) {
         page: 0,
         size: 10,
     });
-    const [sttAndTotal, setSttAndTotal] = useState({
-        stt: "",
-        total: 0
-    })
+    const [total, setTotal] = useState(0);
     const [paymentAgentId, setPaymentAgentId] = useState("");
     const [fromDate, setFromDate] = useState("");
     const [toDate, setToDate] = useState("");
@@ -93,9 +90,9 @@ function TransactionHistory({ classes }) {
     const loadPage = (item, action) => {
         let page = action === "page" ? item : action === "size" ? 0 : state.page
         let size = action === "size" ? item : state.size
-        let paymentMethodSearch = action === "paymentMethod" ? item : state.paymentMethod
-        let paymentAgentIdSearch = action === "paymentAgentId" ? item : state.paymentAgentId
-        let typeSearch = action === "type" ? item : state.type
+        let paymentMethodSearch = action === "paymentMethod" ? item : paymentMethod
+        let paymentAgentIdSearch = action === "paymentAgentId" ? item : paymentAgentId
+        let typeSearch = action === "type" ? item : type
         let fromDateSearch = action === "fromDate" ? item : fromDate
         let toDateSearch = action === "toDate" ? item : toDate
         let amountSearch = action === "amount" ? item : amount
@@ -119,19 +116,12 @@ function TransactionHistory({ classes }) {
             hospitalId: action === "hospitalId" ? item : hospitalId,
         }
         if (params.page === 0) {
-            setSttAndTotal({
-                stt: 0,
-                total: 0,
-            })
+            setTotal(0);
             setData([])
         } else {
             transactionProvider.search(params).then(s => {
                 if (s && s.code === 0 && s.data) {
-                    let stt = 1 + (params.page - 1) * params.size;
-                    setSttAndTotal({
-                        stt,
-                        total: s.data.total,
-                    });
+                    setTotal(s.data.total);
                     setState({
                         page: page,
                         size: size,
@@ -479,7 +469,7 @@ function TransactionHistory({ classes }) {
             <>
                 <PageSize
                     colSpan={9}
-                    total={sttAndTotal.total}
+                    total={total}
                     size={state.size}
                     page={state.page}
                     handleChangePage={handleChangePage}
@@ -490,8 +480,9 @@ function TransactionHistory({ classes }) {
         )
     }
     return (
-        <TableCard
+        <TableComponent
             tableBody={tableBody()}
+            tableBodyAll={true}
         />
     );
 }

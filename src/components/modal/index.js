@@ -1,10 +1,9 @@
-import React, { Children } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import './index.scss';
 import Clear from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '../button'
 function getModalStyle(item, item2) {
   return {
     top: `10%`,
@@ -42,7 +41,7 @@ const styles = theme => ({
     paddingBottom: 18
   }
 });
-function SimpleModal({ classes, Children, isOpen, toggle, title, buttonFooter, width, padding, popupDetail }) {
+function SimpleModal({ classes, Children, isOpen, toggle, title, buttonFooter, width, padding, popupDetail, styleName, titleName }) {
   const [modalStyle] = React.useState(getModalStyle(width, padding));
   const [modalStyleButton] = React.useState(getModalStyleButton(padding));
   return (
@@ -59,6 +58,7 @@ function SimpleModal({ classes, Children, isOpen, toggle, title, buttonFooter, w
               <Clear />
             </IconButton>
             <div className={classes.title}>{title}</div>
+            <div style={styleName}>{titleName}</div>
           </div>
           {
             popupDetail ?
@@ -69,11 +69,7 @@ function SimpleModal({ classes, Children, isOpen, toggle, title, buttonFooter, w
                 {Children}
               </div>
           }
-
           <div className="popup-footer">
-            <div className="row">
-
-            </div>
             {buttonFooter}
           </div>
         </div>

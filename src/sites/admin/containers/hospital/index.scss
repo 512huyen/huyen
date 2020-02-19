@@ -1,0 +1,192 @@
+.hospital {
+    margin-top: 25px;
+    p,h1,h2{
+        margin: 0;
+    }
+    .main-info {
+        height: 100%;
+        .list-bank {
+            clear: both;
+            .bank-item{
+                width: 294px;
+                height: 264px;
+                position: relative;
+                border-radius: 6px;
+                padding: 1px 1px 0 1px;
+                float: left;
+                margin-right: 26px;
+                margin-bottom: 33px;
+                background: linear-gradient(to right, #3927b0, rgb(127, 73, 195));
+                .bank-top{
+                    border-radius: 6px;
+                    background-color: rgb(255, 255, 255);
+                    padding: 6px 11px;
+                    justify-content: space-between;
+                    height: 124px;
+                    position: relative;
+                    .bank-top-header{
+                        display: flex;
+                        .bank-img {
+                            max-width: 206px;
+                            max-height: 61px;
+                        }
+                        .bank-right{
+                            text-align: right;
+                            padding-top: 6px;
+                            margin-left: auto;
+                        }
+                    }
+                    .bank-type-name {
+                        position: absolute;
+                        bottom: 11px;
+                        .bank-type {
+                            font-size: 13px;
+                            color: rgb(0, 0, 0);
+                            padding-top: 5px;
+                            .bank-name {
+                                color: black;
+                                font-weight: 700;
+                                text-transform: uppercase;
+                                font-size: 16px !important;
+                            }
+                            .bank-active {
+                                color: #27ae60;
+                                font-weight: 700;
+                                font-size: 13px !important;
+                                margin-top: -5px;
+                            }
+                        }
+                    }
+                }
+                .bank-info {
+                    padding: 10px 10px 20px 16px;
+                    position: relative;
+                    cursor: pointer;
+                    .bank-title{
+                        font-size: 13px;
+                        font-weight: 700;
+                        color: white;
+                    }
+                    .hospital-bank-item {
+                        margin-left: 12px;
+                        .bank-inner {
+                            font-size: 13px;
+                            color: rgb(255, 255, 255);
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            font-weight: 400 !important;
+                            .hospital-bank-index {
+                                font-size: 12px;
+                                color: black;
+                                font-weight: 700 !important;
+                                text-decoration: underline;
+                                cursor: pointer;
+                            }
+                        }
+                    }  
+                }
+                .bank-footer {
+                    cursor: pointer;
+                    color: #20a8d8;
+                    text-decoration: underline;
+                    font-weight: 600;
+                    margin-left: 16px;
+                    position: absolute;
+                    bottom: 8px;
+                    font-size: 13px;
+                }
+            }
+            .bank-inactive{
+                background: rgb(155, 155, 155) !important;
+                .bank-type {
+                    margin-top: -4px !important;
+                    font-size: 13px;
+                    color: rgb(0, 0, 0);
+                    padding-top: 5px;
+                    .bank-active {
+                        color: rgb(208, 2, 27);
+                    }
+                }
+                .bank-info {
+                    .bank-title, .bank-inner {
+                        color: #000 !important;
+                    }
+                }
+                .bank-footer{
+                    color: #000;
+                }
+            }
+        }
+    }
+}
+.color-border-user-card {
+    .search-type-detail {
+        padding: 4px 0px;
+    }
+}
+.group-detail {
+    padding-bottom: 32px;
+    margin-bottom: 15px;
+    .hospital-detail-paymentMethed {
+        padding-left: 40px;
+        .hospital-title-index {
+            font-size: 15px;
+        }
+        .detail-item {
+            padding-bottom: 7px;
+            .content-detail {
+                margin-bottom: 0 !important;
+                font-weight: 700;
+            }
+            .detail-item-left {
+                padding-left: 18px !important;
+                .label-detail {
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+}
+.popup-body {
+    .table-his-hospital {
+        font-family: 'Open Sans', sans-serif !important;
+        width: 100%;
+        // border: 1px solid rgba(224, 224, 224, 1);
+        border-radius: 6px;
+        margin-top: 0px;
+        overflow: hidden;
+        margin-bottom: 20px !important;
+        box-shadow: 0px 1px 6px #0000003d;
+        margin-top: 15px;
+        thead {
+            tr {
+                background-color: #53657b !important;
+                border-top: 1px solid rgb(151,151,151);
+                height: 42px !important;
+                td {
+                    font-size: 14px !important;
+                    font-weight: 700 !important;
+                    height: 42px !important;
+                    line-height: 33px;
+                    color: white !important;
+                    padding: 4px 7px 4px 9px !important;
+                    text-align: center;
+                }
+            }
+        }
+        tbody {
+            tr:nth-child(2n) {
+                background-color: rgb(246,249,251);
+            }
+            td {
+                font-size: 14px !important;
+                height: 54px !important;
+                color: black !important;
+                padding: 4px 7px 4px 9px !important;
+                border: 1px solid #dfd8d8de;
+            }
+        }
+    }
+}

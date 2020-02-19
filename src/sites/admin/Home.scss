@@ -150,13 +150,13 @@ html:not([dir="rtl"]) .sidebar-lg-show.sidebar-fixed .main, html:not([dir="rtl"]
 }
 html:not([dir="rtl"]) .sidebar {
     margin-left: -240px !important;
-  }
-   html:not([dir="rtl"]) .sidebar-lg-show .sidebar{
+}
+html:not([dir="rtl"]) .sidebar-lg-show .sidebar{
     margin-left:  0 !important;
-  }
-  html:not([dir="rtl"]) .sidebar-minimized .sidebar {
+}
+html:not([dir="rtl"]) .sidebar-minimized .sidebar {
     width: 50px !important;
-  }
-  html:not([dir="rtl"]) .sidebar-lg-show.sidebar-fixed.sidebar-minimized .main, html:not([dir="rtl"]) .sidebar-lg-show.sidebar-fixed.sidebar-minimized .app-footer, html:not([dir="rtl"]) .sidebar-show.sidebar-fixed.sidebar-minimized .main, html:not([dir="rtl"]) .sidebar-show.sidebar-fixed.sidebar-minimized .app-footer{
+}
+html:not([dir="rtl"]) .sidebar-lg-show.sidebar-fixed.sidebar-minimized .main, html:not([dir="rtl"]) .sidebar-lg-show.sidebar-fixed.sidebar-minimized .app-footer, html:not([dir="rtl"]) .sidebar-show.sidebar-fixed.sidebar-minimized .main, html:not([dir="rtl"]) .sidebar-show.sidebar-fixed.sidebar-minimized .app-footer{
     margin-left: 50px !important;
-  }
+}

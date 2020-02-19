@@ -26,6 +26,7 @@ const PaymentAgent = Loadable({
 })
 const Hospital = Loadable({
   loader: () => import('../containers/hospital/hospital'),
+  // loader: () => import('../containers/hospital'),
   loading: Loading,
 })
 const Card = Loadable({
@@ -38,7 +39,6 @@ const CardUser = Loadable({
 })
 const TransactionHistory = Loadable({
   loader: () => import('../containers/transaction-history/transaction-history'),
-  // loader: () => import('../containers/transaction-history'),
   loading: Loading,
 })
 const UserInfo = Loadable({

@@ -19,10 +19,10 @@ table tr {
 ::placeholder {
   font-weight: 400 !important;
 }
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
+:-ms-input-placeholder { 
   font-weight: 400 !important;
 }
-::-ms-input-placeholder { /* Microsoft Edge */
+::-ms-input-placeholder {
   font-weight: 400 !important;
 }
 .trim-text {

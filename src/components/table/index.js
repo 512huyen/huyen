@@ -9,36 +9,44 @@ import { withStyles } from '@material-ui/core/styles';
 import TableFooter from '@material-ui/core/TableFooter';
 import Search from '../search';
 import './index.scss';
-function TableComponent({ classes, setTplModal, button, titlePage, tableHeader, tableBody, pagination }) {
+function TableComponent({ classes, setTplModal, button, titlePage, tableHeader, tableBody, tableBodyAll, tableBodyNoTable, pagination }) {
   return (
     <div className="color-background-control">
       <Paper className={classes.root + " page-header"}>
         <div className={classes.tableWrapper + ' page-wrapper'}>
-          <div className="page-title">
-            {
-              titlePage ? <h2 className="title-page">{titlePage} </h2> : null
-            }
-            {button}
-          </div>
-          <Search
-            tpl={setTplModal} />
-          <Table aria-labelledby="tableTitle" className="style-table-new">
-            <TableHead>
-              <TableRow>
+          {
+            tableBodyAll ? <>{tableBody}</> :
+              <>
+                <div className="page-title">
+                  {
+                    titlePage ? <h2 className="title-page">{titlePage} </h2> : null
+                  }
+                  {button}
+                </div>
+                <Search
+                  tpl={setTplModal} />
                 {
-                  tableHeader && tableHeader.length ? tableHeader.map((item, index) => {
-                    return (
-                      <TableCell key={index} style={{ width: item.width }}>{item.name}</TableCell>
-                    )
-                  }) : null
+                  tableBodyNoTable ? <>{tableBodyNoTable}</> :
+                    <Table aria-labelledby="tableTitle" className="style-table-new">
+                      <TableHead>
+                        <TableRow>
+                          {
+                            tableHeader && tableHeader.length ? tableHeader.map((item, index) => {
+                              return (
+                                <TableCell key={index} style={{ width: item.width }}>{item.name}</TableCell>
+                              )
+                            }) : null
+                          }
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>{tableBody}</TableBody>
+                      <TableFooter>
+                        <TableRow className="pagination-custom">{pagination}</TableRow>
+                      </TableFooter>
+                    </Table>
                 }
-              </TableRow>
-            </TableHead>
-            <TableBody>{tableBody}</TableBody>
-            <TableFooter>
-              <TableRow className="pagination-custom">{pagination}</TableRow>
-            </TableFooter>
-          </Table>
+              </>
+          }
         </div>
       </Paper>
     </div>

@@ -68,7 +68,7 @@ function InputButton({ title, tpl, width, validation }) {
         </div>
     )
 }
-function InputDetail({ title, value, width, style }) {
+function InputDetail({ title, value, width, style, onClick }) {
     return (
         <div className="search-type search-type-detail">
             <div className="row">
@@ -76,7 +76,7 @@ function InputDetail({ title, value, width, style }) {
                     <span className="label-detail">{title}</span>
                 </div>
                 <div className={"col-md-" + (12 - width)}>
-                    <div className="content-detail" style={style}>{value}</div>
+                    <div className="content-detail" onClick={onClick} style={style}>{value}</div>
                 </div>
             </div>
         </div>
