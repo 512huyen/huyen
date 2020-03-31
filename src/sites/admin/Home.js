@@ -164,49 +164,8 @@ class Home extends Component {
         this.setState({ menus: [...this.state.menus] })
     }
     componentDidMount() {
-        // this.getUserAccess();
         this.setState({ menus: this.getMenu() })
     }
-    // getUserAccess = () => {
-    //     let du = new DeviceUUID().parse();
-    //     let dua = [
-    //         du.language,
-    //         du.platform,
-    //         du.os,
-    //         du.cpuCores,
-    //         du.isAuthoritative,
-    //         du.silkAccelerated,
-    //         du.isKindleFire,
-    //         du.isDesktop,
-    //         du.isMobile,
-    //         du.isTablet,
-    //         du.isWindows,
-    //         du.isLinux,
-    //         du.isLinux64,
-    //         du.isMac,
-    //         du.isiPad,
-    //         du.isiPhone,
-    //         du.isiPod,
-    //         du.isSmartTV,
-    //         du.pixelDepth,
-    //         du.isTouchScreen
-    //     ];
-    //     // let lastSend = storageMgr.read("LAST_SEND_COUNTER");
-    //     let deviceId = du.hashMD5(dua.join(':'));
-    //     let data = {
-    //         deviceId: deviceId
-    //     }
-    //     // if (!lastSend || new Date().getTime() - lastSend > 300000) {
-    //     userProvider.userAccess(data).then(s => {
-    //         if (s && s.data && s.code === 0) {
-    //             // storageMgr.write("LAST_SEND_COUNTER", new Date().getTime());
-    //         }
-    //     }).catch(e => {
-
-    //     })
-    //     // }
-
-    // }
     render() {
         const { classes } = this.props;
         return (
