@@ -1,14 +1,14 @@
 const express = require('express');
 const nextJS = require('next');
 const { isBlockedPage, isInternalUrl } = require('next-server/dist/server/utils');
-const backend = require('./src/backend');
+// const backend = require('./src/backend');
 
 async function start() {
   const dev = process.env.NODE_ENV !== 'production';
   const app = nextJS({ dev });
   const server = express();
   await app.prepare();
-  backend.init(server);
+  // backend.init(server);
 
   server.use(express.static(__dirname + '/public'));
   // Redirect all requests to main entrypoint pages/index.js

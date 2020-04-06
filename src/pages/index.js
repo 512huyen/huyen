@@ -47,17 +47,17 @@ function App() {
       path: ["/:function1", "/:function1/:id", "/:function1/:function2/:id"],
       component: User
     },
-    {
-      path: "/",
-      component: connect(state => {
-        return {
-          auth: state.auth.auth
-        };
-      })(props => {
-        if (props.auth.employees) window.location.href = "/admin";
-        return <div></div>;
-      })
-    }
+    // {
+    //   path: "/",
+    //   component: connect(state => {
+    //     return {
+    //       auth: state.auth.auth
+    //     };
+    //   })(props => {
+    //     if (props.auth.employees) window.location.href = "/admin";
+    //     return <div></div>;
+    //   })
+    // }
   ];
 
   return (

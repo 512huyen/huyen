@@ -1173,13 +1173,13 @@ function index(props) {
                     <a
                         href="#"
                         data-toggle="dropdown"
-                        title={props.auth.employees.isofhMail}
+                        title={props.auth.user.isofhMail}
                         className="header-icon d-flex align-items-center justify-content-center ml-2"
                     >
                         <img
                             src="/img/demo/avatars/avatar-admin.png"
                             className="profile-image rounded-circle"
-                            alt={props.auth.employees.name}
+                            alt={props.auth.user.name}
                         />
                     </a>
                     <div className="dropdown-menu dropdown-menu-animated dropdown-lg">
@@ -1189,15 +1189,15 @@ function index(props) {
                                     <img
                                         src="/img/demo/avatars/avatar-admin.png"
                                         className="rounded-circle profile-image"
-                                        alt={props.auth.employees.name}
+                                        alt={props.auth.user.name}
                                     />
                                 </span>
                                 <div className="info-card-text">
                                     <div className="fs-lg text-truncate text-truncate-lg">
-                                        {props.auth.employees.name}
+                                        {props.auth.user.name}
                   </div>
                                     <span className="text-truncate text-truncate-md opacity-80">
-                                        {props.auth.employees.isofhMail}
+                                        {props.auth.user.isofhMail}
                   </span>
                                 </div>
                             </div>

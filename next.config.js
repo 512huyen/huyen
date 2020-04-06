@@ -19,6 +19,7 @@ module.exports = withCSS(withSass(withImages(withSourceMaps({
     config.resolve.alias['@strings'] = path.join(__dirname, 'src/resources/strings')
     config.resolve.alias['@styles'] = path.join(__dirname, 'src/resources/styles')
     config.resolve.alias['@data-access'] = path.join(__dirname, 'src/data-access')
+    config.resolve.alias['@config'] = path.join(__dirname, 'src/config')
     config.resolve.alias['@utils'] = path.join(__dirname, 'src/utils')
     config.resolve.alias['@redux-store'] = path.join(__dirname, 'src/redux-store')
     config.resolve.alias['@actions'] = path.join(__dirname, 'src/redux-store/actions')

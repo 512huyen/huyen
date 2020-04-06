@@ -50,6 +50,10 @@ module.exports = {
     },
     file: {
       upload: "/api/file/upload-file"
-    }
+    },
+    formTypes: "/api/signer/v1/form-types",
+    forms: "/api/signer/v1/forms",
+    login: "/api/signer/v1/auth/login",
+    signPrivileges: "/api/signer/v1/sign-privileges"
   }
 };

@@ -26,77 +26,35 @@ function index(props) {
 
   const routers = [
     {
-      path: ["/time-sheet/config"],
+      path: ["/admin/form-types"],
       component: Loadable({
-        loader: () => import("@admin/containers/timesheet/config"),
+        loader: () => import("@admin/containers/formTypes"),
         loading: Loading
       })
     },
     {
-      path: ["/time-sheet/calendar"],
+      path: ["/admin/form-types/edit/:id", "/admin/form-types/create"],
       component: Loadable({
-        loader: () => import("@admin/containers/timesheet/calendar"),
+        loader: () => import("@admin/containers/formTypes/create"),
         loading: Loading
       })
     },
     {
-      path: ["/time-sheet/commit"],
+      path: ["/admin/forms"],
       component: Loadable({
-        loader: () => import("@admin/containers/timesheet/create"),
+        loader: () => import("@admin/containers/forms"),
         loading: Loading
       })
     },
     {
-      path: ["/admin", "/admin/dashboard"],
+      path: ["/admin/forms/edit/:id", "/admin/forms/create"],
       component: Loadable({
-        loader: () => import("@admin/containers/dashboard"),
+        loader: () => import("@admin/containers/forms/create"),
         loading: Loading
       })
     },
-    {
-      path: ["/admin/job"],
-      component: Loadable({
-        loader: () => import("@admin/containers/job"),
-        loading: Loading
-      })
-    },
-    {
-      path: ["/admin/job/edit/:id", "/admin/job/create"],
-      component: Loadable({
-        loader: () => import("@admin/containers/job/create"),
-        loading: Loading
-      })
-    },
-    {
-      path: ["/admin/project"],
-      component: Loadable({
-        loader: () => import("@admin/containers/project"),
-        loading: Loading
-      })
-    },
-    {
-      path: ["/admin/project/edit/:id", "/admin/project/create"],
-      component: Loadable({
-        loader: () => import("@admin/containers/project/create"),
-        loading: Loading
-      })
-    },
-    {
-      path: ["/admin/product"],
-      component: Loadable({
-        loader: () => import("@admin/containers/product"),
-        loading: Loading
-      })
-    },
-    {
-      path: ["/admin/product/edit/:id", "/admin/product/create"],
-      component: Loadable({
-        loader: () => import("@admin/containers/product/create"),
-        loading: Loading
-      })
-    }
   ];
-  if (!props.auth || !props.auth.employees) {
+  if (!props.auth) {
     props.history.push("/login");
     return null;
   }

@@ -50,11 +50,11 @@ function onLogin(username, password) {
               snackbar.show(constants.text.user.success_login, "success");
               dispath(
                 updateData({
-                  auth: res.data,
+                  auth: res.data.data,
                   detail: null
                 })
               );
-              clientUtils.auth = res.data.loginToken || "";
+              clientUtils.auth =  res.data.data && res.data.data.authentication && res.data.data.authentication.accessToken || "";
               resolve(res.data);
               break;
             case 3:

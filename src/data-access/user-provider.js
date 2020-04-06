@@ -7,12 +7,12 @@ import clientUtils from "../utils/client-utils";
 export default {
   login(username, password) {
     let object = {
-      username,
-      password: password.toMd5()
+      usernameOrEmail: username,
+      password: password,
     };
     return new Promise((resolve, reject) => {
       clientUtils
-        .requestApi("post", constants.api.user.login, object)
+        .requestApi("post", constants.api.login, object)
         .then(x => {
           resolve(x);
         })

@@ -2,7 +2,49 @@ import axios from 'axios';
 
 // const server_url = "https://api.timesheet.isofh.vn";
 // const server_url = "http://localhost:3000";
-const server_url = "";
+
+const getServerUrl = () => {
+    const domain = global.origin;
+    switch (domain) {
+        case 'http://10.0.0.94:2141': // test 110
+            return 'https://1103.test.isofh.vn';
+        case 'http://localhost:3000': // dev
+            return 'https://api.emr.test.isofh.vn';
+        case 'http://localhost:3001': // dev
+            return 'https://api.emr.test.isofh.vn';
+        // return 'https://1103.test.isofh.vn';
+        case 'http://172.17.50.163:2391': // dhy
+            return 'http://172.17.50.163:8983';
+        case 'http://172.17.50.164:2391': // dhy
+            return 'http://172.17.50.164:8983';
+        case 'http://172.17.50.160:2391': // dhy
+            return 'http://172.17.50.160:8983';
+        case 'http://192.168.55.163:2391': // dhy
+            return 'http://192.168.55.163:8983';
+        case 'http://192.168.55.164:2391': // dhy
+            return 'http://192.168.55.164:8983';
+        case 'http://192.168.55.160:2391': // dhy
+            return 'http://192.168.55.160:8983';
+        case 'https://signer.production.isofh.vn': // dhy
+            return 'https://api.emr.production.isofh.vn';
+        case 'http://10.0.0.94:2391': // stable
+            return 'http://10.0.0.94:2301';
+        case 'https://signer.stable.isofh.vn': // stable
+            return 'https://api.emr.stable.isofh.vn';
+        case 'https://signer.test.isofh.vn': // test
+            return 'https://api.emr.test.isofh.vn';
+        case 'http://10.0.0.94:2191': // test
+            return 'http://10.0.0.94:2101';
+        case 'https://signer.demo.isofh.vn': // test
+            return 'https://api.emr.demo.isofh.vn';
+        case 'http://10.0.0.94:2591': // demo
+            return 'http://10.0.0.94:2501';
+
+        default:
+            return 'https://api.emr.test.isofh.vn';
+    }
+};
+const server_url = getServerUrl();
 
 String.prototype.absoluteUrl = String.prototype.absolute || function (defaultValue) {
     var _this = this.toString();
@@ -109,7 +151,7 @@ export default {
                 {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': this.auth,
+                    'Authorization':  this.auth,
                     // 'MobileMode': 'vendorPortal'
                 }, dataBody).then(s => {
                     // ;

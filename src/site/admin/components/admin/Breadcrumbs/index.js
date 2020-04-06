@@ -14,7 +14,7 @@ function index(props) {
     let obj = [];
     switch (url) {
       case "/admin":
-      case "/admin/dashboard":
+      case "/admin/form-types":
         obj = [
           {
             icon: "fal fa-home mr-1",
@@ -22,12 +22,11 @@ function index(props) {
             name: "Home"
           },
           {
-            url: "/dashboard",
-            name: "Dashboard"
+            name: "Danh mục loại form"
           }
         ];
         break;
-      case "/time-sheet":
+      case "/admin/form-types/create":
         obj = [
           {
             icon: "fal fa-home mr-1",
@@ -35,97 +34,15 @@ function index(props) {
             name: "Home"
           },
           {
-            url: "/time-sheet",
-            name: "Time Sheet"
-          }
-        ];
-        break;
-      case "/time-sheet/calendar":
-        obj = [
-          {
-            icon: "fal fa-home mr-1",
-            url: "/admin",
-            name: "Home"
-          },
-          {
-            url: "/time-sheet",
-            name: "Time Sheet"
-          },
-          {
-            url: "/time-sheet/calendar",
-            name: "Calendar"
-          }
-        ];
-        break;
-      case "/time-sheet/config":
-        obj = [
-          {
-            icon: "fal fa-home mr-1",
-            url: "/admin",
-            name: "Home"
-          },
-          {
-            url: "/time-sheet",
-            name: "Time Sheet"
-          },
-          {
-            url: "/time-sheet/config",
-            name: "Cấu hình"
-          }
-        ];
-        break;
-      case "/time-sheet/commit":
-        obj = [
-          {
-            icon: "fal fa-home mr-1",
-            url: "/admin",
-            name: "Home"
-          },
-          {
-            url: "/time-sheet",
-            name: "Time Sheet"
-          },
-          {
-            url: "/time-sheet/commit",
-            name: "Mô tả công việc"
-          }
-        ];
-        break;
-      case "/admin/job":
-        obj = [
-          {
-            icon: "fal fa-home mr-1",
-            url: "/admin",
-            name: "Home"
-          },
-          {
-            name: "Quản lý danh mục"
-          },
-          {
-            name: "Danh mục công việc"
-          }
-        ];
-        break;
-      case "/admin/job/create":
-        obj = [
-          {
-            icon: "fal fa-home mr-1",
-            url: "/admin",
-            name: "Home"
-          },
-          {
-            name: "Quản lý danh mục"
-          },
-          {
-            url: "/admin/job",
-            name: "Danh mục công việc"
+            url: "/admin/form-types",
+            name: "Danh mục loại form"
           },
           {
             name: "Tạo mới"
           }
         ];
         break;
-      case "/admin/product":
+      case "/admin/forms":
         obj = [
           {
             icon: "fal fa-home mr-1",
@@ -133,14 +50,11 @@ function index(props) {
             name: "Home"
           },
           {
-            name: "Quản lý danh mục"
-          },
-          {
-            name: "Danh mục sản phẩm"
+            name: "Phân quyền biểu mẫu"
           }
         ];
         break;
-      case "/admin/product/create":
+      case "/admin/forms/create":
         obj = [
           {
             icon: "fal fa-home mr-1",
@@ -148,54 +62,16 @@ function index(props) {
             name: "Home"
           },
           {
-            name: "Quản lý danh mục"
-          },
-          {
-            url: "/admin/product",
-            name: "Danh mục sản phẩm"
+            url: "/admin/forms",
+            name: "Phân quyền biểu mẫu"
           },
           {
             name: "Tạo mới"
           }
         ];
         break;
-      case "/admin/project":
-        obj = [
-          {
-            icon: "fal fa-home mr-1",
-            url: "/admin",
-            name: "Home"
-          },
-          {
-            name: "Quản lý danh mục"
-          },
-          {
-            name: "Danh mục dự án"
-          }
-        ];
-        break;
-      case "/admin/project/create":
-        obj = [
-          {
-            icon: "fal fa-home mr-1",
-            url: "/admin",
-            name: "Home"
-          },
-          {
-            name: "Quản lý danh mục"
-          },
-          {
-            url: "/admin/project",
-            name: "Danh mục dự án"
-          },
-          {
-            name: "Tạo mới"
-          }
-        ];
-        break;
-
       default:
-        if (url.indexOf("/admin/job/edit") == 0) {
+        if (url.indexOf("/admin/form-types/edit") == 0) {
           obj = [
             {
               icon: "fal fa-home mr-1",
@@ -203,18 +79,15 @@ function index(props) {
               name: "Home"
             },
             {
-              name: "Quản lý danh mục"
+              url: "/admin/form-types",
+              name: "Danh mục loại form"
             },
             {
-              url: "/admin/job",
-              name: "Danh mục công việc"
-            },
-            {
-              name: "Chỉnh sửa công việc"
+              name: "Chỉnh sửa loại form"
             }
           ];
         } else {
-          if (url.indexOf("/admin/product/edit") == 0) {
+          if (url.indexOf("/admin/forms/edit") == 0) {
             obj = [
               {
                 icon: "fal fa-home mr-1",
@@ -222,36 +95,13 @@ function index(props) {
                 name: "Home"
               },
               {
-                name: "Quản lý danh mục"
+                url: "/admin/forms",
+                name: "Phân quyền biểu mẫu"
               },
               {
-                url: "/admin/product",
-                name: "Danh mục sản phẩm"
-              },
-              {
-                name: "Chỉnh sửa sản phẩm"
+                name: "Chỉnh sửa biểu mẫu"
               }
             ];
-          } else {
-            if (url.indexOf("/admin/project/edit") == 0) {
-              obj = [
-                {
-                  icon: "fal fa-home mr-1",
-                  url: "/admin",
-                  name: "Home"
-                },
-                {
-                  name: "Quản lý danh mục"
-                },
-                {
-                  url: "/admin/project",
-                  name: "Danh mục dự án"
-                },
-                {
-                  name: "Chỉnh sửa dự án"
-                }
-              ];
-            }
           }
         }
         break;

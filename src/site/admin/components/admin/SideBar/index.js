@@ -71,16 +71,16 @@ function index(props) {
           <img
             src="/img/demo/avatars/avatar-admin.png"
             className="profile-image rounded-circle"
-            alt={props.auth.employees.name}
+            alt={props.auth.user.name}
           />
           <div className="info-card-text">
             <a href="#" className="d-flex align-items-center text-white">
               <span className="text-truncate text-truncate-sm d-inline-block">
-                {props.auth.employees.name}
+                {props.auth.user.name}
               </span>
             </a>
             <span className="d-inline-block text-truncate text-truncate-sm">
-              {props.auth.employees.isofhMail}
+              {props.auth.user.isofhMail}
             </span>
           </div>
           <img
@@ -105,66 +105,67 @@ function index(props) {
         <ul id="js-nav-menu" className="nav-menu">
           {[
             {
-              href: "/admin/dashboard",
-              i18n: "nav.dashboard",
-              name: "Dashboard",
+              href: "/admin/forms",
+              i18n: "nav.forms",
+              name: "Phân quyền biểu mẫu",
               icon: "fal fa-game-board-alt",
-              filter: "dashboard tổng quan"
+              filter: "forms phân quyền biểu mẫu"
             },
             {
-              href: "#",
-              i18n: "nav.timesheet",
-              name: "Time sheet",
-              icon: "fal fa-person-carry",
-              filter: "timesheet time sheet",
-              menus: [
-                {
-                  href: "/time-sheet/calendar",
-                  name: "Trong tháng",
-                  filter: "trong thang month",
-                  i18n: "time-sheet-in-month"
-                },
-                {
-                  href: "/time-sheet/commit",
-                  name: "Nhập time sheet",
-                  filter: "nhap time sheet insert time sheet",
-                  i18n: "nav.time-sheet-input-time-sheet"
-                },
-                {
-                  href: "/time-sheet/config",
-                  name: "Cấu hình",
-                  filter: "config time sheet cau hinh time sheet",
-                  i18n: "nav.config-timesheet"
-                }
-              ]
+              href: "/admin/users",
+              i18n: "nav.users",
+              name: "Phần quyền ký",
+              icon: "fal fa-game-board-alt",
+              filter: "users Phần quyền ký"
             },
             {
-              href: "#",
-              icon: "fal fa-folder-tree",
-              i18n: "nav.mgr-category",
-              name: "Quản lý danh mục",
-              filter: "Quản lý danh mục category ",
-              menus: [
-                {
-                  href: "/admin/job",
-                  name: "Danh mục công việc",
-                  filter: "Quản lý danh mục công việc job management",
-                  i18n: "nav.job-management"
-                },
-                {
-                  href: "/admin/project",
-                  name: "Danh mục dự án",
-                  filter: "Quản lý danh mục dự án project management",
-                  i18n: "nav.project-management"
-                },
-                {
-                  href: "/admin/product",
-                  name: "Danh mục sản phẩm",
-                  filter: "Quản lý danh mục sản phẩm product management",
-                  i18n: "nav.product-management"
-                }
-              ]
-            }
+              href: "/admin/sign-privileges",
+              i18n: "nav.signPrivileges",
+              name: "Danh mục quyền ký",
+              icon: "fal fa-game-board-alt",
+              filter: "sign privileges Danh mục quyền ký"
+            },
+            {
+              href: "/admin/form-types",
+              i18n: "nav.formTypes",
+              name: "Danh mục loại form",
+              icon: "fal fa-game-board-alt",
+              filter: "form types danh mục loại form"
+            },
+            {
+              href: "/admin/patient-histories",
+              i18n: "nav.patientHistories",
+              name: "Lịch sử ký",
+              icon: "fal fa-game-board-alt",
+              filter: "patient histories Lịch sử ký"
+            },
+            // {
+            //   href: "#",
+            //   icon: "fal fa-folder-tree",
+            //   i18n: "nav.mgr-category",
+            //   name: "Quản lý danh mục",
+            //   filter: "Quản lý danh mục category ",
+            //   menus: [
+            //     {
+            //       href: "/admin/form-types",
+            //       name: "Danh mục loại form",
+            //       filter: "Quản lý danh mục công việc job management",
+            //       i18n: "nav.job-management"
+            //     },
+            //     {
+            //       href: "/admin/project",
+            //       name: "Danh mục dự án",
+            //       filter: "Quản lý danh mục dự án project management",
+            //       i18n: "nav.project-management"
+            //     },
+            //     {
+            //       href: "/admin/product",
+            //       name: "Danh mục sản phẩm",
+            //       filter: "Quản lý danh mục sản phẩm product management",
+            //       i18n: "nav.product-management"
+            //     }
+            //   ]
+            // }
           ].map((item, index) => {
             return <ItemMenu key={index} item={item} />;
           })}

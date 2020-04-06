@@ -8,8 +8,12 @@ const reducer = (state = {}, action) => {
 			newState = { ...state, ...action.data || {} }
 			return newState;
 		case 'persist/REHYDRATE':
-			if (action.payload && action.payload.auth && Object.keys(action.payload.auth).length)
-				clientUtils.auth = ((action.payload.auth || {}).auth || {}).loginToken || "";
+			if (action.payload && action.payload.auth && Object.keys(action.payload.auth).length){
+				clientUtils.auth = action.payload.auth && action.payload.auth.auth && action.payload.auth.auth.authentication.accessToken;
+			}
+			if (clientUtils.auth) {
+				clientUtils.auth = "Bearer " + clientUtils.auth;
+			}	
 		default:
 			return state
 	}

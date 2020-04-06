@@ -1,0 +1,19 @@
+.ant-table-body {
+    .ant-table-fixed {
+        .ant-table-tbody {
+            tr {
+                td {
+                    .select-forms {
+                        .ant-select {
+                            width: 100%;
+                            margin: 3px;
+                            .ant-select-selection {
+                                border: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
