@@ -135,7 +135,7 @@ export default {
     serverApi: server_url,
     uploadFile(url, file) {
         const formData = new FormData();
-        formData.append('files', file)
+        formData.append('file', file)
         const config = {
             headers: {
                 'content-type': 'multipart/form-data',

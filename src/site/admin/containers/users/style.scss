@@ -1,0 +1,113 @@
+.ant-table-body {
+    .ant-table-fixed {
+        .ant-table-tbody {
+            tr {
+                td {
+                    .change-serial-number {
+                        background-color: #7EA802;
+                        padding: 6px 12px;
+                        border-radius: 5px;
+                        color: #fff;
+                        font-weight: bold;
+                        cursor: pointer;
+                        font-size: 12px;
+                    }
+                    .detail {
+                        display: flex;
+                        align-items: center;
+                        .button-sign {
+                            padding: 1px 7px;
+                            height: 26px;
+                            span {
+                                font-size: 20px;
+                                line-height: 20px;
+                                color: #007bff;
+                                font-weight: 900;
+                            }
+                        }
+                        .item {
+                            padding: 8px 14px;
+                            line-height: 14px;
+                            margin-left: 5px;
+                            background: linear-gradient(90deg, #1b75bb 0%, #26a9e0 100%), rgba(0, 0, 0, 0.05);
+                            color: #fff;
+                            font-weight: bold;
+                            border-radius: 4px;
+                            font-size: 13px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.sign-image {
+    .ant-modal-content {
+        .ant-modal-header {
+            font-size: 16px;
+            line-height: 19px;
+            text-transform: uppercase;
+            text-align: center;
+            border: none;
+            .ant-modal-title {
+                color: #00A9FF;
+                font-weight: bold;
+                padding-top: 9px;
+            }            
+        }
+        .ant-modal-body {
+            padding: 6px 24px;
+            .image-background {
+                width: 100%;
+                margin-bottom: 10px;
+                min-height: 100px;
+                border: 1px solid rgba(0,0,0,0.2);
+                img {
+                    width: 100%;
+                    object-fit: cover;
+                }
+            }
+            .body-privileges {
+                padding: 0 40px !important;
+                .privileges-detail {
+                    padding: 5px;
+                    display: flex;
+                    .name {
+                        padding-left: 8px;
+                    }
+                }
+            }
+        }
+        .ant-modal-footer {
+            padding: 16px 24px;
+            border: none;
+            .button-sign-image {
+                float: left;
+                align-items: center;
+                width: 116px;
+                color: #FFFFFF;
+                background-color: #7EA802;
+                border-color: #7EA802;
+                font-weight: bold;
+            }
+            .button-sign-image:hover {
+                color: white;
+                background-color: #249688;
+                border-color: #249688;
+            }
+            .save-sign-image {
+                align-items: center;
+                width: 116px;
+                color: white;
+                background-color: #1985d9;
+                border-color: #1985d9;
+                font-weight: bold;
+            }
+            .save-sign-image:hover {
+                color: white;
+                background-color: #054c9d;
+                border-color: #054c9d;
+            }
+        }
+    }
+}

@@ -54,6 +54,7 @@ module.exports = {
     formTypes: "/api/signer/v1/form-types",
     forms: "/api/signer/v1/forms",
     login: "/api/signer/v1/auth/login",
-    signPrivileges: "/api/signer/v1/sign-privileges"
+    users: "/api/signer/v1/users",
+    signPrivileges: "/api/signer/v1/sign-privileges",
   }
 };
