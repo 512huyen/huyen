@@ -73,7 +73,6 @@ function loadSignPrivilegesDetail(id) {
                 active: s.data.active,
                 name: s.data.name,
                 value: s.data.value,
-                description: s.data.description
               })
             );
             resolve(s.data);
@@ -130,14 +129,12 @@ function changeStatus(item) {
       let name = item.name;
       let active = !item.active;
       let value = item.value;
-      let description = item.description;
-      signPrivilegesProvider.createOrEdit(id, name, active, value, description).then(s => {
+      signPrivilegesProvider.createOrEdit(id, name, active, value).then(s => {
         if (s.code == 0) {
           dispatch(updateData({
             id: "",
             name: "",
             value: "",
-            description: "",
             active: false
           }));
           snackbar.show("Cập nhật trạng thái thành công", "success");
@@ -162,9 +159,8 @@ function createOrEdit() {
       let name = getState().signPrivileges.name;
       let active = getState().signPrivileges.active;
       let value = getState().signPrivileges.value;
-      let description = getState().signPrivileges.description;
       signPrivilegesProvider
-        .createOrEdit(id, name, active, value, description)
+        .createOrEdit(id, name, active, value)
         .then(s => {
           if (s.code == 0) {
             dispatch(
@@ -172,7 +168,6 @@ function createOrEdit() {
                 id: "",
                 name: "",
                 value: "",
-                description: "",
                 active: false
               })
             );
@@ -205,7 +200,7 @@ function onDeleteItem(item) {
     return new Promise((resolve, reject) => {
       confirm({
         title: "Xác nhận",
-        content: `Bạn có muốn xóa loại form ${item.name}?`,
+        content: `Bạn có muốn xóa quyền kí ${item.name}?`,
         okText: "Xóa",
         okType: "danger",
         cancelText: "Hủy",

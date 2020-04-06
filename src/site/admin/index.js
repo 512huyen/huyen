@@ -53,6 +53,20 @@ function index(props) {
         loading: Loading
       })
     },
+    {
+      path: ["/admin/sign-privileges"],
+      component: Loadable({
+        loader: () => import("@admin/containers/signPrivileges"),
+        loading: Loading
+      })
+    },
+    {
+      path: ["/admin/sign-privileges/edit/:id", "/admin/sign-privileges/create"],
+      component: Loadable({
+        loader: () => import("@admin/containers/signPrivileges/create"),
+        loading: Loading
+      })
+    },
   ];
   if (!props.auth) {
     props.history.push("/login");

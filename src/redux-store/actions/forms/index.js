@@ -246,7 +246,7 @@ function onDeleteItem(item) {
     return new Promise((resolve, reject) => {
       confirm({
         title: "Xác nhận",
-        content: `Bạn có muốn xóa loại form ${item.name}?`,
+        content: `Bạn có muốn xóa biểu mẫu ${item.name}?`,
         okText: "Xóa",
         okType: "danger",
         cancelText: "Hủy",

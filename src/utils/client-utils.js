@@ -39,7 +39,11 @@ const getServerUrl = () => {
             return 'https://api.emr.demo.isofh.vn';
         case 'http://10.0.0.94:2591': // demo
             return 'http://10.0.0.94:2501';
-
+        case 'https://110.signer.test.isofh.vn': // test 110
+            return 'https://110.api.emr.test.isofh.vn';
+        // case 'http://localhost:3000': // dev 110
+        //     return 'https://110.api.emr.test.isofh.vn';
+            
         default:
             return 'https://api.emr.test.isofh.vn';
     }
@@ -151,7 +155,7 @@ export default {
                 {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization':  this.auth,
+                    'Authorization': this.auth,
                     // 'MobileMode': 'vendorPortal'
                 }, dataBody).then(s => {
                     // ;

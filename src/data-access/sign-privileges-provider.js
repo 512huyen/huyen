@@ -22,13 +22,12 @@ export default {
     let url = constants.api.signPrivileges + "/" + id;
     return client.requestApi("delete", url, {});
   },
-  createOrEdit(id, name, active, value, description) {
+  createOrEdit(id, name, active, value) {
     if (!id) {
       let url = constants.api.signPrivileges;
       return client.requestApi("post", url, {
         name,
         value,
-        description,
         active: active ? 1 : 0
       });
     } else {
@@ -36,7 +35,6 @@ export default {
       return client.requestApi("put", url, {
         name,
         value,
-        description,
         active: active ? 1 : 0
       });
     }
