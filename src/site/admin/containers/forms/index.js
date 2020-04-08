@@ -53,7 +53,7 @@ function index(props) {
               [`signType${key}`]: e
             });
             props.createOrEdit().then(s => {
-              props.history.push("/admin/forms");
+              props.history.push("/forms");
             });
           }}
           value={data[`signType${key}`]}
@@ -109,7 +109,7 @@ function index(props) {
       value: "",
       description: ""
     });
-    props.history.push("/admin/forms/create");
+    props.history.push("/forms/create");
   };
 
   const editItem = item => () => {
@@ -120,7 +120,7 @@ function index(props) {
       description: item.description,
       value: item.value
     });
-    props.history.push("/admin/forms/edit/" + item.id);
+    props.history.push("/forms/edit/" + item.id);
   };
 
   const onDeleteItem = item => () => {

@@ -57,7 +57,7 @@ class Main extends Component {
       <div style={{ width: "100%", height: "100%" }}>
         <Head>
           <meta charSet="utf-8" />
-          <title>iSofH portal</title>
+          <title>Signer Connector</title>
           <meta name="description" content="AltEditor (beta)" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta

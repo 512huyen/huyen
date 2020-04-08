@@ -12,7 +12,7 @@ function index(props) {
     if (id)
       props.loadFormTypesDetail(id).then(s => {
       }).catch(e => {
-        props.history.replace("/admin/form-types");
+        props.history.replace("/form-types");
       });
     else {
       props.updateData({
@@ -26,7 +26,7 @@ function index(props) {
   }, []);
 
   const onClose = () => () => {
-    props.history.push("/admin/form-types");
+    props.history.push("/form-types");
   };
 
   const handleSubmit = e => {
@@ -34,7 +34,7 @@ function index(props) {
     props.form.validateFields((err, values) => {
       if (!err) {
         props.createOrEdit().then(s => {
-          props.history.push("/admin/form-types");
+          props.history.push("/form-types");
         });
       }
     });

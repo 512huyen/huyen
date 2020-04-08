@@ -37,9 +37,9 @@ function App() {
         "/time-sheet/:function1",
         // "/time-sheet/:function1/:function2",
         "/admin",
-        "/admin/:function1",
-        "/admin/:function1/:function2",
-        "/admin/:function1/:function2/:function3"
+        "/:function1",
+        "/:function1/:function2",
+        "/:function1/:function2/:function3"
       ],
       component: Admin
     },

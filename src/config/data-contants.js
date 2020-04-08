@@ -26,5 +26,9 @@ export default {
       id: 4,
       name: '4'
     }
-  ]
+  ],
+  gender: {
+    1: 'Nam',
+    2: 'Nữ',
+  },
 }

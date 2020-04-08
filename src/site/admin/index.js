@@ -26,54 +26,75 @@ function index(props) {
 
   const routers = [
     {
-      path: ["/admin/form-types"],
+      path: ["/form-types"],
       component: Loadable({
         loader: () => import("@admin/containers/formTypes"),
         loading: Loading
       })
     },
     {
-      path: ["/admin/form-types/edit/:id", "/admin/form-types/create"],
+      path: ["/form-types/edit/:id", "/form-types/create"],
       component: Loadable({
         loader: () => import("@admin/containers/formTypes/create"),
         loading: Loading
       })
     },
     {
-      path: ["/admin/forms"],
+      path: ["/forms"],
       component: Loadable({
         loader: () => import("@admin/containers/forms"),
         loading: Loading
       })
     },
     {
-      path: ["/admin/forms/edit/:id", "/admin/forms/create"],
+      path: ["/forms/edit/:id", "/forms/create"],
       component: Loadable({
         loader: () => import("@admin/containers/forms/create"),
         loading: Loading
       })
     },
     {
-      path: ["/admin/sign-privileges"],
+      path: ["/sign-privileges"],
       component: Loadable({
         loader: () => import("@admin/containers/signPrivileges"),
         loading: Loading
       })
     },
     {
-      path: ["/admin/sign-privileges/edit/:id", "/admin/sign-privileges/create"],
+      path: ["/sign-privileges/edit/:id", "/sign-privileges/create"],
       component: Loadable({
         loader: () => import("@admin/containers/signPrivileges/create"),
         loading: Loading
       })
     },
     {
-      path: ["/admin/users"],
+      path: ["/users"],
       component: Loadable({
         loader: () => import("@admin/containers/users"),
         loading: Loading
       })
-    }
+    },
+    {
+      path: ["/patient-histories"],
+      component: Loadable({
+        loader: () => import("@admin/containers/patientHistories"),
+        loading: Loading
+      })
+    },
+    {
+      path: ["/patient-histories/:id"],
+      component: Loadable({
+        loader: () => import("@admin/containers/patientHistories/detailHistories"),
+        loading: Loading
+      })
+    },
+    {
+      path: ["/result"],
+      component: Loadable({
+        loader: () => import("@admin/containers/result"),
+        loading: Loading
+      })
+    },
   ];
   if (!props.auth) {
     props.history.push("/login");
@@ -241,6 +262,11 @@ function index(props) {
         </div>
       </div>
       <SettingLayout />
+      <iframe
+        id="print-iframe"
+        title="print-iframe"
+        style={{ display: 'none' }}
+      />
     </div>
   );
 }

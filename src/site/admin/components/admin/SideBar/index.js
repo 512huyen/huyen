@@ -34,7 +34,7 @@ function index(props) {
             alt="iSofH Portal"
             aria-roledescription="logo"
           />
-          <span className="page-logo-text mr-1">iSofH Portal</span>
+          <span className="page-logo-text mr-1">Signer Connector</span>
           {/* <span className="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
           <i className="fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i> */}
         </a>
@@ -105,39 +105,46 @@ function index(props) {
         <ul id="js-nav-menu" className="nav-menu">
           {[
             {
-              href: "/admin/forms",
+              href: "/forms",
               i18n: "nav.forms",
               name: "Phân quyền biểu mẫu",
               icon: "fal fa-game-board-alt",
               filter: "forms phân quyền biểu mẫu"
             },
             {
-              href: "/admin/users",
+              href: "/users",
               i18n: "nav.users",
               name: "Phần quyền ký",
               icon: "fal fa-game-board-alt",
               filter: "users Phần quyền ký"
             },
             {
-              href: "/admin/sign-privileges",
+              href: "/sign-privileges",
               i18n: "nav.signPrivileges",
               name: "Danh mục quyền ký",
               icon: "fal fa-game-board-alt",
               filter: "sign privileges Danh mục quyền ký"
             },
             {
-              href: "/admin/form-types",
+              href: "/form-types",
               i18n: "nav.formTypes",
               name: "Danh mục loại form",
               icon: "fal fa-game-board-alt",
               filter: "form types danh mục loại form"
             },
             {
-              href: "/admin/patient-histories",
+              href: "/patient-histories",
               i18n: "nav.patientHistories",
               name: "Lịch sử ký",
               icon: "fal fa-game-board-alt",
               filter: "patient histories Lịch sử ký"
+            },
+            {
+              href: "/result",
+              i18n: "nav.result",
+              name: "Xem kết quả",
+              icon: "fal fa-game-board-alt",
+              filter: "result Xem kết quả"
             },
             // {
             //   href: "#",
@@ -147,19 +154,19 @@ function index(props) {
             //   filter: "Quản lý danh mục category ",
             //   menus: [
             //     {
-            //       href: "/admin/form-types",
+            //       href: "/form-types",
             //       name: "Danh mục loại form",
             //       filter: "Quản lý danh mục công việc job management",
             //       i18n: "nav.job-management"
             //     },
             //     {
-            //       href: "/admin/project",
+            //       href: "/project",
             //       name: "Danh mục dự án",
             //       filter: "Quản lý danh mục dự án project management",
             //       i18n: "nav.project-management"
             //     },
             //     {
-            //       href: "/admin/product",
+            //       href: "/product",
             //       name: "Danh mục sản phẩm",
             //       filter: "Quản lý danh mục sản phẩm product management",
             //       i18n: "nav.product-management"

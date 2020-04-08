@@ -43,7 +43,7 @@ function index(props) {
       value: "",
       description: ""
     });
-    props.history.push("/admin/form-types/create");
+    props.history.push("/form-types/create");
   };
 
   const editItem = item => () => {
@@ -54,7 +54,7 @@ function index(props) {
       description: item.description,
       value: item.value
     });
-    props.history.push("/admin/form-types/edit/" + item.id);
+    props.history.push("/form-types/edit/" + item.id);
   };
 
   const onDeleteItem = item => () => {

@@ -41,7 +41,7 @@ function index(props) {
       name: "",
       value: "",
     });
-    props.history.push("/admin/sign-privileges/create");
+    props.history.push("/sign-privileges/create");
   };
 
   const editItem = item => () => {
@@ -51,7 +51,7 @@ function index(props) {
       name: item.name,
       value: item.value
     });
-    props.history.push("/admin/sign-privileges/edit/" + item.id);
+    props.history.push("/sign-privileges/edit/" + item.id);
   };
 
   const onDeleteItem = item => () => {

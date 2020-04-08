@@ -43,11 +43,11 @@ const getServerUrl = () => {
             return 'https://110.api.emr.test.isofh.vn';
         // case 'http://localhost:3000': // dev 110
         //     return 'https://110.api.emr.test.isofh.vn';
-            
+
         default:
             return 'https://api.emr.test.isofh.vn';
     }
-};
+}
 const server_url = getServerUrl();
 
 String.prototype.absoluteUrl = String.prototype.absolute || function (defaultValue) {
@@ -130,9 +130,11 @@ String.prototype.resolveResource = String.prototype.resolveResource || function 
 
 
 export default {
-    // auth: "eyJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiaXNvZmhDYXJlIiwiY3JlYXRlZCI6MTU1MzA3MDc0Mzc4NiwidHlwZSI6MCwidXNlcklkIjo1NX0.k8B3Cm5M-22ckpKk3W1fhgHoHq7LGVdKIjhLZUl0abKES5nSCC5RhupsRXctTK6skQMvCZ8f-TuZGbDcNgdlsb_Kc0ogFmaPmGI4ao7MKrCb9nCr4fxztUN0ABWUERA1wnQNFljgVR9FIrNKnf2hx_aTHIrwS9Ol1JOaKJVnj83cK5vg2ExvN7ralb1yoyuHEZoODlDBVHCIxeG5X3oaJE6-BKfcafXau_cmYz-Ovg31VtZpu1lCffaOj2uLSefPBvqfL2d2U1sswiUrV95rankTjOomr31lP4xiCN71-7YX_6Hx7EraRFhmclmaOjGUWM83VB0fvY8hIEHiE8yB8w",
     auth: "",
     serverApi: server_url,
+    EMR_SIGNER_SERVICE: `${getServerUrl()}/api/signer/v1/`,
+    EMR_SERVICE: `${getServerUrl()}/api/emr/v1/`,
+    SUBCLINICAL_RESULT: `${getServerUrl()}/api/subclinical-result/v1/`,
     uploadFile(url, file) {
         const formData = new FormData();
         formData.append('file', file)
@@ -140,7 +142,6 @@ export default {
             headers: {
                 'content-type': 'multipart/form-data',
                 'Authorization': this.auth,
-                // 'MobileMode': 'vendorPortal'
             }
         }
         return axios.post(url.getServiceUrl(), formData, config)
@@ -156,12 +157,28 @@ export default {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     'Authorization': this.auth,
-                    // 'MobileMode': 'vendorPortal'
                 }, dataBody).then(s => {
-                    // ;
                     s.json().then(val => {
                         resolve(val);
                     }).catch(e => { reject(e) });
+                }).catch(e => {
+                    reject(e);
+                });
+        });
+    },
+    requestApiFiles(methodType, url, body) {
+        return new Promise((resolve, reject) => {
+            var dataBody = "";
+            if (!body)
+                body = {};
+            dataBody = JSON.stringify(body);
+            this.requestFetch(methodType, url && url.indexOf('http') == 0 ? url : (url),
+                {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': this.auth,
+                }, dataBody).then(s => {
+                    resolve(s);
                 }).catch(e => {
                     reject(e);
                 });
@@ -191,7 +208,6 @@ export default {
     },
     requestService(url) {
         return new Promise(function (resolve, reject) {
-
             axios.get(server_url + url)
                 .then(function (response) {
                     resolve(response.data);

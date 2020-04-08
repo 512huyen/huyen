@@ -1,4 +1,4 @@
-import usersProvider from "@data-access/user-provider";
+import patientHistoriesProvider from "@data-access/patient-histories-provider";
 import snackbar from "@utils/snackbar-utils";
 import stringUtils from "mainam-react-native-string-utils";
 import moment from "moment";
@@ -8,7 +8,7 @@ const { confirm } = Modal;
 function updateData(data) {
   return dispatch => {
     dispatch({
-      type: "USERS-UPDATE-DATA",
+      type: "PATIENT-HISTORIES-UPDATE-DATA",
       data: data
     });
   };
@@ -25,14 +25,15 @@ function onSizeChange(size) {
   };
 }
 
-function onSearch(name, fullName) {
+function onSearch(patientDocument, patientValue, patientName) {
   return (dispatch, getState) => {
-    if (name === undefined && fullName === undefined) {
+    if (patientDocument === undefined && patientValue === undefined && patientName === undefined) {
     } else {
       dispatch(
         updateData({
-          searchName: name,
-          searchFullName: fullName,
+          searchPatientDocument: patientDocument,
+          searchPatientValue: patientValue,
+          searchPatientName: patientName
         })
       );
     }
@@ -43,11 +44,11 @@ function onSearch(name, fullName) {
 function gotoPage(page) {
   return (dispatch, getState) => {
     dispatch(updateData({ page: page }));
-    let size = getState().users.size || 10;
-    let name = getState().users.searchName;
-    let fullName = getState().users.searchFullName;
-    let sort = getState().users.sort || {};
-    usersProvider.search(page, size, name, fullName, undefined, sort).then(s => {
+    let size = getState().patientHistories.size || 10;
+    let patientDocument = getState().patientHistories.searchPatientDocument;
+    let patientValue = getState().patientHistories.searchPatientValue;
+    let patientName = getState().patientHistories.searchPatientName;
+    patientHistoriesProvider.search(page, size, patientDocument, patientValue, patientName, undefined).then(s => {
       dispatch(
         updateData({
           total: s.totalElements || size,
@@ -58,10 +59,10 @@ function gotoPage(page) {
   };
 }
 
-function loadUsersDetail(id) {
+function loadPatientHistoriesDetail(id) {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-      usersProvider
+      patientHistoriesProvider
         .getById(id)
         .then(s => {
           if (s && s.code == 0 && s.data) {
@@ -92,32 +93,6 @@ function loadUsersDetail(id) {
   };
 }
 
-function uploadImageSign(data) {
-  return (dispatch, getState) => {
-    return new Promise((resolve, reject) => {
-      usersProvider.uploadImageSign(data.file).then(s => {
-        if (s && s.data && s.data.code == 0) {
-          dispatch(
-            updateData({
-              openChangeSignImage: false
-            })
-          );
-          resolve(s.data);
-          return;
-        }
-        snackbar.show("Lưu chữ ký thất bại!", "danger");
-        reject(s);
-      }).catch(e => {
-        snackbar.show(
-          e && e.message ? e.message : "Xảy ra lỗi, vui lòng thử lại sau",
-          "danger"
-        );
-        reject(e);
-      });
-    });
-  };
-}
-
 function onSort(key, value) {
   return (dispatch, getState) => {
     dispatch(
@@ -132,14 +107,14 @@ function onSort(key, value) {
   };
 }
 
-function loadListUsers() {
+function loadListPatientHistories() {
   return (dispatch, getState) => {
-    usersProvider.search(0, 1000, "", "").then(s => {
+    patientHistoriesProvider.search(0, 1000, "", "").then(s => {
       switch (s.code) {
         case 0:
           dispatch(
             updateData({
-              users: s.data,
+              patientHistories: s.data,
               total: s.totalElements
             })
           );
@@ -152,13 +127,13 @@ function loadListUsers() {
 function createOrEdit(item, action) {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-      let id = getState().users.id;
-      let name = getState().users.name;
-      let fullName = getState().users.fullName;
-      let signImage = action === "signImage" ? item : getState().users.signImage;
-      let serialNumber = getState().users.serialNumber;
-      let privileges = action === "privileges" ? item : getState().users.privileges;
-      usersProvider.createOrEdit(id, name, fullName, signImage, serialNumber, privileges).then(s => {
+      let id = getState().patientHistories.id;
+      let name = getState().patientHistories.name;
+      let fullName = getState().patientHistories.fullName;
+      let signImage = action === "signImage" ? item : getState().patientHistories.signImage;
+      let serialNumber = getState().patientHistories.serialNumber;
+      let privileges = action === "privileges" ? item : getState().patientHistories.privileges;
+      patientHistoriesProvider.createOrEdit(id, name, fullName, signImage, serialNumber, privileges).then(s => {
         if (s.code == 0) {
           dispatch(
             updateData({
@@ -178,7 +153,7 @@ function createOrEdit(item, action) {
           } else {
             snackbar.show("Cập nhật thành công", "success");
           }
-          dispatch(loadListUsers());
+          dispatch(loadListPatientHistories());
           resolve(s.data);
         } else {
           if (!id) {
@@ -201,17 +176,17 @@ function onDeleteItem(item) {
     return new Promise((resolve, reject) => {
       confirm({
         title: "Xác nhận",
-        content: `Bạn có muốn xóa quyền ký ${item.name}?`,
+        content: `Bạn có muốn xóa lịch sử ký ${item.name}?`,
         okText: "Xóa",
         okType: "danger",
         cancelText: "Hủy",
         onOk() {
-          usersProvider
+          patientHistoriesProvider
             .delete(item.id)
             .then(s => {
               if (s.code == 0) {
                 snackbar.show("Xóa thành công", "success");
-                let data = getState().users.data || [];
+                let data = getState().patientHistories.data || [];
                 let index = data.findIndex(x => x.id == item.id);
                 if (index != -1);
                 data.splice(index, 1);
@@ -220,7 +195,7 @@ function onDeleteItem(item) {
                     data: [...data]
                   })
                 );
-                dispatch(loadListUsers());
+                dispatch(loadListPatientHistories());
                 resolve();
               } else {
                 snackbar.show("Xóa không thành công", "danger");
@@ -241,7 +216,7 @@ function onDeleteItem(item) {
 }
 
 export default {
-  loadListUsers,
+  loadListPatientHistories,
   createOrEdit,
   updateData,
   gotoPage,
@@ -249,6 +224,5 @@ export default {
   onSizeChange,
   onSort,
   onDeleteItem,
-  loadUsersDetail,
-  uploadImageSign
+  loadPatientHistoriesDetail
 };

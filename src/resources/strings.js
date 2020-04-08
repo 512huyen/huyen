@@ -56,5 +56,7 @@ module.exports = {
     login: "/api/signer/v1/auth/login",
     users: "/api/signer/v1/users",
     signPrivileges: "/api/signer/v1/sign-privileges",
+    signedFiles: "/api/signer/v1/sign/signed-files",
+    patientHistories: "/api/emr/v1/patient-histories",
   }
 };

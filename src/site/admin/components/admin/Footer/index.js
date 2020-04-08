@@ -6,7 +6,7 @@ export default function index() {
         <footer className="page-footer" role="contentinfo">
             <div className="d-flex align-items-center flex-1 text-muted">
                 <span className="hidden-md-down fw-700">
-                    2020 © iSofH Portal
+                    2020 © Signer Connector
           </span>
             </div>
             {/* <div>

@@ -12,7 +12,7 @@ function index(props) {
     if (id)
       props.loadSignPrivilegesDetail(id).then(s => {
       }).catch(e => {
-        props.history.replace("/admin/sign-privileges");
+        props.history.replace("/sign-privileges");
       });
     else {
       props.updateData({
@@ -25,7 +25,7 @@ function index(props) {
   }, []);
 
   const onClose = () => () => {
-    props.history.push("/admin/sign-privileges");
+    props.history.push("/sign-privileges");
   };
 
   const handleSubmit = e => {
@@ -33,7 +33,7 @@ function index(props) {
     props.form.validateFields((err, values) => {
       if (!err) {
         props.createOrEdit().then(s => {
-          props.history.push("/admin/sign-privileges");
+          props.history.push("/sign-privileges");
         });
       }
     });

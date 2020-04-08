@@ -89,7 +89,7 @@ function index(props) {
       return null;
     });
     props.createOrEdit(listPermissionActive, "privileges").then(s => {
-      props.history.push("/admin/users");
+      props.history.push("/users");
     })
   };
   const onShowSignImage = (data) => {
@@ -134,7 +134,7 @@ function index(props) {
       props.uploadImageSign({ file: fileUpload }).then(s => {
         if (s && s.code === 0 && s.data) {
           props.createOrEdit(s.data, "signImage").then(s => {
-            props.history.push("/admin/users");
+            props.history.push("/users");
           })
         }
       })
@@ -413,7 +413,6 @@ export default connect(
       searchName: state.users.searchName,
       searchValue: state.users.searchValue,
       dataSignPrivileges: state.signPrivileges.signPrivileges || [],
-      dataIndex: state.users.dataIndex,
       openChangeSerialNumber: state.users.openChangeSerialNumber || false,
       openChangePrivileges: state.users.openChangePrivileges || false,
       openChangeSignImage: state.users.openChangeSignImage || false
@@ -424,8 +423,6 @@ export default connect(
     onSizeChange: actionUsers.onSizeChange,
     gotoPage: actionUsers.gotoPage,
     onSearch: actionUsers.onSearch,
-    onDeleteItem: actionUsers.onDeleteItem,
-    changeStatus: actionUsers.changeStatus,
     loadListSignPrivileges: signPrivileges.loadListSignPrivileges,
     createOrEdit: actionUsers.createOrEdit,
     uploadImageSign: actionUsers.uploadImageSign

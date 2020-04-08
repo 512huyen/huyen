@@ -1,0 +1,76 @@
+.ant-table-body {
+    cursor: pointer;
+}
+.col-action {
+    .detail {
+        align-items: center;
+        color: rgb(255, 255, 255);
+        background-color: rgb(126, 168, 2);
+        border-radius: 5px;
+        border-style: solid;
+        border-image: initial;
+        border-color: rgb(126, 168, 2);
+        margin: 0px 5px;
+    }
+    .detail:hover {
+        color: white;
+        background-color: rgb(36, 150, 136);
+        border-color: rgb(36, 150, 136);
+    }
+    .download {
+        align-items: center;
+        color: white;
+        background-color: rgb(25, 133, 217);
+        border-radius: 5px;
+        border-style: solid;
+        border-image: initial;
+        border-color: rgb(25, 133, 217);
+        margin: 0px 5px;
+    }
+    .download:hover {
+        color: white;
+        background-color: rgb(5, 76, 157);
+        border-color: rgb(5, 76, 157);
+    }
+}
+.detail-file {
+    .ant-modal-content {
+        .ant-modal-close {
+            display: none;
+        }
+        .ant-modal-header {
+            border: none;
+            padding: 25px 32px 0px;
+            .ant-modal-title {
+                display: flex;
+                .title-header {
+                    color: rgb(0, 169, 255);
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+                .download {
+                    margin-left: auto;
+                    align-items: center;
+                    color: white;
+                    background-color: rgb(25, 133, 217);
+                    border-radius: 5px;
+                    border-style: solid;
+                    border-image: initial;
+                    border-color: rgb(25, 133, 217);
+                    width: 75px;
+                }
+                .download:hover {
+                    color: white;
+                    background-color: rgb(5, 76, 157);
+                    border-color: rgb(5, 76, 157);
+                }
+            }
+        }
+        .ant-modal-body {
+            padding: 0 24px;
+        }
+        .ant-modal-footer {
+            border: none;
+        }
+    }
+}

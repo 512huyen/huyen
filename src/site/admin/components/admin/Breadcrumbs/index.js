@@ -14,7 +14,7 @@ function index(props) {
     let obj = [];
     switch (url) {
       case "/admin":
-      case "/admin/form-types":
+      case "/form-types":
         obj = [
           {
             icon: "fal fa-home mr-1",
@@ -26,7 +26,7 @@ function index(props) {
           }
         ];
         break;
-      case "/admin/form-types/create":
+      case "/form-types/create":
         obj = [
           {
             icon: "fal fa-home mr-1",
@@ -34,7 +34,7 @@ function index(props) {
             name: "Home"
           },
           {
-            url: "/admin/form-types",
+            url: "/form-types",
             name: "Danh mục loại form"
           },
           {
@@ -42,7 +42,7 @@ function index(props) {
           }
         ];
         break;
-      case "/admin/forms":
+      case "/forms":
         obj = [
           {
             icon: "fal fa-home mr-1",
@@ -54,7 +54,7 @@ function index(props) {
           }
         ];
         break;
-      case "/admin/forms/create":
+      case "/forms/create":
         obj = [
           {
             icon: "fal fa-home mr-1",
@@ -62,7 +62,7 @@ function index(props) {
             name: "Home"
           },
           {
-            url: "/admin/forms",
+            url: "/forms",
             name: "Phân quyền biểu mẫu"
           },
           {
@@ -71,7 +71,7 @@ function index(props) {
         ];
         break;
       default:
-        if (url.indexOf("/admin/form-types/edit") == 0) {
+        if (url.indexOf("/form-types/edit") == 0) {
           obj = [
             {
               icon: "fal fa-home mr-1",
@@ -79,7 +79,7 @@ function index(props) {
               name: "Home"
             },
             {
-              url: "/admin/form-types",
+              url: "/form-types",
               name: "Danh mục loại form"
             },
             {
@@ -87,7 +87,7 @@ function index(props) {
             }
           ];
         } else {
-          if (url.indexOf("/admin/forms/edit") == 0) {
+          if (url.indexOf("/forms/edit") == 0) {
             obj = [
               {
                 icon: "fal fa-home mr-1",
@@ -95,7 +95,7 @@ function index(props) {
                 name: "Home"
               },
               {
-                url: "/admin/forms",
+                url: "/forms",
                 name: "Phân quyền biểu mẫu"
               },
               {

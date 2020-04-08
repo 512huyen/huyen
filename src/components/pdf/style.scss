@@ -1,0 +1,14 @@
+.ant-modal-body {
+    .react-pdf__Document {
+        .react-pdf__Page {
+            .react-pdf__Page__canvas {
+                width: 100% !important;
+                height: auto !important;
+            }
+        }
+    }
+    p {
+        font-size: 12px;
+        text-align: right;
+    }
+}

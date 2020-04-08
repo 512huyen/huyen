@@ -60,6 +60,7 @@
     "react-multi-carousel": "^2.2.2",
     "react-otp-input": "^1.0.1",
     "react-owl-carousel2": "^0.3.0",
+    "react-pdf": "^4.1.0",
     "react-redux": "^5.0.7",
     "react-reveal": "^1.2.2",
     "react-router": "^5.1.2",

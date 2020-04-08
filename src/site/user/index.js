@@ -10,20 +10,20 @@ function Loading() {
 }
 export default function index(props) {
     const routers = [
-        {
-            path: ["/gioi-thieu"],
-            component: Loadable({
-                loader: () => import('@user/containers/About'),
-                loading: Loading,
-            })
-        },
-        {
-            path: ["/tin-tuc", "/tin-tuc/:alias", "/tin-tuc/:function1/:function1"],
-            component: Loadable({
-                loader: () => import('@user/containers/News'),
-                loading: Loading,
-            })
-        }
+        // {
+        //     path: ["/gioi-thieu"],
+        //     component: Loadable({
+        //         loader: () => import('@user/containers/About'),
+        //         loading: Loading,
+        //     })
+        // },
+        // {
+        //     path: ["/tin-tuc", "/tin-tuc/:alias", "/tin-tuc/:function1/:function1"],
+        //     component: Loadable({
+        //         loader: () => import('@user/containers/News'),
+        //         loading: Loading,
+        //     })
+        // }
     ]
     return (
         <div>

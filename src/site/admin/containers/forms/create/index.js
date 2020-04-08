@@ -13,7 +13,7 @@ function index(props) {
     if (id)
       props.loadFormsDetail(id).then(s => {
       }).catch(e => {
-        props.history.replace("/admin/forms");
+        props.history.replace("/forms");
       });
     else {
       props.updateData({
@@ -26,7 +26,7 @@ function index(props) {
   }, []);
 
   const onClose = () => () => {
-    props.history.push("/admin/forms");
+    props.history.push("/forms");
   };
 
   const handleSubmit = e => {
@@ -34,7 +34,7 @@ function index(props) {
     props.form.validateFields((err, values) => {
       if (!err) {
         props.createOrEdit().then(s => {
-          props.history.push("/admin/forms");
+          props.history.push("/forms");
         });
       }
     });
