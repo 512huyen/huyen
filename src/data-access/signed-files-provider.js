@@ -11,4 +11,8 @@ export default {
     if (userId) url += "&userId=" + userId;
     return client.requestApi("get", url, {});
   },
+  subclinicalResult(patientDocument) {
+    let url = constants.api.subclinicalResult + "?patientDocument=" + (patientDocument || "");
+    return client.requestApi("get", url, {});
+  },
 };

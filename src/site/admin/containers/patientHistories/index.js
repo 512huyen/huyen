@@ -10,17 +10,9 @@ import SelectSize from "@components/common/SelectSize";
 import Pagination from "@components/common/Pagination";
 import { AdminPage, Panel } from "@admin/components/admin";
 import DataContants from '@config/data-contants';
-import dataCacheProvider from '@data-access/datacache-provider';
 import "./style.scss";
-const initImage = {
-  urlPreview: '',
-  fileUpload: '',
-  fileName: '',
-};
+
 function index(props) {
-  const [uploadImage, setuploadImage] = useState(initImage);
-  const [listPermission, setListPermission] = useState([]);
-  const inputEl = useRef(null);
   const onSizeChange = size => {
     props.onSizeChange(size);
   };

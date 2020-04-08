@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Form, Button, Select, Tooltip, Modal, Input, Checkbox } from "antd";
 import { connect } from "react-redux";
-import actionSignedFiles from "@actions/signedFiles";
+import actionSubclinicalResult from "@actions/subclinicalResult";
 import actionPatientHistories from "@actions/patientHistories";
 import signPrivileges from "@actions/signPrivileges";
 import dateUtils from "mainam-react-native-date-utils";
@@ -12,31 +12,31 @@ import Pagination from "@components/common/Pagination";
 import { AdminPage, Panel } from "@admin/components/admin";
 import DataContants from '@config/data-contants';
 import ShowPdfModal from './ShowPdfModal';
-import '../style.scss';
+import '../../patientHistories/style.scss';
 import { print } from '@components/pdf/utils';
 function index(props) {
     const [isOpen, setIsOpen] = useState(false);
     const [currentPdf, setCurrentPdf] = useState('');
 
     useEffect(() => {
-        let link = window.location.pathname.split("/patient-histories/");
+        let link = window.location.pathname.split("/result/");
         let patientDocument = ''
         if (link.length === 2) {
             patientDocument = link[1]
         }
         props.onSearch(patientDocument);
-        props.signedFiles(patientDocument);
+        props.subclinicalResult(patientDocument);
     }, []);
     let data = (props.data || []).map((item, index) => {
         return {
             key: index,
             col1: index + 1,
-            col2: item.formId,
-            col3: item.username,
-            col4: new Date(item.actDate).format("dd-MM-yyyy HH:mm:ss"),
-            col5: item.sequenceNo,
-            col6: item.description,
-            col7: item.signedFilePath
+            col2: item.soPhieu,
+            col3: item.formId,
+            col4: new Date(item.ngayTaoKetQua).format("dd-MM-yyyy HH:mm:ss"),
+            col5: item.lanKQ,
+            col6: item.moTa,
+            col7: item.filePath
         };
     });
     const toggleModal = (pdf = '') => () => {
@@ -47,7 +47,7 @@ function index(props) {
         print({
             pdf: data,
             isDownload: true,
-            typeUrl: 1,
+            typeUrl: 2,
         })
     }
     return (
@@ -55,8 +55,8 @@ function index(props) {
             <AdminPage
                 className="mgr-patient-histories"
                 icon="subheader-icon fal fa-window"
-                header="Quản lý lịch sử ký"
-                subheader="Chi tiết lịch sử ký"
+                header="Quản lý kết quả"
+                subheader="Chi tiết kết quả"
             >
                 <div className="detail-header">
                     <div className="name">{props.dataPatientDocument[0] && props.dataPatientDocument[0].patientName}</div>
@@ -90,7 +90,7 @@ function index(props) {
                             {
                                 title: (
                                     <div className="custome-header">
-                                        <div className="title-box">Tên biểu mẫu</div>
+                                        <div className="title-box">Số phiếu</div>
                                         <div className="addition-box"></div>
                                     </div>
                                 ),
@@ -101,7 +101,7 @@ function index(props) {
                             {
                                 title: (
                                     <div className="custome-header">
-                                        <div className="title-box">Người ký</div>
+                                        <div className="title-box">Loại dịch vụ</div>
                                         <div className="addition-box"></div>
                                     </div>
                                 ),
@@ -112,7 +112,7 @@ function index(props) {
                             {
                                 title: (
                                     <div className="custome-header">
-                                        <div className="title-box">Thời gian ký</div>
+                                        <div className="title-box">Thời gian trả KQ</div>
                                         <div className="addition-box"></div>
                                     </div>
                                 ),
@@ -123,7 +123,7 @@ function index(props) {
                             {
                                 title: (
                                     <div className="custome-header">
-                                        <div className="title-box">Lần ký</div>
+                                        <div className="title-box">Lần trả KQ</div>
                                         <div className="addition-box"></div>
                                     </div>
                                 ),
@@ -207,14 +207,14 @@ export default connect(
     state => {
         return {
             auth: state.auth.auth,
-            data: state.signedFiles.data,
+            data: state.subclinicalResult.data,
             dataPatientDocument: state.patientHistories.data,
-            patientDocument: state.signedFiles.patientDocument,
+            patientDocument: state.subclinicalResult.patientDocument,
         };
     },
     {
-        updateData: actionSignedFiles.updateData,
-        signedFiles: actionSignedFiles.signedFiles,
+        updateData: actionSubclinicalResult.updateData,
+        subclinicalResult: actionSubclinicalResult.subclinicalResult,
         onSearch: actionPatientHistories.onSearch
     }
 )(index);

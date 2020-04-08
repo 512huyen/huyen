@@ -10,15 +10,9 @@ import SelectSize from "@components/common/SelectSize";
 import Pagination from "@components/common/Pagination";
 import { AdminPage, Panel } from "@admin/components/admin";
 import DataContants from '@config/data-contants';
-const initImage = {
-  urlPreview: '',
-  fileUpload: '',
-  fileName: '',
-};
+import "../patientHistories/style.scss";
+
 function index(props) {
-  const [uploadImage, setuploadImage] = useState(initImage);
-  const [listPermission, setListPermission] = useState([]);
-  const inputEl = useRef(null);
   const onSizeChange = size => {
     props.onSizeChange(size);
   };
@@ -43,6 +37,9 @@ function index(props) {
       col7: item.address
     };
   });
+  const onClickRow = (data) => {
+    props.history.push("/result/" + data.col2);
+  }
   return (
     <AdminPage
       className="mgr-patient-histories"
@@ -56,6 +53,11 @@ function index(props) {
         allowCollapse={false}
       >
         <Table
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: event => { onClickRow(record) }
+            };
+          }}
           scroll={{ x: 800, y: 500 }}
           style={{ marginLeft: -10, marginRight: -10 }}
           className="custom"

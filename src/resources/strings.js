@@ -58,5 +58,6 @@ module.exports = {
     signPrivileges: "/api/signer/v1/sign-privileges",
     signedFiles: "/api/signer/v1/sign/signed-files",
     patientHistories: "/api/emr/v1/patient-histories",
+    subclinicalResult: "/api/subclinical-result/v1/result-file",
   }
 };

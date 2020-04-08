@@ -6,6 +6,7 @@ import users from './users';
 import patientHistories from './patientHistories';
 import signPrivileges from './signPrivileges';
 import signedFiles from './signedFiles';
+import subclinicalResult from './subclinicalResult';
 export default combineReducers({
 	auth,
 	formTypes,
@@ -13,5 +14,6 @@ export default combineReducers({
 	signPrivileges,
 	users,
 	patientHistories,
-	signedFiles
+	signedFiles,
+	subclinicalResult
 })

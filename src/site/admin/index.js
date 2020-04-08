@@ -95,6 +95,13 @@ function index(props) {
         loading: Loading
       })
     },
+    {
+      path: ["/result/:id"],
+      component: Loadable({
+        loader: () => import("@admin/containers/result/detailHistories"),
+        loading: Loading
+      })
+    },
   ];
   if (!props.auth) {
     props.history.push("/login");

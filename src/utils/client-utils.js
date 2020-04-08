@@ -159,7 +159,11 @@ export default {
                     'Authorization': this.auth,
                 }, dataBody).then(s => {
                     s.json().then(val => {
-                        resolve(val);
+                        if (val === 401){
+                            window.location.href = '/login'
+                        } else {
+                            resolve(val);
+                        }
                     }).catch(e => { reject(e) });
                 }).catch(e => {
                     reject(e);
