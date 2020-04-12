@@ -102,6 +102,13 @@ function index(props) {
         loading: Loading
       })
     },
+    {
+      path: ["/"],
+      component: Loadable({
+        loader: () => import("@admin/containers/users"),
+        loading: Loading
+      })
+    },
   ];
   if (!props.auth) {
     props.history.push("/login");

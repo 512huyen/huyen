@@ -5,12 +5,13 @@ import { Button, Modal } from 'antd';
 import Pdf from '@components/pdf/index';
 import { connect } from 'react-redux';
 import '../style.scss';
+import clientUtils from '../../../../../utils/client-utils';
 const ShowPdfModal = props => {
   const { toggle, isOpenModal, pdf } = props;
 
   return (
     <Modal
-      width={700}
+      width={600}
       keyboard
       title={
         <>
@@ -27,8 +28,9 @@ const ShowPdfModal = props => {
       footer={[
         <></>
       ]} >
-      <Pdf pdf={pdf} typeUrl={1} showPrint />
-    </Modal>
+      {/* <Pdf pdf={pdf} typeUrl={1} showPrint /> */}
+      <iframe src={'https://docs.google.com/viewer?url=' + `${clientUtils.EMR_SIGNER_SERVICE}files/${pdf}` + '&embedded=true'} height="100%" width="100%"></iframe>
+    </Modal >
   );
 };
 

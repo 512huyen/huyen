@@ -32,20 +32,8 @@ function App() {
       component: Auth
     },
     {
-      path: [
-        "/time-sheet",
-        "/time-sheet/:function1",
-        // "/time-sheet/:function1/:function2",
-        "/admin",
-        "/:function1",
-        "/:function1/:function2",
-        "/:function1/:function2/:function3"
-      ],
+      path: ["/", "/:function1", "/:function1/:id", "/:function1/:function2/:id"],
       component: Admin
-    },
-    {
-      path: ["/:function1", "/:function1/:id", "/:function1/:function2/:id"],
-      component: User
     },
     // {
     //   path: "/",

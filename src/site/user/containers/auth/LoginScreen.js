@@ -1,5 +1,5 @@
 import React, { createState, useState, useEffect } from "react";
-// import "./css/main.scss";
+import "./css/main.scss";
 import "./css/util.css";
 import { connect } from "react-redux";
 import authAction from "@actions/auth";

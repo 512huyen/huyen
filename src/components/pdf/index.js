@@ -23,21 +23,12 @@ const Pdf = ({ pdf, typeUrl }) => {
   const myPdf = (
     <Document file={data.pdf} onLoadSuccess={onDocumentLoadSuccess}>
       {Array.from(new Array(data.numPages), (el, index) => (
-        <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+        <Page size="A4" key={`page_${index + 1}`} pageNumber={index + 1} />
       ))}
     </Document>
   );
   return (
-    <div>
-      {data.pdf && (
-        <>
-          {myPdf}
-          <p>
-            Page {data.pageNumber} of {data.numPages}
-          </p>
-        </>
-      )}
-    </div>
+    <div>{data.pdf && myPdf}</div>
   );
 };
 

@@ -4,9 +4,18 @@ export const getFilePdf = async ({ typeUrl, pdf }) => {
   if (pdf) {
     await commons.getPdf(typeUrl, pdf).then(async Response => {
       await Response.arrayBuffer().then(s => (data = s)).catch(() => null);
-    }).catch(() => null);
+    }).catch((e) => console.log('pdf', e));
   }
   return data;
+};
+const getPdf = () => {
+  if (pdf) {
+    debugger
+    pdf.arrayBuffer()
+      // eslint-disable-next-line no-return-assign
+      .then(s => setData({ ...data, pdf: s }))
+      .catch((e) => console.log('pdf', e))
+  }
 };
 export const print = async ({ pdf, typeUrl, isDownload }) => {
   if (!pdf) return;
