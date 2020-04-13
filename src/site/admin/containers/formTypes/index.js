@@ -70,25 +70,14 @@ function index(props) {
       header="Quản lý danh mục loại form"
       subheader="Danh sách danh mục loại form"
     >
+      <Button className="button">
+        Thêm mới
+        </Button>
       <Panel
         id={"mgr-form-types"}
         allowClose={false}
         allowCollapse={false}
-        toolbar={
-          <div className="toolbar">
-            <Button className="button" onClick={create}>
-              Thêm mới
-            </Button>
-          </div>
-        }
       >
-        {/* <div className="body-header">
-          <div className="toolbar">
-            <Button className="button" onClick={create}>
-              Thêm mới
-            </Button>
-          </div>
-        </div> */}
         <Table
           scroll={{ x: 800, y: 500 }}
           style={{ marginLeft: -10, marginRight: -10 }}
@@ -182,12 +171,12 @@ function index(props) {
               render: item => {
                 if (item.active)
                   return (
-                    <label href="#" style={{ cursor: 'pointer'}} className="badge badge-success" onClick={onChangeStatus(item)}>
+                    <label href="#" style={{ cursor: 'pointer' }} className="badge badge-success" onClick={onChangeStatus(item)}>
                       Active
                     </label>
                   );
                 return (
-                  <label href="#" style={{ cursor: 'pointer'}} className="badge badge-danger" onClick={onChangeStatus(item)}>
+                  <label href="#" style={{ cursor: 'pointer' }} className="badge badge-danger" onClick={onChangeStatus(item)}>
                     InActive
                   </label>
                 );
