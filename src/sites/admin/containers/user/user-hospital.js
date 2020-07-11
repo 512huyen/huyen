@@ -64,7 +64,7 @@ const UserHospital = () => {
     const userApp = useSelector(state => state.userApp);
     const dispatch = useDispatch();
     useEffect(() => {
-        loadPage();
+        loadPage("", "", true);
         getHospital();
     }, []);
 

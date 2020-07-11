@@ -48,25 +48,25 @@ class Home extends Component {
                 subMenu: [
                     {
                         role: [],
-                        name: "TK nhân viên ISOFHPAY",
+                        name: "Tài khoản hệ thống",
                         url: '/admin/user-admin',
                         imgUrl: '/icon/the.png',
                         classActiveStyle: 'user-admin',
                     },
                     {
                         role: [],
-                        name: "TK CSYT",
+                        name: "Tài khoản cơ sở y tế",
                         url: '/admin/user-hospital',
                         imgUrl: '/icon/danh-muc-tk.png',
                         classActiveStyle: 'user-hospital',
                     },
-                    {
-                        role: [],
-                        name: "Tài khoản người bệnh",
-                        url: '/admin/user',
-                        imgUrl: '/icon/the.png',
-                        classActiveStyle: 'user-admin',
-                    }
+                    // {
+                    //     role: [],
+                    //     name: "Tài khoản người bệnh",
+                    //     url: '/admin/user',
+                    //     imgUrl: '/icon/the.png',
+                    //     classActiveStyle: 'user-admin',
+                    // }
                 ]
             },
             {

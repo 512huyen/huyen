@@ -177,7 +177,7 @@ const CreateUpdateUserAdmin = ({ data, classes, useCallback }) => {
                         /> :
                         <InputModal
                             width={3}
-                            title="Username (*)"
+                            title="Username (*):"
                             placeholder="Nhập username"
                             value={username}
                             onChange={(event) => { setCheckButton(true); setUsername(event.target.value); }}

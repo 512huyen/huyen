@@ -1,0 +1,193 @@
+.payment-agent {
+    margin-left: 31px !important;
+    p,h1,h2{
+        margin: 0;
+    }
+    .main-info {
+        .main-info-item{
+            padding-top: 16px;
+            clear: both;
+            .main-title{
+                font-size: 18px;
+                font-weight: 600;
+                padding-bottom: 19px;
+            }
+        }
+    }
+    .list-bank{
+        clear: both;
+        .bank-item {
+            width: 294px;
+            height: 155px;
+            border-radius: 6px;
+            padding: 1px 1px 0 1px;
+            float: left;
+            margin-right: 26px;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #3927b0, rgb(127, 73, 195));
+            .bank-top{
+                border-radius: 6px;
+                background-color: rgb(255, 255, 255);
+                padding: 6px 11px;
+                display: flex;
+                justify-content: space-between;
+                .bank-img {
+                    max-width: 91px;
+                    max-height: 49px;
+                    object-fit: scale-down;
+                }
+                .bank-right{
+                    text-align: right;
+                    padding-top: 6px;
+                }
+            }
+            .bank-right {
+                .bank-type{
+                    font-size: 13px;
+                    color: rgb(0, 0, 0);
+                    padding-top: 5px;
+                }
+            }
+            .bank-type {
+                .bank-active{
+                    color: rgb(39, 174, 96);
+                    font-weight: 700;
+                }
+            }
+            .bank-info{
+                padding: 11px 10px 20px 16px;
+                height: 54px;
+                .bank-title {
+                    font-size: 19px;
+                    font-weight: 700;
+                    color: rgb(60, 185, 239);
+                    margin-top: 11px;
+                    text-transform: uppercase;
+                }
+                .bank-inner {
+                    font-size: 15px;
+                    color: rgb(255, 255, 255);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    margin-top: -6px;
+                }
+            }
+        }
+        .bank-item-method{
+            width: 294px;
+            height: 148px;
+            border-radius: 6px;
+            padding: 1px 1px 0 1px;
+            float: left;
+            margin-right: 26px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 8px 0 #00000033;
+            .bank-top{
+                border-radius: 6px;
+                background-color: rgb(255, 255, 255);
+                padding: 6px 11px;
+                display: flex;
+                justify-content: space-between;
+            }
+            .bank-top-method{
+                border-radius: 6px;
+                background-color: rgb(255, 255, 255);
+                padding: 6px 11px;
+                display: flex;
+                justify-content: space-between;
+                background: linear-gradient(to right, #3927b0, rgb(127, 73, 195));
+                height: 64px;
+                .bank-right{
+                    text-align: right;
+                    padding-top: 11px;
+                }
+                .bank-img{
+                    max-width: 69px;
+                    max-height: 44px;
+                    margin-top: 3px;
+                }
+            }
+            .bank-type{
+                font-size: 14px;
+                color: white;
+                padding-top: 13px;
+                font-weight: 700;
+            }
+            .bank-info{
+                padding: 11px 10px 20px 16px;
+                height: 54px;
+                .bank-title{
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: black;
+                }
+                .bank-inner{
+                    font-size: 14px;
+                    color: rgb(33,152,188);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    font-weight: 700;
+                }
+            }
+        }
+        .bank-inactive{
+            background: rgb(155, 155, 155) !important;
+            .bank-type {
+                .bank-active {
+                    color: rgb(208, 2, 27);
+                }
+            }
+            .bank-info {
+                .bank-title, .bank-inner {
+                    color: #000;
+                }
+            }
+        }
+    }
+}
+.popup-body {
+    .user-create-header {
+        padding-top: 10px!important;
+        .payment-agent-title {
+            padding: 0 20px;
+            .upload-image-create {
+                width: 30px;
+                margin: auto;
+                cursor: pointer;
+            }
+            .title-search-input {
+                padding-top: 7px;
+            }
+            .paymentMethod-title {
+                padding-bottom: 25px!important;
+                padding-left: 30px;
+                padding-top: 15px;
+                .paymentMethod-index {
+                    padding-bottom: 10px;
+                }
+                .news-title-select {
+                    padding: 0!important;
+                    margin-bottom: 18px!important;
+                }
+            }
+        }
+    }
+}
+.col-md-7.detail-payment-agent {
+    border-right: 2px solid #2198bc;
+}
+.detail-item {
+    padding-bottom: 7px;
+    margin-left: 32px;
+    .content-detail {
+        margin-bottom: 0!important;
+        font-weight: 700;
+    }
+    .detail-index {
+        padding: 4px 0 2px 22px;
+    }
+}

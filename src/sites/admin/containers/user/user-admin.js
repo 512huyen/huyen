@@ -20,7 +20,7 @@ const UserAdmin = () => {
     const [search, setSearch] = useState({
         text: '',
         status: -1,
-        type: 3,
+        type: -1,
     });
     const [sttAndTotal, setSttAndTotal] = useState({
         stt: "",
@@ -71,9 +71,8 @@ const UserAdmin = () => {
     const userApp = useSelector(state => state.userApp);
     const dispatch = useDispatch();
     useEffect(() => {
-        loadPage();
+        loadPage("", "", true);
     }, []);
-
     const loadPage = (action, item, fromApi) => {
         let page = action === "page" ? item : action === "size" ? 0 : state.page
         let size = action === "size" ? item : state.size
@@ -85,7 +84,7 @@ const UserAdmin = () => {
             size: 99999,
             text: text,
             status: status,
-            type: type
+            type: type === -1 ? 3 : type
         }
         if (userApp.listUserAdmin && userApp.listUserAdmin.length !== 0 && !fromApi) {
             let dataPage = []
@@ -134,7 +133,6 @@ const UserAdmin = () => {
     const handleChangePage = (event, action) => {
         loadPage("page", action);
     };
-
     const handleChangeRowsPerPage = event => {
         loadPage("size", event.target.value);
     };
@@ -147,7 +145,7 @@ const UserAdmin = () => {
         let dataView = [];
         if (action === "text") {
             value = value.trim().toLocaleLowerCase().unsignText()
-            if (status === -1 && type === 3) {
+            if (status === -1 && type === -1) {
                 dataView = listData.filter(item => {
                     return (item.user.username || "").toLocaleLowerCase().unsignText().indexOf(value) !== -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(value) !== -1
                 })
@@ -167,7 +165,7 @@ const UserAdmin = () => {
                 })
             }
         } else if (action === "status") {
-            if (type === 3) {
+            if (type === -1) {
                 dataView = listData.filter(item => {
                     return ((item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1)
                         && (value === -1 ? (item.user.status === 1 || item.user.status === 2) : item.user.status === Number(value))
@@ -183,7 +181,7 @@ const UserAdmin = () => {
             if (status === -1) {
                 dataView = listData.filter(item => {
                     return ((item.user.username || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1 || (item.user.name || "").toLocaleLowerCase().unsignText().indexOf(textSearch) !== -1)
-                        && item.user.type === Number(value)
+                        && (value === -1 ? (item.user.type === 1 || item.user.type === 2) : item.user.type === Number(value))
                 })
             } else {
                 dataView = listData.filter(item => {
@@ -247,7 +245,7 @@ const UserAdmin = () => {
                 />
                 <SelectText
                     title="Loại tài khoản"
-                    listOption={[{ id: 3, name: "Tất cả" }, ...DataContants.listUser]}
+                    listOption={[{ id: -1, name: "Tất cả" }, ...DataContants.listUser]}
                     placeholder={'Tìm kiếm'}
                     selected={type}
                     getIdObject={(item) => {
@@ -299,7 +297,7 @@ const UserAdmin = () => {
                                 <TableCell>{item.user.email}</TableCell>
                                 <TableCell>{moment(item.user.dob).format("DD-MM-YYYY")}</TableCell>
                                 <TableCell style={{ textAlign: "center" }}>{item.user.type === 1 ? "Admin" : item.user.type === 2 ? "Nhân viên" : ""}</TableCell>
-                                <TableCell>{moment(item.user.createdDate).format("DD-MM-YYYY HH:mm:ss")}</TableCell>
+                                <TableCell>{moment(item.user.createdDate).format("DD-MM-YYYY")}</TableCell>
                                 <TableCell style={{ textAlign: "center" }}>{item.user.status === 1 ? "Đang hoạt động" : item.user.status === 2 ? "Đã khóa" : ""}</TableCell>
                                 <TableCell style={{ textAlign: "center" }}>
                                     <ToolTip title="Chỉnh sửa" image="/images/edit.png" onClick={() => modalCreateUpdate(item)} />
@@ -336,7 +334,7 @@ const UserAdmin = () => {
     }
     return (
         <Table
-            titlePage="Tài khoản nhân viên isofhpay"
+            titlePage="Tài khoản hệ thống"
             setTplModal={setTplModal()}
             button={button()}
             tableHeader={tableHeader}

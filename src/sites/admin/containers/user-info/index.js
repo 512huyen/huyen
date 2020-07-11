@@ -11,7 +11,6 @@ import ChangePassword from './change-password';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import userProvider from '../../../../data-access/user-provider';
 import imageProvider from '../../../../data-access/image-provider';
-import '../../css/user-info.css'
 import dataCacheProvider from '../../../../data-access/datacache-provider'
 import constants from "../../../../resources/strings";
 import Reply from '@material-ui/icons/Reply';

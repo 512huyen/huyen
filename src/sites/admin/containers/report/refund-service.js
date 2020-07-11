@@ -8,7 +8,6 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { ValidatorForm } from 'react-material-ui-form-validator';
-import '../../css/user-info.css'
 import { SelectBox } from '../../../../components/input-field/InputField';
 import { DateBox } from '../../../../components/input-field/InputField';
 import { TimePicker } from 'antd';
@@ -18,6 +17,7 @@ import DataContants from '../../../../config/data-contants';
 import transactionProvider from '../../../../data-access/transaction-provider';
 import ClientUtils from '../../../../utils/client-utils';
 import { listHospital } from '../../../../reducers/actions';
+import '../control/index.scss';
 const format = 'HH:mm:ss';
 class Wallets extends React.Component {
     constructor(props) {
@@ -301,169 +301,167 @@ class Wallets extends React.Component {
                                     <h4 className="recharge-title">
                                         BÁO CÁO HOÀN DỊCH VỤ
                                     </h4>
-                                    <div className="row">
-                                        <div className="recharge-detail">
-                                            <div className="col-md-4">
-                                                <div className="racharge-item">
-                                                    Tên CSYT (*):
+                                    <div className="row recharge-detail">
+                                        <div className="col-md-4">
+                                            <div className="racharge-item">
+                                                Tên CSYT (*):
                                             </div>
+                                        </div>
+                                        <div className="col-md-8">
+                                            {
+                                                userHospitalId === -1 ?
+                                                    <div className="select-box-recharge">
+                                                        <SelectBox
+                                                            listOption={[{ hospital: { code: -1, name: "Chọn CSYT" } }, ...listHospital]}
+                                                            placeholder={'Chọn CSYT'}
+                                                            selected={hospitalId}
+                                                            getIdObject={(item) => {
+                                                                return item.hospital.code;
+                                                            }}
+                                                            getLabelObject={(item) => {
+                                                                return item.hospital.name
+                                                            }}
+                                                            onChangeSelect={(lists, ids) => {
+                                                                this.handleChangeFilter(lists, 1)
+                                                            }}
+                                                        />
+                                                        {
+                                                            checkValidate && hospitalId === -1 ? <div className="error-dob">Vui lòng chọn CSYT!</div> : null
+                                                        }
+                                                    </div> :
+                                                    <div className="recharge-disabled">
+                                                        {userHospitalName}
+                                                    </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="row recharge-detail">
+                                        <div className="col-md-4">
+                                            <div className="racharge-item">
+                                                Phương thức thanh toán (*):
                                             </div>
-                                            <div className="col-md-8">
+                                        </div>
+                                        <div className="col-md-8">
+                                            <div className="select-box-recharge">
+                                                <SelectBox
+                                                    listOption={[{ id: -1, name: "Chọn phương thức thanh toán" }, ...listPaymentMethod]}
+                                                    placeholder={'Chọn phương thức thanh toán'}
+                                                    selected={paymentMethod}
+                                                    getIdObject={(item) => {
+                                                        return item.id;
+                                                    }}
+                                                    getLabelObject={(item) => {
+                                                        return item.name
+                                                    }}
+                                                    onChangeSelect={(lists, ids) => {
+                                                        this.handleChangeFilter(ids, 2)
+                                                    }}
+                                                />
                                                 {
-                                                    userHospitalId === -1 ?
-                                                        <div className="select-box-recharge">
-                                                            <SelectBox
-                                                                listOption={[{ hospital: { code: -1, name: "Chọn CSYT" } }, ...listHospital]}
-                                                                placeholder={'Chọn CSYT'}
-                                                                selected={hospitalId}
-                                                                getIdObject={(item) => {
-                                                                    return item.hospital.code;
-                                                                }}
-                                                                getLabelObject={(item) => {
-                                                                    return item.hospital.name
-                                                                }}
-                                                                onChangeSelect={(lists, ids) => {
-                                                                    this.handleChangeFilter(lists, 1)
-                                                                }}
-                                                            />
-                                                            {
-                                                                checkValidate && hospitalId === -1 ? <div className="error-dob">Vui lòng chọn CSYT!</div> : null
-                                                            }
-                                                        </div> :
-                                                        <div className="recharge-disabled">
-                                                            {userHospitalName}
-                                                        </div>
+                                                    checkValidate && paymentMethod === -1 ? <div className="error-dob">Vui lòng chọn Phương thức thanh toán!</div> : null
                                                 }
                                             </div>
                                         </div>
-                                        <div className="recharge-detail">
-                                            <div className="col-md-4">
-                                                <div className="racharge-item">
-                                                    Phương thức thanh toán (*):
+                                    </div>
+                                    <div className="row recharge-detail">
+                                        <div className="col-md-4">
+                                            <div className="racharge-item">
+                                                Nhà cung cấp DV (*):
                                             </div>
+                                        </div>
+                                        <div className="col-md-8">
+                                            <div className="select-box-recharge">
+                                                <SelectBox
+                                                    listOption={[{ code: -1, nameAbb: "Chọn nhà cung cấp" }, ...listPaymentAgent]}
+                                                    placeholder={'Chọn nhà cung cấp'}
+                                                    selected={paymentAgentId}
+                                                    getIdObject={(item) => {
+                                                        return item.code;
+                                                    }}
+                                                    getLabelObject={(item) => {
+                                                        return item.nameAbb
+                                                    }}
+                                                    onChangeSelect={(lists, ids) => {
+                                                        this.handleChangeFilter(lists, 3)
+                                                    }}
+                                                />
+                                                {
+                                                    checkValidate && paymentAgentId === -1 ? <div className="error-dob">Vui lòng chọn Nhà cung cấp!</div> : null
+                                                }
                                             </div>
-                                            <div className="col-md-8">
-                                                <div className="select-box-recharge">
-                                                    <SelectBox
-                                                        listOption={[{ id: -1, name: "Chọn phương thức thanh toán" }, ...listPaymentMethod]}
-                                                        placeholder={'Chọn phương thức thanh toán'}
-                                                        selected={paymentMethod}
-                                                        getIdObject={(item) => {
-                                                            return item.id;
-                                                        }}
-                                                        getLabelObject={(item) => {
-                                                            return item.name
-                                                        }}
-                                                        onChangeSelect={(lists, ids) => {
-                                                            this.handleChangeFilter(ids, 2)
+                                        </div>
+                                    </div>
+                                    <div className="row recharge-detail">
+                                        <div className="col-md-4">
+                                            <div className="racharge-item">
+                                                Từ ngày (*):
+                                            </div>
+                                        </div>
+                                        <div className="col-md-8">
+                                            <div className="row">
+                                                <div className="col-md-6 select-date-time">
+                                                    <DateBox
+                                                        isInput={true}
+                                                        placeholder="Nhập ngày"
+                                                        value={date}
+                                                        onChangeValue={(event) => {
+                                                            this.getDateTime(event, "date", "fromDate")
                                                         }}
                                                     />
                                                     {
-                                                        checkValidate && paymentMethod === -1 ? <div className="error-dob">Vui lòng chọn Phương thức thanh toán!</div> : null
+                                                        checkValidate && !date ? <div className="error-dob">Vui lòng chọn ngày!</div> : null
+                                                    }
+                                                </div>
+                                                <div className="col-md-6 time-antd">
+                                                    <TimePicker
+                                                        value={time && moment(time, format)}
+                                                        format={format}
+                                                        onChange={(event) => {
+                                                            this.getDateTime(event, "time", "fromDate")
+                                                        }}
+                                                        placeholder="Nhập giờ"
+                                                    />
+                                                    {
+                                                        checkValidate && !time ? <div className="error-dob">Vui lòng chọn giờ!</div> : null
                                                     }
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="recharge-detail">
-                                            <div className="col-md-4">
-                                                <div className="racharge-item">
-                                                    Nhà cung cấp DV (*):
-                                            </div>
-                                            </div>
-                                            <div className="col-md-8">
-                                                <div className="select-box-recharge">
-                                                    <SelectBox
-                                                        listOption={[{ code: -1, nameAbb: "Chọn nhà cung cấp" }, ...listPaymentAgent]}
-                                                        placeholder={'Chọn nhà cung cấp'}
-                                                        selected={paymentAgentId}
-                                                        getIdObject={(item) => {
-                                                            return item.code;
-                                                        }}
-                                                        getLabelObject={(item) => {
-                                                            return item.nameAbb
-                                                        }}
-                                                        onChangeSelect={(lists, ids) => {
-                                                            this.handleChangeFilter(lists, 3)
-                                                        }}
-                                                    />
-                                                    {
-                                                        checkValidate && paymentAgentId === -1 ? <div className="error-dob">Vui lòng chọn Nhà cung cấp!</div> : null
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="recharge-detail">
-                                            <div className="col-md-4">
-                                                <div className="racharge-item">
-                                                    Từ ngày (*):
-                                            </div>
-                                            </div>
-                                            <div className="col-md-8">
-                                                <div className="row">
-                                                    <div className="col-md-6 select-date-time">
-                                                        <DateBox
-                                                            isInput={true}
-                                                            placeholder="Nhập ngày"
-                                                            value={date}
-                                                            onChangeValue={(event) => {
-                                                                this.getDateTime(event, "date", "fromDate")
-                                                            }}
-                                                        />
-                                                        {
-                                                            checkValidate && !date ? <div className="error-dob">Vui lòng chọn ngày!</div> : null
-                                                        }
-                                                    </div>
-                                                    <div className="col-md-6 time-antd">
-                                                        <TimePicker
-                                                            value={time && moment(time, format)}
-                                                            format={format}
-                                                            onChange={(event) => {
-                                                                this.getDateTime(event, "time", "fromDate")
-                                                            }}
-                                                            placeholder="Nhập giờ"
-                                                        />
-                                                        {
-                                                            checkValidate && !time ? <div className="error-dob">Vui lòng chọn giờ!</div> : null
-                                                        }
-                                                    </div>
-                                                </div>
-                                            </div>
 
+                                    </div>
+                                    <div className="row recharge-detail">
+                                        <div className="col-md-4">
+                                            <div className="racharge-item">
+                                                Đến ngày (*):
+                                            </div>
                                         </div>
-                                        <div className="recharge-detail">
-                                            <div className="col-md-4">
-                                                <div className="racharge-item">
-                                                    Đến ngày (*):
-                                            </div>
-                                            </div>
-                                            <div className="col-md-8">
-                                                <div className="row">
-                                                    <div className="col-md-6 select-date-time">
-                                                        <DateBox
-                                                            isInput={true}
-                                                            placeholder="Nhập ngày"
-                                                            value={date2}
-                                                            onChangeValue={(event) => {
-                                                                this.getDateTime(event, "date", "toDate")
-                                                            }}
-                                                        />
-                                                        {
-                                                            checkValidate && !date2 ? <div className="error-dob">Vui lòng chọn ngày!</div> : null
-                                                        }
-                                                    </div>
-                                                    <div className="col-md-6 time-antd">
-                                                        <TimePicker
-                                                            value={time2 && moment(time2, format)}
-                                                            format={format}
-                                                            onChange={(event) => {
-                                                                this.getDateTime(event, "time", "toDate")
-                                                            }}
-                                                            placeholder="Nhập giờ"
-                                                        />
-                                                        {
-                                                            checkValidate && !time2 ? <div className="error-dob">Vui lòng chọn giờ!</div> : null
-                                                        }
-                                                    </div>
+                                        <div className="col-md-8">
+                                            <div className="row">
+                                                <div className="col-md-6 select-date-time">
+                                                    <DateBox
+                                                        isInput={true}
+                                                        placeholder="Nhập ngày"
+                                                        value={date2}
+                                                        onChangeValue={(event) => {
+                                                            this.getDateTime(event, "date", "toDate")
+                                                        }}
+                                                    />
+                                                    {
+                                                        checkValidate && !date2 ? <div className="error-dob">Vui lòng chọn ngày!</div> : null
+                                                    }
+                                                </div>
+                                                <div className="col-md-6 time-antd">
+                                                    <TimePicker
+                                                        value={time2 && moment(time2, format)}
+                                                        format={format}
+                                                        onChange={(event) => {
+                                                            this.getDateTime(event, "time", "toDate")
+                                                        }}
+                                                        placeholder="Nhập giờ"
+                                                    />
+                                                    {
+                                                        checkValidate && !time2 ? <div className="error-dob">Vui lòng chọn giờ!</div> : null
+                                                    }
                                                 </div>
                                             </div>
                                         </div>

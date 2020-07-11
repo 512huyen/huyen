@@ -198,5 +198,15 @@ export default {
             id: 3,
             name: "Đang xử lý"
         }
-    ]
+    ],
+    listTypePaymentAgent: [
+        {
+            id: 1,
+            name: "Ngân hàng"
+        },
+        {
+            id: 2,
+            name: "Nhà cung cấp khác"
+        }
+    ],
 }

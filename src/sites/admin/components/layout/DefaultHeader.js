@@ -27,50 +27,26 @@ class PrimarySearchAppBar extends React.Component {
       userAvatar: ''
     };
   }
-
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
-
   handleProfile() {
     window.location.href = '/admin/user-info';
   }
-
   handlelogOut = event => {
-    // let param = JSON.parse(localStorage.getItem('isofh'));
     localStorage.clear()
     window.location.href = '/dang-nhap';
-    // let id = (this.props.userApp.currentUser || {}).id;
-    // userProvider.logout(id).then(s => {
-    //   if (s && s.data && s.code === 0) {
-    //     localStorage.clear()
-    //     // window.location.reload()
-    //     window.location.href = '/dang-nhap';
-    //     // var logedin = localStorage.getItem('isofh')
-    //     // if(!logedin) {
-    //     //   this.props.history.push("/login");
-    //     // }
-    //   } else {
-    //     alert(s.message)
-    //   }
-    // }).catch(e => {
-
-    // })
   };
-
   handleMenuClose = () => {
     this.setState({ anchorEl: null });
     this.handleMobileMenuClose();
   };
-
   handleMobileMenuOpen = event => {
     this.setState({ mobileMoreAnchorEl: event.currentTarget });
   };
-
   handleMobileMenuClose = () => {
     this.setState({ mobileMoreAnchorEl: null });
   };
-
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
@@ -87,21 +63,17 @@ class PrimarySearchAppBar extends React.Component {
         className="profile-menu"
         color="primary"
       >
-        <MenuItem onClick={this.handleProfile} >Hồ sơ</MenuItem>
-        {/* <MenuItem onClick={this.handleMenuClose}>My account</MenuItem> */}
+        {/* <MenuItem onClick={this.handleProfile} >Hồ sơ</MenuItem> */}
         <MenuItem onClick={this.handlelogOut}>Đăng xuất</MenuItem>
       </Menu>
     );
-
     const renderMobileMenu = (
       <Menu
         anchorEl={mobileMoreAnchorEl}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={isMobileMenuOpen}
-        onClose={this.handleMobileMenuClose}
-
-      >
+        onClose={this.handleMobileMenuClose} >
         <MenuItem>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -163,7 +135,7 @@ class PrimarySearchAppBar extends React.Component {
                 <span className="user-icon item-right">
                   {
                     (this.props.userApp.currentUser || {}).image ?
-                      <img width={100} height={100} src={(this.props.userApp.currentUser || {}).image.absoluteUrl()} alt="" /> :
+                      <img width={50} height={50} src={(this.props.userApp.currentUser || {}).image.absoluteUrl()} alt="" /> :
                       <img src="/icon/logoIsofhPay.png" alt="" />
                   }
                 </span>

@@ -51,47 +51,6 @@ export default {
             }).catch(e => {
                 reject(e);
             })
-            // let data = datacacheProvider.read(param.type, "DATA_USER", [])
-            // if (!fromApi) {
-            //     if (data && data.data && data.data.data.length) {
-            //         if (param.size < data.data.total){
-            //             param.size = data.data.total
-            //             this.search(param, true).then(s=>{
-            //                 resolve(s)
-            //             }).catch(e=>{
-            //                 resolve([])
-            //             })
-            //         } else {
-            //             resolve(data)
-            //         }
-            //     } else {
-            //         this.search(param, true).then(s => {
-            //             resolve(s)
-            //         }).catch(e => {
-            //             resolve([])
-            //         })
-            //     }
-            // } else {
-            //     clientUtils.requestApi("get", constants.api.user.search + parameters, {}).then(x => {
-            //         datacacheProvider.save(param.type, "DATA_USER", x);
-            //         if (x && x.data){
-            //             if (param.size < x.data.total) {
-            //                 param.size = x.data.total
-            //                 this.search(param, true).then(s => {
-            //                     resolve(s);
-            //                 }).catch(e => {
-            //                     resolve([])
-            //                 })
-            //             } else {
-            //                 resolve(x);
-            //             }
-            //         } else {
-            //             resolve([])
-            //         }
-            //     }).catch(e => {
-            //         resolve([])
-            //     })
-            // }
         })
     },
     updatePassword(id, object) {

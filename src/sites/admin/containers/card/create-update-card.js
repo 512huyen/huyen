@@ -158,6 +158,7 @@ function CreateUpdateCard({ useCallback, data, dataHospital, hospitalID, dataPay
                     onChange={(event) => {
                         setCheckButton(true); setTransferDate(event)
                     }}
+                    style={{ width: "100%" }}
                     validation={checkValidate && (transferDate === null || (transferDate && transferDate.length === 0)) ? "Vui lòng nhập ngày bàn giao!" : null}
                 />
                 <InputButton

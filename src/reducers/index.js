@@ -4,7 +4,6 @@ const defaultState = {
     userApp:
     {
         currentUser: {
-            
         },
         image: "",
         isLogin: false,
@@ -29,7 +28,6 @@ const reducer = (state = defaultState, action) => {
             newState.userApp.unReadNotificationCount = 0;
             return newState;
         case constants.action.action_user_logout:
-            // userProvider.logout();
             newState.userApp.unReadNotificationCount = 0;
             newState.userApp.currentUser = {};
             newState.userApp.isLogin = false;

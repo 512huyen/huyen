@@ -6,6 +6,7 @@ import { InputModal, InputDisabled, InputButton } from '../../../../components/i
 import { ButtonFooter, CheckBox } from '../../../../components/button';
 import { SelectModal } from '../../../../components/select';
 import Image from '../../../../components/image';
+
 function CreateUpdateUserHospital({ data, useCallback, dataHospital }) {
     const [open] = useState(true);
     const [username, setUsername] = useState(data && data.user && data.user.username ? data.user.username : '');

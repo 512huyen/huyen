@@ -189,4 +189,52 @@
             }
         }
     }
+    .button-upload {
+        color: #27ae60!important;
+        text-transform: none!important;
+        font-weight: 700!important;
+        margin-top: -8px!important;
+        margin-bottom: auto;
+        margin-left: -5px!important;
+        background: none;
+        border: none;
+    }
+    .button-upload:focus {
+        background-color: #00000014;
+        outline: 0 !important;
+        padding: 6px 12px;
+        border-radius: 5px;
+        box-shadow: 1px 1px 3px 0px #0000004d;
+    }
+    .upload-image-create {
+        width: 30px;
+        margin: auto;
+        cursor: pointer;
+    }
+}
+// .hospital-title-header:before {
+//     height: calc(100% - 120px);
+//     width: 2px;
+//     background: rgb(33,152,188);
+//     content: "";
+//     display: block;
+//     position: absolute;
+//     left: 50%;
+// }
+.hospital-title-header {
+    padding-bottom: 30px;
+    .hospital-header {
+        padding-left: 30px!important;
+        padding-right: 30px!important;
+        padding-top: 8px;
+        .hospital-title {
+            color: #2198bc;
+            font-weight: 700;
+            padding: 0!important;
+            margin-top: 8px!important;
+        }
+        .hospital-padding {
+            padding: 4px 4px 4px 26px!important;
+        }
+    }
 }

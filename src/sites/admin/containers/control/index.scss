@@ -1,0 +1,116 @@
+.color-background-control {
+    .user-info-body {
+        box-shadow: 0px 1px 8px #00000033 !important;
+        min-height: 799px;
+        .info-hospital {
+            background-color: #fff !important;
+            padding: 25px 0px 0px;
+            .setting-control {
+                margin-left: auto;
+                padding-right: 17px;
+                font-size: 18px;
+                color: #0a9be1;
+                font-weight: 600;
+                cursor: pointer;
+            }
+            .user-info-form {
+                width: 100%;
+                .user-info-recharge {
+                    padding: 60px 60px 53px!important;
+                    position: relative;
+                    box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
+                    h4.recharge-title {
+                        font-weight: 700;
+                        color: #087292!important;
+                        font-size: 28px;
+                        text-align: center;
+                        padding-bottom: 18px;
+                    }
+                    .recharge-detail {
+                        width: 100%;
+                        .racharge-item {
+                            padding-top: 5px;
+                            font-weight: 600;
+                        }
+                        .col-md-4 {
+                            padding: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.button-change-update {
+    background-color: #fff!important;
+    box-shadow: 0 4px 0 rgba(0,0,0,.16)!important;
+    font-size: 16px!important;
+    text-transform: none!important;
+    color: #2198bc!important;
+    border-radius: 3px!important;
+    width: 140px;
+    margin: 10px 6px!important;
+}
+.export-file-button {
+    border: 1px solid #979797!important;
+    color: #000!important;
+}
+.change-password-color {
+    background-color: #27ae60!important;
+    color: #fff!important;
+}
+.user-info-form {
+    width: 100%;
+    .user-info-recharge {
+        padding: 60px 20px 53px 45px !important;
+        position: relative;
+        box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12);
+        .recharge-title {
+            font-weight: 700;
+            color: #087292!important;
+            font-size: 28px;
+            text-align: center;
+            padding-bottom: 18px;
+        }
+        .col-md-4 {
+            padding-right: 0;
+        }
+        .recharge-detail {
+            width: 100%;
+            padding-top: 10px;
+            .racharge-item {
+                padding-top: 0px;
+                font-weight: 600;
+            }
+        }
+        .style-table-set-up {
+            width: 100%;
+            border-radius: 6px;
+            overflow: hidden;
+            thead {
+                tr {
+                    background-color: #2197ba52 !important;
+                    th {
+                        color: black !important;
+                        padding: 2px 4px 2px 4px !important;
+                        border: 1px solid #9d9b9b !important;
+                        text-align: center;
+                        font-weight: bold;
+                        line-height: 36px;
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    td {
+                        border: 1px solid #e0e0e0 !important;
+                        padding: 0px 7px 0px 9px!important
+                    }
+                }
+            }
+        }
+    }
+    .ant-time-picker {
+        width: 100%;
+    }
+}

@@ -147,7 +147,7 @@ class PrimarySearchAppBar extends React.Component {
                 <span className="user-icon item-right">
                   {
                     (this.props.userApp.currentUser || {}).image ?
-                      <img width={100} height={100} src={(this.props.userApp.currentUser || {}).image.absoluteUrl()} alt="" /> :
+                      <img width={50} height={50} src={(this.props.userApp.currentUser || {}).image.absoluteUrl()} alt="" /> :
                       <img src="/icon/logoIsofhPay.png" alt="" />
                   }
                 </span>

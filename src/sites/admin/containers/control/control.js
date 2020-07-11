@@ -1,12 +1,11 @@
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import '../../css/user-info.css'
 import { SelectBox } from '../../../../components/input-field/InputField';
 import { DateBox } from '../../../../components/input-field/InputField';
 import { TimePicker } from 'antd';
@@ -20,67 +19,68 @@ import { listHospital } from '../../../../reducers/actions';
 import { toast } from 'react-toastify';
 import ClientUtils from '../../../../utils/client-utils';
 import transactionProvider from '../../../../data-access/transaction-provider';
+import './index.scss'
 const format = 'HH:mm:ss';
-class Wallets extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: true,
-            selected: [],
-            listHospital: [],
-            listPaymentAgent: [],
-            dataHisHospital: [],
-            listPaymentMethod: [],
-            listTypeId: [],
-            listType: DataContants.listType,
-            listTypes: [],
-            progress: true,
-            fromDate: new Date(),
-            toDate: new Date(),
-            date: new Date(),
-            time: "00:00:00",
-            date2: new Date(),
-            time2: "23:59:59",
-            hospitalId: -1,
-            paymentAgentId: -1,
-            paymentMethod: -1,
-            type: 5,
-            statusActive: this.props.data && this.props.data.user && this.props.data.user.status === 1 ? true : false,
-            userHospitalId: this.props.userApp && this.props.userApp.currentUser && this.props.userApp.currentUser.hospital ? this.props.userApp.currentUser.hospital.id : -1,
-            userHospitalName: this.props.userApp && this.props.userApp.currentUser && this.props.userApp.currentUser.hospital ? this.props.userApp.currentUser.hospital.name : '',
-        }
-    }
-    componentWillMount() {
-        if (this.state.userHospitalId === -1) {
-            this.getHospital();
+function Wallets(props) {
+    const [state, _setState] = useState({
+        open: true,
+        selected: [],
+        listHospital: [],
+        listPaymentAgent: [],
+        dataHisHospital: [],
+        listPaymentMethod: [],
+        listTypeId: [],
+        listType: DataContants.listType,
+        listTypes: [],
+        progress: true,
+        fromDate: new Date(),
+        toDate: new Date(),
+        date: new Date(),
+        time: "00:00:00",
+        date2: new Date(),
+        time2: "23:59:59",
+        hospitalId: -1,
+        paymentAgentId: -1,
+        paymentMethod: -1,
+        type: 5,
+        statusActive: props.data && props.data.user && props.data.user.status === 1 ? true : false,
+        userHospitalId: props.userApp && props.userApp.currentUser && props.userApp.currentUser.hospital ? props.userApp.currentUser.hospital.id : -1,
+        userHospitalName: props.userApp && props.userApp.currentUser && props.userApp.currentUser.hospital ? props.userApp.currentUser.hospital.name : '',
+    });
+    const setState = (_state) => {
+        _setState((state) => ({
+            ...state,
+            ...(_state || {}),
+        }));
+    };
+    useEffect(() => {
+        if (state.userHospitalId === -1) {
+            getHospital();
         } else {
-            this.getPaymentMethodHospital(this.state.userHospitalId)
+            getPaymentMethodHospital(state.userHospitalId)
         }
-    }
-    getHospital() {
+    }, []);
+    const getHospital = () => {
         let object = {
             page: 1,
-            size: 9999
+            size: 9999,
+            status: 1
         }
-        if (this.props.userApp.listHospital && this.props.userApp.listHospital.length !== 0) {
-            this.setState({
-                listHospital: this.props.userApp.listHospital.filter(item => { return (item.hospital.status === 1) })
-            })
-        } else {
-            hospitalProvider.search(object).then(s => {
-                if (s && s.data && s.code === 0) {
-                    this.props.dispatch(listHospital(s.data.data))
-                    this.setState({
-                        listHospital: s.data.data.filter(item => { return (item.hospital.status === 1) })
-                    })
-                }
-            }).catch(e => {
+        hospitalProvider.search(object).then(s => {
+            if (s && s.data && s.code === 0) {
+                setState({
+                    listHospital: s.data.data
+                })
+            }
+        }).catch(e => {
 
-            })
-        }
+        })
     }
-    hospitalPaymentMethod() {
-        const { hospitalId, paymentAgentId, paymentMethod, listType } = this.state;
+    const hospitalPaymentMethod = (hospitalId, paymentAgentId, paymentMethod) => {
+        setState({
+            listTypes: []
+        })
+        const { listType } = state;
         let param = {
             hospitalCode: hospitalId,
             paymentMethod,
@@ -116,7 +116,7 @@ class Wallets extends React.Component {
                     }
                     return item
                 })
-                this.setState({
+                setState({
                     listTypes: listTypes
                 })
             }
@@ -124,7 +124,7 @@ class Wallets extends React.Component {
 
         })
     }
-    getPaymentMethodHospital(item) {
+    const getPaymentMethodHospital = (item) => {
         hospitalProvider.getDetail(item).then(s => {
             if (s && s.data && s.code === 0) {
                 let paymentMethod = Object.keys(s.data.hospital.paymentMethods)
@@ -138,22 +138,23 @@ class Wallets extends React.Component {
                     })
                     return index
                 })
-                this.setState({
+                setState({
                     hospitalId: s.data.hospital.code,
                     listPaymentMethod: data,
                     listPaymentAgentSearch: s.data.hospital.paymentMethods
                 })
                 if (data && data.length === 1) {
-                    this.setState({
+                    setState({
                         paymentMethod: data[0].id,
                         listPaymentAgent: s.data.hospital.paymentMethods[data[0].id.toString()]
                     })
                     if (s.data.hospital.paymentMethodss.data.hospital.paymentMethods && s.data.hospital.paymentMethods[data[0].id.toString()].length === 1) {
                         let a = s.data.hospital.paymentMethods[data[0].id.toString()]
-                        this.setState({
+                        setState({
                             paymentAgentId: a[0].code,
                             listPaymentAgent: a
-                        }, () => this.hospitalPaymentMethod())
+                        });
+                        hospitalPaymentMethod(s.data.hospital.code, a[0].code, data[0].id)
                     }
                 }
             }
@@ -161,11 +162,11 @@ class Wallets extends React.Component {
 
         })
     }
-    exportControl() {
-        const { listType, hospitalId, paymentAgentId, paymentMethod, date, date2, time, time2, type } = this.state;
+    const exportControl = () => {
+        const { listType, hospitalId, paymentAgentId, paymentMethod, date, date2, time, time2, type } = state;
         let fromD = moment(date).format("YYYY-MM-DD") + " " + time;
         let toD = moment(date2).format("YYYY-MM-DD") + " " + time2;
-        this.setState({
+        setState({
             fromDate: fromD,
             toDate: toD
         })
@@ -180,16 +181,16 @@ class Wallets extends React.Component {
             }
             return option
         })
-        this.setState({
+        setState({
             listTypeId: listTypeId
         })
         if (hospitalId === -1 || paymentAgentId === -1 || paymentMethod === -1 || !date || !date2 || !time || !time2 || listTypeId.length === 0) {
-            this.setState({
+            setState({
                 checkValidate: true
             })
             return
         } else {
-            this.setState({
+            setState({
                 checkValidate: false
             })
         }
@@ -205,7 +206,7 @@ class Wallets extends React.Component {
         console.log(JSON.stringify(param))
         transactionProvider.report(param).then(s => {
             if (s && s.data && s.code === 0) {
-                this.setState({
+                setState({
                     fileName: s.data.fileName
                 })
                 window.open(ClientUtils.serverApi + "/" + s.data.fileName)
@@ -217,7 +218,7 @@ class Wallets extends React.Component {
                 toast.error("Không tồn tại Nhà cung cấp!", {
                     position: toast.POSITION.TOP_RIGHT
                 });
-            } else if (s.code === 6){
+            } else if (s.code === 6) {
                 toast.error("Không tồn tại bản ghi mới!", {
                     position: toast.POSITION.TOP_RIGHT
                 });
@@ -230,28 +231,28 @@ class Wallets extends React.Component {
 
         })
     }
-    getDateTime(event, type, action) {
+    const getDateTime = (event, type, action) => {
         if (type === "time") {
             if (!event) {
                 if (action === "fromDate") {
-                    this.setState({
+                    setState({
                         time: "",
                     })
                 } else {
-                    this.setState({
+                    setState({
                         time2: "",
                     })
                 }
             } else {
                 let time = moment(event && event._d).format("HH:mm:ss")
-                let dateFrom = moment(this.state.date).format("YYYY-MM-DD") + " " + time
+                let dateFrom = moment(state.date).format("YYYY-MM-DD") + " " + time
                 if (action === "fromDate") {
-                    this.setState({
+                    setState({
                         time: time,
                         fromDate: dateFrom
                     })
                 } else {
-                    this.setState({
+                    setState({
                         time2: time,
                         toDate: dateFrom
                     })
@@ -261,24 +262,24 @@ class Wallets extends React.Component {
         if (type === "date") {
             if (!event) {
                 if (action === "fromDate") {
-                    this.setState({
+                    setState({
                         date: "",
                     })
                 } else {
-                    this.setState({
+                    setState({
                         date2: "",
                     })
                 }
             } else {
                 let date = moment(event).format("YYYY-MM-DD")
-                let dateFrom = date + " " + this.state.time
+                let dateFrom = date + " " + state.time
                 if (action === "fromDate") {
-                    this.setState({
+                    setState({
                         date: date,
                         fromDate: dateFrom
                     })
                 } else {
-                    this.setState({
+                    setState({
                         date2: date,
                         toDate: dateFrom
                     })
@@ -286,7 +287,7 @@ class Wallets extends React.Component {
             }
         }
     }
-    handleChangeFilter(item, type) {
+    const handleChangeFilter = (item, type) => {
         if (type === 1) {
             let dataPaymentMethod = item.hospital && item.hospital.paymentMethods ? Object.keys(item.hospital.paymentMethods) : []
             let data = []
@@ -300,7 +301,7 @@ class Wallets extends React.Component {
                 })
                 return index
             })
-            this.setState({
+            setState({
                 hospitalId: item.hospital.code,
                 listPaymentMethod: data,
                 listPaymentAgentSearch: dataPaymentAgent
@@ -308,13 +309,14 @@ class Wallets extends React.Component {
             if (data && data.length === 1) {
                 let dataCheckPaymentAgent = dataPaymentAgent && dataPaymentAgent[data[0].id.toString()] ? dataPaymentAgent[data[0].id.toString()] : []
                 if (dataCheckPaymentAgent && dataCheckPaymentAgent.length === 1) {
-                    this.setState({
+                    setState({
                         paymentMethod: data[0].code,
                         paymentAgentId: dataCheckPaymentAgent[0].code,
                         listPaymentAgent: dataCheckPaymentAgent
-                    }, () => this.hospitalPaymentMethod())
+                    })
+                    hospitalPaymentMethod(item.hospital.code, dataCheckPaymentAgent[0].code, data[0].code);
                 } else {
-                    this.setState({
+                    setState({
                         paymentMethod: data[0].id,
                         paymentAgentId: -1,
                         listPaymentAgent: dataCheckPaymentAgent
@@ -322,22 +324,23 @@ class Wallets extends React.Component {
                 }
 
             } else {
-                this.setState({
+                setState({
                     paymentMethod: -1,
                     listPaymentAgent: []
                 })
             }
         }
         if (type === 2) {
-            let dataCheckPaymentAgent = item !== -1 ? this.state.listPaymentAgentSearch[item.toString()] : []
+            let dataCheckPaymentAgent = item !== -1 ? state.listPaymentAgentSearch[item.toString()] : []
             if (dataCheckPaymentAgent && dataCheckPaymentAgent.length === 1) {
-                this.setState({
+                setState({
                     paymentMethod: item,
                     paymentAgentId: dataCheckPaymentAgent[0].code,
                     listPaymentAgent: dataCheckPaymentAgent
-                }, () => this.hospitalPaymentMethod())
+                });
+                hospitalPaymentMethod(state.hospitalId, dataCheckPaymentAgent[0].code, item);
             } else {
-                this.setState({
+                setState({
                     paymentMethod: item,
                     paymentAgentId: -1,
                     listPaymentAgent: dataCheckPaymentAgent
@@ -346,29 +349,30 @@ class Wallets extends React.Component {
 
         }
         if (type === 3) {
-            this.setState({
+            setState({
                 paymentAgentId: item.code
-            }, () => this.hospitalPaymentMethod())
+            });
+            hospitalPaymentMethod(state.hospitalId, item.code, state.paymentMethod);
         }
     }
-    listCheckMethod(event, item) {
+    const listCheckMethod = (event, item) => {
         item.checked = !item.checked;
-        let listTypeId = this.state.listType.filter(item => {
+        let listTypeId = state.listType.filter(item => {
             return item.checked
         }).map(item => {
             return item.id
         })
-        this.setState({
+        setState({
             listType: [...DataContants.listType],
             listTypeId: listTypeId
         })
     }
-    closePopup() {
+    const closePopup = () => {
         DataContants.listType.map(item => {
             item.checked = false
             return item
         })
-        this.setState({
+        setState({
             hospitalId: -1,
             paymentMethod: -1,
             paymentAgentId: -1,
@@ -378,288 +382,242 @@ class Wallets extends React.Component {
             time2: "23:59:59"
         })
     }
-    render() {
-        const { classes } = this.props;
-        const { listHospital, userHospitalId, userHospitalName, checkValidate, listTypeId, date, time, time2, date2, listPaymentAgent, hospitalId, paymentAgentId, listTypes, paymentMethod, listPaymentMethod } = this.state;
-        return (
-            <div className="color-background-control">
-                <Paper className={classes.root + " user-info-body"}>
-                    <div className="info-hospital">
-                        <div className="row">
-                            {
-                                userHospitalId === -1 ?
-                                    <Link className="setting-control"
-                                        to={'/admin/setting-control'}>
-                                        Thiết lập đối soát
-                                        <IconButton color="primary" className={classes.button + " setting-control-image"} aria-label="EditIcon">
-                                            <img src="/images/settingse.png" alt="" />
-                                        </IconButton>
-                                    </Link> : null
-                            }
+    const { listHospital, userHospitalId, userHospitalName, checkValidate, listTypeId, date, time, time2, date2, listPaymentAgent, hospitalId, paymentAgentId, listTypes, paymentMethod, listPaymentMethod } = state;
+    return (
+        <div className="color-background-control">
+            <Paper className={" user-info-body"} >
+                <div className="info-hospital">
+                    <div className="row">
+                        {
+                            userHospitalId === -1 ?
+                                <Link className="setting-control"
+                                    to={'/admin/setting-control'}>
+                                    Thiết lập đối soát
+                                        <IconButton color="primary" className={" setting-control-image"} aria-label="EditIcon">
+                                        <img src="/images/settingse.png" alt="" />
+                                    </IconButton>
+                                </Link> : null
+                        }
 
-                            <div className="user-info-form">
-                                <div className="col-md-6 offset-md-3 user-info-table user-info-recharge">
-                                    <h4 className="recharge-title">
-                                        ĐỐI SOÁT
+                        <div className="user-info-form">
+                            <div className="col-md-6 offset-md-3 user-info-table user-info-recharge">
+                                <h4 className="recharge-title">
+                                    ĐỐI SOÁT
                                     </h4>
-                                    <div className="row">
-                                        <div className="recharge-detail">
-                                            <div className="col-md-4">
-                                                <div className="racharge-item">
-                                                    Tên CSYT (*):
+                                <div className="row recharge-detail">
+                                    <div className="col-md-4">
+                                        <div className="racharge-item">
+                                            Tên CSYT (*):
                                             </div>
+                                    </div>
+                                    <div className="col-md-8">
+                                        {
+                                            userHospitalId === -1 ?
+                                                <div className="select-box-recharge">
+                                                    <SelectBox
+                                                        listOption={[{ hospital: { code: -1, name: "Chọn CSYT" } }, ...listHospital]}
+                                                        placeholder={'Chọn CSYT'}
+                                                        selected={hospitalId}
+                                                        getIdObject={(item) => {
+                                                            return item.hospital.code;
+                                                        }}
+                                                        getLabelObject={(item) => {
+                                                            return item.hospital.name
+                                                        }}
+                                                        onChangeSelect={(lists, ids) => {
+                                                            handleChangeFilter(lists, 1)
+                                                        }}
+                                                    />
+                                                    {
+                                                        checkValidate && hospitalId === -1 ? <div className="error-dob">Vui lòng chọn CSYT!</div> : null
+                                                    }
+                                                </div> :
+                                                <div className="recharge-disabled">
+                                                    {userHospitalName}
+                                                </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div className="row recharge-detail">
+                                    <div className="col-md-4">
+                                        <div className="racharge-item">
+                                            Phương thức thanh toán (*):
+                                            </div>
+                                    </div>
+                                    <div className="col-md-8">
+                                        <div className="select-box-recharge">
+                                            <SelectBox
+                                                listOption={[{ id: -1, name: "Chọn phương thức thanh toán" }, ...listPaymentMethod]}
+                                                placeholder={'Chọn phương thức thanh toán'}
+                                                selected={paymentMethod}
+                                                getIdObject={(item) => {
+                                                    return item.id;
+                                                }}
+                                                getLabelObject={(item) => {
+                                                    return item.name
+                                                }}
+                                                onChangeSelect={(lists, ids) => {
+                                                    handleChangeFilter(ids, 2)
+                                                }}
+                                            />
+                                            {
+                                                checkValidate && paymentMethod === -1 ? <div className="error-dob">Vui lòng chọn Phương thức thanh toán!</div> : null
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row recharge-detail">
+                                    <div className="col-md-4">
+                                        <div className="racharge-item">
+                                            Nhà cung cấp DV (*):
+                                            </div>
+                                    </div>
+                                    <div className="col-md-8">
+                                        <div className="select-box-recharge">
+                                            <SelectBox
+                                                listOption={[{ code: -1, nameAbb: "Chọn nhà cung cấp" }, ...listPaymentAgent]}
+                                                placeholder={'Chọn nhà cung cấp'}
+                                                selected={paymentAgentId}
+                                                getIdObject={(item) => {
+                                                    return item.code;
+                                                }}
+                                                getLabelObject={(item) => {
+                                                    return item.nameAbb
+                                                }}
+                                                onChangeSelect={(lists, ids) => {
+                                                    handleChangeFilter(lists, 3)
+                                                }}
+                                            />
+                                            {
+                                                checkValidate && paymentAgentId === -1 ? <div className="error-dob">Vui lòng chọn Nhà cung cấp!</div> : null
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                {
+                                    listTypes && listTypes.length > 0 ?
+                                        <div className="row recharge-detail">
+                                            <div className="col-md-4">
+
+                                                <div className="racharge-item">
+                                                    Loại giao dịch (*):
+                                                        </div>
+
                                             </div>
                                             <div className="col-md-8">
                                                 {
-                                                    userHospitalId === -1 ?
-                                                        <div className="select-box-recharge">
-                                                            <SelectBox
-                                                                listOption={[{ hospital: { code: -1, name: "Chọn CSYT" } }, ...listHospital]}
-                                                                placeholder={'Chọn CSYT'}
-                                                                selected={hospitalId}
-                                                                getIdObject={(item) => {
-                                                                    return item.hospital.code;
-                                                                }}
-                                                                getLabelObject={(item) => {
-                                                                    return item.hospital.name
-                                                                }}
-                                                                onChangeSelect={(lists, ids) => {
-                                                                    this.handleChangeFilter(lists, 1)
-                                                                }}
-                                                            />
-                                                            {
-                                                                checkValidate && hospitalId === -1 ? <div className="error-dob">Vui lòng chọn CSYT!</div> : null
-                                                            }
-                                                        </div> :
-                                                        <div className="recharge-disabled">
-                                                            {userHospitalName}
-                                                        </div>
+                                                    listTypes.map((item, index) => {
+                                                        return (
+                                                            <div key={index}>
+                                                                {
+                                                                    item.checked ?
+                                                                        <div className="paymentMethod-item control-index">
+                                                                            <Checkbox
+                                                                                checked={true}
+                                                                                onClick={event => listCheckMethod(event, item)}
+                                                                                value={item.id.toString()}
+                                                                            /> <span className="hospital-name">{item.name}</span>
+                                                                        </div> :
+                                                                        <div className="paymentMethod-item control-index">
+                                                                            <Checkbox
+                                                                                checked={false}
+                                                                                onClick={event => listCheckMethod(event, item)}
+                                                                                value={item.id.toString()}
+                                                                            /> <span className="hospital-name">{item.name}</span>
+                                                                        </div>
+                                                                }
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+                                                {
+                                                    checkValidate && listTypeId.length === 0 ? <div className="error-dob">Vui lòng chọn Nhà cung cấp!</div> : null
                                                 }
                                             </div>
-                                        </div>
-                                        <div className="recharge-detail">
-                                            <div className="col-md-4">
-                                                <div className="racharge-item">
-                                                    Phương thức thanh toán (*):
+                                        </div> : null
+                                }
+                                <div className="row recharge-detail">
+                                    <div className="col-md-4">
+                                        <div className="racharge-item">
+                                            Từ ngày (*):
                                             </div>
+                                    </div>
+                                    <div className="col-md-8">
+                                        <div className="row">
+                                            <div className="col-md-6 select-date-time">
+                                                <DateBox
+                                                    isInput={true}
+                                                    placeholder="Nhập ngày"
+                                                    value={date && new Date(date)}
+                                                    onChangeValue={(event) => {
+                                                        getDateTime(event, "date", "fromDate")
+                                                    }}
+                                                />
+                                                {checkValidate && !date ? <div className="error-dob">Vui lòng chọn ngày!</div> : null}
                                             </div>
-                                            <div className="col-md-8">
-                                                <div className="select-box-recharge">
-                                                    <SelectBox
-                                                        listOption={[{ id: -1, name: "Chọn phương thức thanh toán" }, ...listPaymentMethod]}
-                                                        placeholder={'Chọn phương thức thanh toán'}
-                                                        selected={paymentMethod}
-                                                        getIdObject={(item) => {
-                                                            return item.id;
-                                                        }}
-                                                        getLabelObject={(item) => {
-                                                            return item.name
-                                                        }}
-                                                        onChangeSelect={(lists, ids) => {
-                                                            this.handleChangeFilter(ids, 2)
-                                                        }}
-                                                    />
-                                                    {
-                                                        checkValidate && paymentMethod === -1 ? <div className="error-dob">Vui lòng chọn Phương thức thanh toán!</div> : null
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="recharge-detail">
-                                            <div className="col-md-4">
-                                                <div className="racharge-item">
-                                                    Nhà cung cấp DV (*):
-                                            </div>
-                                            </div>
-                                            <div className="col-md-8">
-                                                <div className="select-box-recharge">
-                                                    <SelectBox
-                                                        listOption={[{ code: -1, nameAbb: "Chọn nhà cung cấp" }, ...listPaymentAgent]}
-                                                        placeholder={'Chọn nhà cung cấp'}
-                                                        selected={paymentAgentId}
-                                                        getIdObject={(item) => {
-                                                            return item.code;
-                                                        }}
-                                                        getLabelObject={(item) => {
-                                                            return item.nameAbb
-                                                        }}
-                                                        onChangeSelect={(lists, ids) => {
-                                                            this.handleChangeFilter(lists, 3)
-                                                        }}
-                                                    />
-                                                    {
-                                                        checkValidate && paymentAgentId === -1 ? <div className="error-dob">Vui lòng chọn Nhà cung cấp!</div> : null
-                                                    }
-                                                </div>
+                                            <div className="col-md-6 time-antd">
+                                                <TimePicker
+                                                    value={time && moment(time, format)}
+                                                    format={format}
+                                                    onChange={(event) => {
+                                                        getDateTime(event, "time", "fromDate")
+                                                    }}
+                                                    placeholder="Nhập giờ"
+                                                />
+                                                {checkValidate && !time ? <div className="error-dob">Vui lòng chọn giờ!</div> : null}
                                             </div>
                                         </div>
-                                        {
-                                            listTypes && listTypes.length > 0 ?
-                                                <div className="recharge-detail">
-                                                    <div className="col-md-4">
+                                    </div>
 
-                                                        <div className="racharge-item">
-                                                            Loại giao dịch (*):
-                                                        </div>
-
-                                                    </div>
-                                                    <div className="col-md-8">
-                                                        {
-                                                            listTypes.map((item, index) => {
-                                                                return (
-                                                                    <div key={index}>
-                                                                        {
-                                                                            item.checked ?
-                                                                                <div className="paymentMethod-item control-index">
-                                                                                    <Checkbox
-                                                                                        checked={true}
-                                                                                        onClick={event => this.listCheckMethod(event, item)}
-                                                                                        value={item.id.toString()}
-                                                                                    /> <span className="hospital-name">{item.name}</span>
-                                                                                </div> :
-                                                                                <div className="paymentMethod-item control-index">
-                                                                                    <Checkbox
-                                                                                        checked={false}
-                                                                                        onClick={event => this.listCheckMethod(event, item)}
-                                                                                        value={item.id.toString()}
-                                                                                    /> <span className="hospital-name">{item.name}</span>
-                                                                                </div>
-                                                                        }
-                                                                    </div>
-                                                                )
-                                                            })
-                                                        }
-                                                        {
-                                                            checkValidate && listTypeId.length === 0 ? <div className="error-dob">Vui lòng chọn Nhà cung cấp!</div> : null
-                                                        }
-                                                    </div>
-                                                </div> : null
-                                        }
-                                        <div className="recharge-detail">
-                                            <div className="col-md-4">
-                                                <div className="racharge-item">
-                                                    Từ ngày (*):
+                                </div>
+                                <div className="row recharge-detail">
+                                    <div className="col-md-4">
+                                        <div className="racharge-item">
+                                            Đến ngày (*):
                                             </div>
+                                    </div>
+                                    <div className="col-md-8">
+                                        <div className="row">
+                                            <div className="col-md-6 select-date-time">
+                                                <DateBox
+                                                    isInput={true}
+                                                    placeholder="Nhập ngày"
+                                                    value={date2 && new Date(date2)}
+                                                    onChangeValue={(event) => {
+                                                        getDateTime(event, "date", "toDate")
+                                                    }}
+                                                />
+                                                {checkValidate && !date2 ? <div className="error-dob">Vui lòng chọn ngày!</div> : null}
                                             </div>
-                                            <div className="col-md-8">
-                                                <div className="row">
-                                                    <div className="col-md-6 select-date-time">
-                                                        <DateBox
-                                                            isInput={true}
-                                                            placeholder="Nhập ngày"
-                                                            value={date}
-                                                            onChangeValue={(event) => {
-                                                                this.getDateTime(event, "date", "fromDate")
-                                                            }}
-                                                        />
-                                                        {
-                                                            checkValidate && !date ? <div className="error-dob">Vui lòng chọn ngày!</div> : null
-                                                        }
-                                                    </div>
-                                                    <div className="col-md-6 time-antd">
-                                                        <TimePicker
-                                                            value={time && moment(time, format)}
-                                                            format={format}
-                                                            onChange={(event) => {
-                                                                this.getDateTime(event, "time", "fromDate")
-                                                            }}
-                                                            placeholder="Nhập giờ"
-                                                        />
-                                                        {
-                                                            checkValidate && !time ? <div className="error-dob">Vui lòng chọn giờ!</div> : null
-                                                        }
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div className="recharge-detail">
-                                            <div className="col-md-4">
-                                                <div className="racharge-item">
-                                                    Đến ngày (*):
-                                            </div>
-                                            </div>
-                                            <div className="col-md-8">
-                                                <div className="row">
-                                                    <div className="col-md-6 select-date-time">
-                                                        <DateBox
-                                                            isInput={true}
-                                                            placeholder="Nhập ngày"
-                                                            value={date2}
-                                                            onChangeValue={(event) => {
-                                                                this.getDateTime(event, "date", "toDate")
-                                                            }}
-                                                        />
-                                                        {
-                                                            checkValidate && !date2 ? <div className="error-dob">Vui lòng chọn ngày!</div> : null
-                                                        }
-                                                    </div>
-                                                    <div className="col-md-6 time-antd">
-                                                        <TimePicker
-                                                            value={time2 && moment(time2, format)}
-                                                            format={format}
-                                                            onChange={(event) => {
-                                                                this.getDateTime(event, "time", "toDate")
-                                                            }}
-                                                            placeholder="Nhập giờ"
-                                                        />
-                                                        {
-                                                            checkValidate && !time2 ? <div className="error-dob">Vui lòng chọn giờ!</div> : null
-                                                        }
-                                                    </div>
-                                                </div>
+                                            <div className="col-md-6 time-antd">
+                                                <TimePicker
+                                                    value={time2 && moment(time2, format)}
+                                                    format={format}
+                                                    onChange={(event) => {
+                                                        getDateTime(event, "time", "toDate")
+                                                    }}
+                                                    placeholder="Nhập giờ"
+                                                />
+                                                {checkValidate && !time2 ? <div className="error-dob">Vui lòng chọn giờ!</div> : null}
                                             </div>
                                         </div>
-                                        <div className="col-md-12" style={{ textAlign: "center", paddingTop: 22 }}>
-                                            <Button className="button-change-update export-file-button-2" variant="contained" color="inherit" onClick={() => this.closePopup()}>Hủy</Button>
-                                            <Button className="button-change-update change-password-color" variant="contained" color="inherit" onClick={() => this.exportControl()} >Xuất file</Button>
-                                        </div>
+                                    </div>
+                                    <div className="col-md-12" style={{ textAlign: "center", paddingTop: 22 }}>
+                                        <Button className="button-change-update export-file-button" variant="contained" color="inherit" onClick={() => closePopup()}>Hủy</Button>
+                                        <Button className="button-change-update change-password-color" variant="contained" color="inherit" onClick={() => exportControl()} >Xuất file</Button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </Paper>
-            </div>
-        )
-    }
+                </div>
+            </Paper>
+        </div>
+    )
 }
-
 function mapStateToProps(state) {
     return {
         userApp: state.userApp
     };
 }
-
-const styles = theme => ({
-    root: {
-        width: '100%',
-        marginTop: theme.spacing.unit * 3,
-    },
-    table: {
-        minWidth: 2048,
-    },
-    tableWrapper: {
-        overflowX: 'auto',
-    }, contentClass: {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        display: '-webkit-box',
-        WebkitLineClamp: 2,
-        WebkitBoxOrient: 'vertical'
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-    },
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-});
-
-Wallets.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(connect(mapStateToProps)(Wallets));
+export default (connect(mapStateToProps)(Wallets));

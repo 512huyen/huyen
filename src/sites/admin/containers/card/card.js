@@ -279,7 +279,7 @@ function Card() {
                                 key={index}
                                 tabIndex={-1}>
                                 <TableCell>{index + sttAndTotal.stt}</TableCell>
-                                <TableCell>{moment(item.cardTransferHistory && item.cardTransferHistory.transferDate).format("DD-MM-YYYY")}</TableCell>
+                                <TableCell>{moment(item.cardTransferHistory && item.cardTransferHistory.transferDate).format("DD/MM/YYYY")}</TableCell>
                                 <TableCell>{item.cardTransferHistory && item.cardTransferHistory.quantity}</TableCell>
                                 <TableCell>{item.cardTransferHistory && item.cardTransferHistory.transferUser}</TableCell>
                                 <TableCell>{item.cardTransferHistory && item.cardTransferHistory.paymentAgent && item.cardTransferHistory.paymentAgent.nameAbb}</TableCell>
