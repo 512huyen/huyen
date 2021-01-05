@@ -17,7 +17,7 @@
     "@date-io/moment": "0.0.2",
     "@material-ui/core": "^3.3.2",
     "@material-ui/icons": "^3.0.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "ckeditor4-react": "^1.0.0-beta",
     "crypto-js": "^3.1.9-1",
     "device-uuid": "^1.0.4",
